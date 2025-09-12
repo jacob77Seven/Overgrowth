@@ -9,6 +9,8 @@
 
 #include "shellapi.h"
 
+#include "Src/LevelImporter.h"
+
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
 
@@ -70,6 +72,9 @@ void CGame::Release(){
 void CGame::BeginGame(){  
   delete m_pSpriteDesc;
   m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter); 
+  LevelImporter *lvl = new LevelImporter();
+  lvl->ParseLevel("TEST_LEVEL");
+  //printf("Hello?");
 } //BeginGame
 
 /// Poll the keyboard state and respond to the key presses that happened since
