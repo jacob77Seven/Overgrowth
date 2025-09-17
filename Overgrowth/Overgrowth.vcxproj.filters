@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Src\LevelImporter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameDefines.h" />
+    <ClInclude Include="Src\LevelImporter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Overgrowth.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Media">
+      <UniqueIdentifier>{ac9172ac-58f0-4f5b-a616-27991d47b640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Images">
+      <UniqueIdentifier>{0b648e35-85ab-456c-99eb-ecfdf1165e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Sounds">
+      <UniqueIdentifier>{326a9413-d4ea-4e12-8b5c-6e4a31959ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Fonts">
+      <UniqueIdentifier>{d22023dc-316c-41d9-983d-e6e8c71b8b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\XML">
+      <UniqueIdentifier>{7875e9a6-ed73-4278-9e9a-732187a62063}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Media\Images\background.png">
+      <Filter>Media\Images</Filter>
+    </Image>
+    <Image Include="Media\Images\textwheel.png">
+      <Filter>Media\Images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Media\Fonts\AverageSans_24.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Media\Fonts\OFL.txt">
+      <Filter>Media\Fonts</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Media\XML\gamesettings.xml">
+      <Filter>Media\XML</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Media\Sounds\clang.wav">
+      <Filter>Media\Sounds</Filter>
+    </Media>
+    <Media Include="Media\Sounds\umph.wav">
+      <Filter>Media\Sounds</Filter>
+    </Media>
+  </ItemGroup>
+</Project>

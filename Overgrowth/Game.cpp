@@ -42,7 +42,8 @@ void CGame::LoadImages(){
 
   m_pRenderer->Load(eSprite::Background, "background"); 
   m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
-  m_pRenderer->Load(eSprite::TextWheel,  "pig"); 
+  m_pRenderer->Load(eSprite::Pig,  "pig"); 
+  m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
