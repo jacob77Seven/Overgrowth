@@ -72,7 +72,8 @@ void CGame::Release(){
 
 void CGame::BeginGame(){  
   delete m_pSpriteDesc;
-  m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter); 
+  m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
+  m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter);
   LevelImporter *lvl = new LevelImporter();
   lvl->ParseLevel("TEST_LEVEL");
   //printf("Hello?");
@@ -102,6 +103,16 @@ void CGame::KeyboardHandler(){
   if (m_pKeyboard->TriggerDown('P'))
       m_pAudio->play(eSound::Piano);
 
+  if (m_pKeyboard->Down(VK_LEFT))  m_pSquareDesc->m_vPos.x -= 5.0f;
+
+  if (m_pKeyboard->Down(VK_RIGHT)) m_pSquareDesc->m_vPos.x += 5.0f;
+
+  if (m_pKeyboard->Down(VK_UP))    m_pSquareDesc->m_vPos.y += 5.0f;
+
+  if (m_pKeyboard->Down(VK_DOWN))  m_pSquareDesc->m_vPos.y -= 5.0f;
+
+
+
   if(m_pKeyboard->TriggerDown(VK_BACK)) //restart game
     BeginGame(); //restart game
 } //KeyboardHandler
@@ -123,6 +134,8 @@ void CGame::RenderFrame(){
   m_pRenderer->BeginFrame(); //required before rendering
   
   m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
+  if (m_pSquareDesc)
+      m_pRenderer->Draw(m_pSquareDesc);
   m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite
   if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 

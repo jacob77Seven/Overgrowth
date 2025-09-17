@@ -25,6 +25,7 @@ class CGame:
   private:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
+    LSpriteDesc2D* m_pSquareDesc = nullptr;
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     
     void LoadImages(); ///< Load images.
