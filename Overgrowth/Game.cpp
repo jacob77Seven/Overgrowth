@@ -74,9 +74,14 @@ void CGame::BeginGame(){
   delete m_pSpriteDesc;
   m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
   m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter);
-  LevelImporter *lvl = new LevelImporter();
-  lvl->ParseLevel("TEST_LEVEL");
-  //printf("Hello?");
+  LevelImporter lvl;
+  LevelData data = lvl.ParseLevel("Test Level Export.json");
+
+  // Debug print tiles
+  for (auto& t : data.tiles) {
+      printf("Tile %d at (%d,%d), src=(%d,%d)\n",
+          t.tileID, t.posX, t.posY, t.srcX, t.srcY);
+  }
 } //BeginGame
 
 /// Poll the keyboard state and respond to the key presses that happened since
