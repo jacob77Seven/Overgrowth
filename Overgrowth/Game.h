@@ -28,6 +28,9 @@ class CGame:
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     
     void LoadImages(); ///< Load images.
+
+    void DrawUI();
+
     void LoadSounds(); ///< Load sounds.
     void BeginGame(); ///< Begin playing the game.
     void CreateObjects(); ///< Create game objects.

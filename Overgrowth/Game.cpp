@@ -43,6 +43,7 @@ void CGame::LoadImages(){
   m_pRenderer->Load(eSprite::Background, "background"); 
   m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
   m_pRenderer->Load(eSprite::TextWheel,  "pig"); 
+  m_pRenderer->Load(eSprite::Rogue, "roguecharacter");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
@@ -125,6 +126,7 @@ void CGame::RenderFrame(){
   m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite
   if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
+  DrawUI();
   m_pRenderer->EndFrame(); //required after rendering
 } //RenderFrame
 

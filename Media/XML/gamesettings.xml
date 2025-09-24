@@ -3,7 +3,7 @@
 
 <settings>
   <game name="Overgrowth" />
-  <renderer width="1024" height="768"/>
+  <renderer width="1920" height="1080"/>
    
   <font file="Media\Fonts\AverageSans_24.spritefont"/>
 
@@ -13,6 +13,7 @@
     <sprite name="pig" file="pig.png"/>
     <sprite name="background" file="background.png"/>
     <sprite name="textwheel" file="textwheel.png"/>
+	<sprite name="roguecharacter" file="roguecharacter.jpg"/>
   </sprites>
 
   <!-- sound -->
