@@ -8,6 +8,7 @@
 #include "Settings.h"
 #include "SpriteDesc.h"
 #include "SpriteRenderer.h"
+#include "Src/LevelImporter.h"
 
 /// \brief The game class.
 ///
@@ -27,9 +28,11 @@ class CGame:
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
     LSpriteDesc2D* m_pSquareDesc = nullptr;
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
+    LevelImporter* LvlImporter = nullptr;
     
     void LoadImages(); ///< Load images.
     void LoadSounds(); ///< Load sounds.
+    void LoadLevels(); ///< Load levels.
     void BeginGame(); ///< Begin playing the game.
     void CreateObjects(); ///< Create game objects.
     void KeyboardHandler(); ///< The keyboard handler.

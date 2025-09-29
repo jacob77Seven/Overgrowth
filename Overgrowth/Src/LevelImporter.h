@@ -2,7 +2,19 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <stdio.h>
 #include "json.hpp"
+
+#include "Defines.h"
+#include "Abort.h"
+
+#include "WindowDesc.h"
+#include "Settings.h"
+#include "Component.h"
+#include "ComponentIncludes.h"
+#include "Helpers.h"
+
+
 
 struct TileData {
 	int tileID;          // LDtk tile ID ("t")
@@ -15,8 +27,13 @@ struct LevelData {
 	std::vector<TileData> tiles;
 };
 
-class LevelImporter {
+class LevelImporter: public LSettingsManager {
+
+private:
+	void ParseLevel(std::string LevelPath);
+
 public:
 	LevelImporter();
-	LevelData ParseLevel(std::string LevelPath);
+	void Load(size_t index, const char* name);
+	std::vector<LevelData> Levels;
 };

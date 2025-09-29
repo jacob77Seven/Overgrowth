@@ -9,8 +9,6 @@
 
 #include "shellapi.h"
 
-#include "Src/LevelImporter.h"
-
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
 
@@ -26,7 +24,7 @@ void CGame::Initialize(){
   m_pRenderer->Initialize(eSprite::Size); 
   LoadImages(); //load images from xml file list
   LoadSounds(); //load the sounds for this game
-
+  LoadLevels();
   BeginGame();
 } //Initialize
 
@@ -47,6 +45,16 @@ void CGame::LoadImages(){
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
+
+// Load Levels
+void CGame::LoadLevels() {
+    LvlImporter = new LevelImporter();
+    //LvlImporter->Initialize(eLevels::Size);
+    LvlImporter->Load((int)eLevels::RealLevel, "reallevel");
+
+} //LoadLevels
+
+
 
 /// Initialize the audio player and load game sounds.
 
@@ -72,16 +80,17 @@ void CGame::Release(){
 
 void CGame::BeginGame(){  
   delete m_pSpriteDesc;
+  delete m_pSquareDesc;
   m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
   m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter);
   LevelImporter lvl;
-  LevelData data = lvl.ParseLevel("Test Level Export.json");
+  //LevelData data = lvl.ParseLevel();
 
   // Debug print tiles
-  for (auto& t : data.tiles) {
-      printf("Tile %d at (%d,%d), src=(%d,%d)\n",
-          t.tileID, t.posX, t.posY, t.srcX, t.srcY);
-  }
+  //for (auto& t : data.tiles) {
+  //    printf("Tile %d at (%d,%d), src=(%d,%d)\n",
+  //        t.tileID, t.posX, t.posY, t.srcX, t.srcY);
+  //}
 } //BeginGame
 
 /// Poll the keyboard state and respond to the key presses that happened since

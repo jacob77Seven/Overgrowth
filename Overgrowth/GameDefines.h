@@ -18,6 +18,13 @@ enum class eSprite: UINT{
   Size  //MUST BE LAST
 }; //eSprite
 
+
+enum class eLevels : UINT {
+	TestLevel, RealLevel,
+	Size  //MUST BE LAST
+}; //eSprite
+
+
 /// \brief Sound enumerated type.
 ///
 /// An enumerated type for the sounds, which will be cast to an unsigned
