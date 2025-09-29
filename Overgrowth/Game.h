@@ -37,6 +37,7 @@ class CGame:
     void DrawFrameRateText(); ///< Draw frame rate text to screen.
 
   public:
+    std::vector<LSpriteDesc2D*> m_vLevelSprites; //container for storing tiles
     ~CGame(); ///< Destructor.
 
     void Initialize(); ///< Initialize the game.

@@ -73,7 +73,10 @@ void CGame::Release(){
 void CGame::BeginGame(){  
   delete m_pSpriteDesc;
   m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
-  m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter);
+  m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter); // SCALING BELOW IS JUST FOR TESTING
+  m_pSquareDesc->m_fXScale = 3.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
+  m_pSquareDesc->m_fYScale = 3.0f;
+
   LevelImporter lvl;
   LevelData data = lvl.ParseLevel("Test Level Export.json");
 
@@ -81,6 +84,15 @@ void CGame::BeginGame(){
   for (auto& t : data.tiles) {
       printf("Tile %d at (%d,%d), src=(%d,%d)\n",
           t.tileID, t.posX, t.posY, t.srcX, t.srcY);
+  }
+
+  for (auto* s : m_vLevelSprites) delete s; //clean up old level sprites
+  m_vLevelSprites.clear();
+
+  // Build sprite descriptors for each tile
+  for (auto& t : data.tiles) {
+      auto* desc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, Vector2((float)t.posX, (float)t.posY));
+      m_vLevelSprites.push_back(desc);
   }
 } //BeginGame
 
@@ -139,6 +151,11 @@ void CGame::RenderFrame(){
   m_pRenderer->BeginFrame(); //required before rendering
   
   m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
+
+  for (auto* desc : m_vLevelSprites) { //draw level sprites
+      m_pRenderer->Draw(desc);
+  }
+
   if (m_pSquareDesc)
       m_pRenderer->Draw(m_pSquareDesc);
   m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite

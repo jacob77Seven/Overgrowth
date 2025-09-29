@@ -42,7 +42,7 @@ LevelData LevelImporter::ParseLevel(std::string LevelPath) {
 
                 // World position (px array has [x,y])
                 t.posX = tile["px"][0];
-                t.posY = tile["px"][1];
+				t.posY = (tile["px"][1]) * -1 + 750; // Invert Y for our coordinate system
 
                 lvlDat.tiles.push_back(t);
             }
