@@ -51,7 +51,7 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
     }
 
     printf("Imported %zu tiles total.\n", lvlDat.tiles.size());
-    Levels.push_back(lvlDat);
+    CurrLevel = lvlDat;
 }
 
 
@@ -91,3 +91,7 @@ void LevelImporter::Load(size_t index, const char* name) {
     //createInstances(index, instances, SoundEffectInstance_Use3D |
         //SoundEffectInstance_ReverbUseFilters);
 } //LoadByIndex
+
+LevelData LevelImporter::GetLevelData() {
+    return CurrLevel;
+}

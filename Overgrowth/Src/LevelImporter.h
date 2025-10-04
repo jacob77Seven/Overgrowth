@@ -35,5 +35,7 @@ private:
 public:
 	LevelImporter();
 	void Load(size_t index, const char* name);
-	std::vector<LevelData> Levels;
+	//std::vector<LevelData> Levels;
+	LevelData CurrLevel;
+	LevelData GetLevelData();
 };

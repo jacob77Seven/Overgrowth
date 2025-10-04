@@ -164,12 +164,25 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Src\BaseAnimator.cpp" />
+    <ClCompile Include="Src\BaseCharacter.cpp" />
+    <ClCompile Include="Src\BaseController.cpp" />
+    <ClCompile Include="Src\common.cpp" />
     <ClCompile Include="Src\LevelImporter.cpp" />
+    <ClCompile Include="Src\Object.cpp" />
+    <ClCompile Include="Src\ObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameDefines.h" />
+    <ClInclude Include="Src\BaseAnimator.h" />
+    <ClInclude Include="Src\BaseCharacter.h" />
+    <ClInclude Include="Src\BaseController.h" />
+    <ClInclude Include="Src\Common.h" />
+    <ClInclude Include="Src\json.hpp" />
     <ClInclude Include="Src\LevelImporter.h" />
+    <ClInclude Include="Src\Object.h" />
+    <ClInclude Include="Src\ObjectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />
