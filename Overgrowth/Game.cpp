@@ -14,6 +14,14 @@
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
 
+//gravity implemntation
+Sprite* pinkSprite = nullptr;
+float pinkX = 200.0f;
+float pinkY = 100.0f;
+float pinkVy = 0.0f;
+const float gravity = 500.0f;
+const float groundY = 600.0f;
+
 CGame::~CGame(){
   delete m_pSpriteDesc;
 } //destructor
@@ -155,6 +163,18 @@ void CGame::ProcessFrame(){
   m_pTimer->Tick([&](){ //all time-dependent function calls should go here
     const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
     m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
+
+    // --- Gravity for the pink square ---
+        if (m_pSquareDesc) {
+            pinkVy += gravity * t;
+            m_pSquareDesc->m_vPos.y += pinkVy * t;
+            // ground collision
+            if (m_pSquareDesc->m_vPos.y > groundY) {
+                m_pSquareDesc->m_vPos.y = groundY;
+                pinkVy = 0.0f; 
+            }
+        }
+    
   });
 
   RenderFrame(); //render a frame of animation
