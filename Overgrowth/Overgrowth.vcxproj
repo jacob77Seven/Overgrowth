@@ -186,11 +186,11 @@
     <Text Include="Media\Fonts\OFL.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Media\XML\gamesettings.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="Media\Sounds\clang.wav" />
     <Media Include="Media\Sounds\umph.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Media\XML\gamesettings.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

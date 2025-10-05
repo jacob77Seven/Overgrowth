@@ -86,8 +86,14 @@ void CGame::BeginGame(){
   m_pSquareDesc->m_fXScale = 3.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
   m_pSquareDesc->m_fYScale = 3.0f;
 
-  LevelImporter lvl;
   //LevelData data = lvl.ParseLevel();
+
+  if ((LvlImporter == nullptr) || (LvlImporter->Levels.size() == 0)) {
+      printf("No levels loaded!\n");
+	  return;
+  }
+
+  LevelData& data = LvlImporter->Levels[0]; //get first level for now
 
   // Debug print tiles
   for (auto& t : data.tiles) {

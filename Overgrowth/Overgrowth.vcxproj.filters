@@ -42,16 +42,12 @@
     <None Include="Media\Fonts\AverageSans_24.spritefont">
       <Filter>Media\Fonts</Filter>
     </None>
+    <None Include="Test Level Export.json" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Media\Fonts\OFL.txt">
       <Filter>Media\Fonts</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="Media\XML\gamesettings.xml">
-      <Filter>Media\XML</Filter>
-    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Media\Sounds\clang.wav">
@@ -60,5 +56,10 @@
     <Media Include="Media\Sounds\umph.wav">
       <Filter>Media\Sounds</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Media\XML\gamesettings.xml">
+      <Filter>Media\XML</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
