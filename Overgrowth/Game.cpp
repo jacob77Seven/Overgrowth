@@ -165,14 +165,20 @@ void CGame::DrawFrameRateText(){
 void CGame::RenderFrame(){
   m_pRenderer->BeginFrame(); //required before rendering
   
+  Vector2 camOffset = m_vWinCenter - m_vCameraPos;
+
   m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
 
   for (auto* desc : m_vLevelSprites) { //draw level sprites
-      m_pRenderer->Draw(desc);
+	  Vector2 drawPos = desc->m_vPos + camOffset;
+      m_pRenderer->Draw(desc->m_nSpriteIndex, drawPos);
   }
 
-  if (m_pSquareDesc)
-      m_pRenderer->Draw(m_pSquareDesc);
+  if (m_pSquareDesc) {
+      Vector2 drawPos = m_pSquareDesc->m_vPos + camOffset;
+      m_pRenderer->Draw(m_pSquareDesc->m_nSpriteIndex, drawPos);
+  }
+
   m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite
   if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
@@ -192,6 +198,13 @@ void CGame::ProcessFrame(){
   m_pTimer->Tick([&](){ //all time-dependent function calls should go here
     const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
     m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
+
+    if (m_pSquareDesc) {
+        // Follow player smoothly
+        const float followSpeed = 5.0f;
+        Vector2 playerPos = Vector2(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y);
+        m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
+    }
   });
 
   RenderFrame(); //render a frame of animation

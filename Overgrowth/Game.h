@@ -29,6 +29,7 @@ class CGame:
     LSpriteDesc2D* m_pSquareDesc = nullptr;
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     LevelImporter* LvlImporter = nullptr;
+    Vector2 m_vCameraPos;
     
     void LoadImages(); ///< Load images.
     void LoadSounds(); ///< Load sounds.
