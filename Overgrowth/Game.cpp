@@ -22,6 +22,12 @@ CGame::~CGame(){
 void CGame::Initialize(){
   m_pRenderer = new LSpriteRenderer(eSpriteMode::Batched2D); 
   m_pRenderer->Initialize(eSprite::Size); 
+
+  // Initialize the camera
+  m_pCamera = new LBaseCamera();
+  m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, 1024.0f / 768.0f, 0.1f, 1000.0f);
+  m_pCamera->MoveTo(Vector3(0, 0, 50));
+
   LoadImages(); //load images from xml file list
   LoadSounds(); //load the sounds for this game
   LoadLevels();
@@ -82,7 +88,9 @@ void CGame::BeginGame(){
   delete m_pSpriteDesc;
   delete m_pSquareDesc;
   m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
-  m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter); // SCALING BELOW IS JUST FOR TESTING
+  m_pSquareDesc = new LSpriteDesc3D();
+  m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
+  // SCALING BELOW IS JUST FOR TESTING
   m_pSquareDesc->m_fXScale = 3.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
   m_pSquareDesc->m_fYScale = 3.0f;
 
@@ -167,7 +175,7 @@ void CGame::RenderFrame(){
   
   Vector2 camOffset = m_vWinCenter - m_vCameraPos;
 
-  m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
+  //m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
 
   for (auto* desc : m_vLevelSprites) { //draw level sprites
 	  Vector2 drawPos = desc->m_vPos + camOffset;
@@ -179,7 +187,7 @@ void CGame::RenderFrame(){
       m_pRenderer->Draw(m_pSquareDesc->m_nSpriteIndex, drawPos);
   }
 
-  m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite
+  //m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite
   if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
   m_pRenderer->EndFrame(); //required after rendering
@@ -202,7 +210,7 @@ void CGame::ProcessFrame(){
     if (m_pSquareDesc) {
         // Follow player smoothly
         const float followSpeed = 5.0f;
-        Vector2 playerPos = Vector2(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y);
+        Vector3 playerPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, m_pSquareDesc->m_vPos.z);
         m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
     }
   });

@@ -45,6 +45,10 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
                 t.posX = tile["px"][0];
 				t.posY = (tile["px"][1]) * -1 + 750; // Invert Y for our coordinate system
 
+                if (layerName == "CollisionTiles" || layerName == "Decor" || layerName == "Entities") t.posZ = 5.0f;
+                else if (layerName == "Background") t.posZ = 0.0f;
+				else if (layerName == "Foreground") t.posZ = 10.0f;
+
                 lvlDat.tiles.push_back(t);
             }
         }

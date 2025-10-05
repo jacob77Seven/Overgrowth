@@ -26,11 +26,13 @@ class CGame:
   private:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
-    LSpriteDesc2D* m_pSquareDesc = nullptr;
+    LSpriteDesc3D* m_pSquareDesc = nullptr;
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     LevelImporter* LvlImporter = nullptr;
     Vector2 m_vCameraPos;
-    
+    LBaseCamera* m_pCamera = nullptr;
+
+
     void LoadImages(); ///< Load images.
     void LoadSounds(); ///< Load sounds.
     void LoadLevels(); ///< Load levels.
