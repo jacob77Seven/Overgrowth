@@ -30,9 +30,9 @@ public:
     // DEPRACATED
     //OObject* create(eSprite esp, const Vector2&); ///< Create new object.
     // The Factory is now much simpler.
-    static OObject* create(const Vector2& pos) {
+    static T* create(const Vector2& pos) {
         static_assert(std::is_base_of<OObject, T>::value, "T must be a descendant of OObject");
-        auto pObj = new T(pos);
+        T* pObj = new T(pos);
         OObjectList.push_back(pObj);
         return pObj;
     }

@@ -6,7 +6,7 @@
 #include "GameDefines.h"
 #include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
-#include "Src\BaseCharacter.h"
+#include "Src\TestCharacter.h"
 #include "shellapi.h"
 
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
@@ -82,10 +82,10 @@ void CGame::BeginGame(){
     delete m_pSquareDesc;
     m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter); // SCALING BELOW IS JUST FOR TESTING
-    m_pSquareDesc->m_fXScale = 3.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
-    m_pSquareDesc->m_fYScale = 3.0f;
+    m_pSquareDesc->m_fXScale = 1.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
+    m_pSquareDesc->m_fYScale = 1.0f;
 
-    m_pObjectManager->create<OBaseCharacter>(Vector2(700, 700));
+    TestCharacter* character = m_pObjectManager->create<TestCharacter>(Vector2(700, 700));
 
     // Debug print tiles
     for (auto& t : LvlImporter->GetLevelData().tiles) {
