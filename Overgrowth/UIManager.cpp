@@ -40,7 +40,7 @@ void CUIManager::ActiveCharFrame(UINT c) {
 		case (UINT)eSprite::RogueCharFrame:
 			m_pRogueCharFrame.m_fXScale = 1 / (m_vRogueCharFrameSize.x / m_fActiveHeight);
 			m_pRogueCharFrame.m_fYScale = 1 / (m_vRogueCharFrameSize.y / m_fActiveHeight);
-
+			
 			InactiveCharFrame((UINT)eSprite::WarriorCharFrame);
 			InactiveCharFrame((UINT)eSprite::DruidCharFrame);
 			break;
