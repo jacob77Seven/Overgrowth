@@ -13,7 +13,7 @@
     <sprite name="pig" file="pig.png"/>
     <sprite name="background" file="background.png"/>
     <sprite name="textwheel" file="textwheel.png"/>
-	<sprite name="roguecharacter" file="roguecharacter.jpg"/>
+	<sprite name="roguecharframe" file="roguecharframe.jpg"/>
   </sprites>
 
   <!-- sound -->

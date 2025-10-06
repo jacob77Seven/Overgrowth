@@ -8,6 +8,8 @@
 #include "Settings.h"
 #include "SpriteDesc.h"
 #include "SpriteRenderer.h"
+#include "Common.h"
+#include "UIManager.h"
 
 /// \brief The game class.
 ///
@@ -20,18 +22,16 @@
 
 class CGame: 
   public LComponent, 
-  public LSettings{ 
+  public LSettings,
+  public CCommon{ 
 
   private:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
-    LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     
     void LoadImages(); ///< Load images.
-
-    void DrawUI();
-
     void LoadSounds(); ///< Load sounds.
+
     void BeginGame(); ///< Begin playing the game.
     void CreateObjects(); ///< Create game objects.
     void KeyboardHandler(); ///< The keyboard handler.

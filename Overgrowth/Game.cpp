@@ -4,7 +4,6 @@
 #include "Game.h"
 
 #include "GameDefines.h"
-#include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
 
 #include "shellapi.h"
@@ -24,10 +23,11 @@ CGame::~CGame(){
 void CGame::Initialize(){
   m_pRenderer = new LSpriteRenderer(eSpriteMode::Batched2D); 
   m_pRenderer->Initialize(eSprite::Size); 
+  m_pUIManager = new CUIManager;
   LoadImages(); //load images from xml file list
   LoadSounds(); //load the sounds for this game
 
-  BeginGame();
+  m_pUIManager->InitializeUI();
 } //Initialize
 
 /// Load the specific images needed for this game. This is where `eSprite`
@@ -43,7 +43,7 @@ void CGame::LoadImages(){
   m_pRenderer->Load(eSprite::Background, "background"); 
   m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
   m_pRenderer->Load(eSprite::TextWheel,  "pig"); 
-  m_pRenderer->Load(eSprite::Rogue, "roguecharacter");
+  m_pRenderer->Load(eSprite::RogueCharFrame, "roguecharframe");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
@@ -70,9 +70,7 @@ void CGame::Release(){
 /// you can restart a new game without having to shut down and restart the
 /// program.
 
-void CGame::BeginGame(){  
-  delete m_pSpriteDesc;
-  m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter); 
+void CGame::BeginGame(){ 
   LevelImporter *lvl = new LevelImporter();
   lvl->ParseLevel("TEST_LEVEL");
   //printf("Hello?");
@@ -83,27 +81,7 @@ void CGame::BeginGame(){
 
 void CGame::KeyboardHandler(){
   m_pKeyboard->GetState(); //get current keyboard state 
-  
-  if(m_pKeyboard->TriggerDown(VK_F1)) //help
-    ShellExecute(0, 0, "https://larc.unt.edu/code/physics/blank/", 0, 0, SW_SHOW);
-  
-  if(m_pKeyboard->TriggerDown(VK_F2)) //toggle frame rate 
-    m_bDrawFrameRate = !m_bDrawFrameRate;
-  
-  if(m_pKeyboard->TriggerDown(VK_SPACE)) //play sound
-    m_pAudio->play(eSound::Clang);
-
-  if(m_pKeyboard->TriggerUp(VK_SPACE)) //play sound
-    m_pAudio->play(eSound::Grunt);
-  
-  if (m_pKeyboard->TriggerDown('O'))
-    m_pAudio->play(eSound::Oink);
-
-  if (m_pKeyboard->TriggerDown('P'))
-      m_pAudio->play(eSound::Piano);
-
-  if(m_pKeyboard->TriggerDown(VK_BACK)) //restart game
-    BeginGame(); //restart game
+	
 } //KeyboardHandler
 
 /// Draw the current frame rate to a hard-coded position in the window.
@@ -121,12 +99,8 @@ void CGame::DrawFrameRateText(){
 
 void CGame::RenderFrame(){
   m_pRenderer->BeginFrame(); //required before rendering
-  
-  m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
-  m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite
-  if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
-  DrawUI();
+  m_pUIManager->DrawUI();
   m_pRenderer->EndFrame(); //required after rendering
 } //RenderFrame
 
@@ -139,11 +113,6 @@ void CGame::RenderFrame(){
 void CGame::ProcessFrame(){
   KeyboardHandler(); //handle keyboard input
   m_pAudio->BeginFrame(); //notify audio player that frame has begun
-
-  m_pTimer->Tick([&](){ //all time-dependent function calls should go here
-    const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
-    m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
-  });
 
   RenderFrame(); //render a frame of animation
 } //ProcessFrame
