@@ -6,6 +6,7 @@
 #include "GameDefines.h"
 #include "SpriteRenderer.h"
 
+// Forward declarations
 class CUIManager;
 
 class CCommon {

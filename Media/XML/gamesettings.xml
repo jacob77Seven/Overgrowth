@@ -14,6 +14,8 @@
     <sprite name="background" file="background.png"/>
     <sprite name="textwheel" file="textwheel.png"/>
 	<sprite name="roguecharframe" file="roguecharframe.jpg"/>
+	<sprite name="warriorcharframe" file="warriorcharframe.jpg"/>
+	<sprite name="druidcharframe" file="druidcharframe.jpg"/>
   </sprites>
 
   <!-- sound -->

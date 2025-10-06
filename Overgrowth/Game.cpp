@@ -15,6 +15,7 @@
 
 CGame::~CGame(){
   delete m_pSpriteDesc;
+  delete m_pUIManager;
 } //destructor
 
 /// Create the renderer and the sprite descriptor load images and sounds, and
@@ -28,6 +29,8 @@ void CGame::Initialize(){
   LoadSounds(); //load the sounds for this game
 
   m_pUIManager->InitializeUI();
+
+  BeginGame();
 } //Initialize
 
 /// Load the specific images needed for this game. This is where `eSprite`
@@ -42,8 +45,11 @@ void CGame::LoadImages(){
 
   m_pRenderer->Load(eSprite::Background, "background"); 
   m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
-  m_pRenderer->Load(eSprite::TextWheel,  "pig"); 
+  m_pRenderer->Load(eSprite::TextWheel,  "pig");
+
   m_pRenderer->Load(eSprite::RogueCharFrame, "roguecharframe");
+  m_pRenderer->Load(eSprite::WarriorCharFrame, "warriorcharframe");
+  m_pRenderer->Load(eSprite::DruidCharFrame, "druidcharframe");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
@@ -73,6 +79,7 @@ void CGame::Release(){
 void CGame::BeginGame(){ 
   LevelImporter *lvl = new LevelImporter();
   lvl->ParseLevel("TEST_LEVEL");
+
   //printf("Hello?");
 } //BeginGame
 
