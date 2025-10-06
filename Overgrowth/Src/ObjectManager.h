@@ -9,6 +9,7 @@
 #include "BaseObjectManager.h"
 #include "Object.h"
 #include "Common.h"
+#include "CollisionInterface.h"
 
 /// \brief The object manager handles calling rendering and running 
 /// collision checks on all the game objects.
@@ -18,8 +19,11 @@ class OObjectManager :
     public OCommon
 {
 private:
-    //void BroadPhase(); ///< Broad phase collision detection and response.
+    void BroadPhase(); ///< Broad phase collision detection and response.
     //void NarrowPhase(OObject*, OObject*); ///< Narrow phase collision detection and response.
+    static std::vector<OObject*> OObjectList;
+    // OObject* c is the collided object from the static list.
+    const bool StaticCollisionCheck(BoundingSphere s, Vector2& norm, float& d, OObject* c) const;
 
 public:
     template <typename T>
@@ -28,8 +32,9 @@ public:
     // The Factory is now much simpler.
     static OObject* create(const Vector2& pos) {
         static_assert(std::is_base_of<OObject, T>::value, "T must be a descendant of OObject");
-        // We now use the 'new' keyword directly.
-        return new T(pos);
+        auto pObj = new T(pos);
+        OObjectList.push_back(pObj);
+        return pObj;
     }
 
     //virtual void draw(); ///< Draw all objects.

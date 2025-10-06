@@ -10,6 +10,7 @@
     <ClCompile Include="Src\BaseCharacter.cpp" />
     <ClCompile Include="Src\BaseAnimator.cpp" />
     <ClCompile Include="Src\common.cpp" />
+    <ClCompile Include="Src\TestCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -22,6 +23,8 @@
     <ClInclude Include="Src\BaseController.h" />
     <ClInclude Include="Src\BaseCharacter.h" />
     <ClInclude Include="Src\BaseAnimator.h" />
+    <ClInclude Include="Src\CollisionInterface.h" />
+    <ClInclude Include="Src\TestCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

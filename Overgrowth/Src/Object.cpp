@@ -40,6 +40,9 @@ OObject::OObject(const Vector2& Position)
 
 }
 
+void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+    printf("Object collision!\n");
+}
 
 //OObject::OObject()
 //{
@@ -84,18 +87,18 @@ void OObject::draw() {
 /// \param pObj Pointer to object being collided with (defaults to `nullptr`,
 /// which means collision with a wall).
 
-void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
-    if (m_bDead)return; //dead, bail out
-
-    const Vector2 vOverlap = d * norm; //overlap in direction of this
-    const bool bStatic = !pObj || pObj->m_bStatic; //whether other object is static
-
-    if (!m_bStatic && !bStatic) //both objects are dynamic
-        m_vPos += vOverlap / 2; //back off this object by half
-
-    else if (!m_bStatic && bStatic) //only this object is dynamic
-        m_vPos += vOverlap; //back off this object
-} //CollisionResponse
+//void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+//    if (m_bDead)return; //dead, bail out
+//
+//    const Vector2 vOverlap = d * norm; //overlap in direction of this
+//    const bool bStatic = !pObj || pObj->m_bStatic; //whether other object is static
+//
+//    if (!m_bStatic && !bStatic) //both objects are dynamic
+//        m_vPos += vOverlap / 2; //back off this object by half
+//
+//    else if (!m_bStatic && bStatic) //only this object is dynamic
+//        m_vPos += vOverlap; //back off this object
+//} //CollisionResponse
 
 /// Compute the view vector from the object orientation.
 /// \return The view vector.

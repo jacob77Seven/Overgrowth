@@ -171,6 +171,7 @@
     <ClCompile Include="Src\LevelImporter.cpp" />
     <ClCompile Include="Src\Object.cpp" />
     <ClCompile Include="Src\ObjectManager.cpp" />
+    <ClCompile Include="Src\TestCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -178,11 +179,13 @@
     <ClInclude Include="Src\BaseAnimator.h" />
     <ClInclude Include="Src\BaseCharacter.h" />
     <ClInclude Include="Src\BaseController.h" />
+    <ClInclude Include="Src\CollisionInterface.h" />
     <ClInclude Include="Src\Common.h" />
     <ClInclude Include="Src\json.hpp" />
     <ClInclude Include="Src\LevelImporter.h" />
     <ClInclude Include="Src\Object.h" />
     <ClInclude Include="Src\ObjectManager.h" />
+    <ClInclude Include="Src\TestCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />
