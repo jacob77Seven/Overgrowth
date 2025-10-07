@@ -47,6 +47,11 @@ OBaseCharacter::~OBaseCharacter() {
 void OBaseCharacter::move() {
 } //move
 
+void OBaseCharacter::tick(const float dt) {
+
+    OObject::tick(dt);
+}
+
 /// Ask the renderer to draw the sprite described in the sprite descriptor.
 /// Note that `OObject` is derived from `LBaseObject` which is inherited from
 /// `LSpriteDesc2D`. Therefore `LSpriteRenderer::Draw(const LSpriteDesc2D*)`

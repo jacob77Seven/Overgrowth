@@ -8,6 +8,7 @@
 #include "ComponentIncludes.h"
 #include "Src\TestCharacter.h"
 #include "shellapi.h"
+#include "Src\Common.h"
 
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
@@ -20,12 +21,14 @@ CGame::~CGame(){
 /// begin the game.
 
 void CGame::Initialize(){
-    m_pObjectManager = new OObjectManager; //set up the object manager;
     m_pRenderer = new LSpriteRenderer(eSpriteMode::Batched2D); 
     m_pRenderer->Initialize(eSprite::Size); 
+    OCommon::m_pRenderer = m_pRenderer;
     LoadImages(); //load images from xml file list
     LoadSounds(); //load the sounds for this game
     LoadLevels();
+    m_pObjectManager = new OObjectManager; //set up the object manager;
+    OCommon::m_pObjectManager = m_pObjectManager;
     BeginGame();
 } //Initialize
 
@@ -85,7 +88,10 @@ void CGame::BeginGame(){
     m_pSquareDesc->m_fXScale = 1.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
     m_pSquareDesc->m_fYScale = 1.0f;
 
-    TestCharacter* character = m_pObjectManager->create<TestCharacter>(Vector2(700, 700));
+    TestCharacter* character = m_pObjectManager->create<TestCharacter>(Vector2(m_vWinCenter.x, m_vWinCenter.y + 400));
+    TestCharacter* character2 = m_pObjectManager->create<TestCharacter>(Vector2(m_vWinCenter.x, m_vWinCenter.y - 400));
+    character2->speed = character2->speed * -1;
+    character2->SetObjectCollisionType(ECollisionType::Static);
 
     // Debug print tiles
     for (auto& t : LvlImporter->GetLevelData().tiles) {
@@ -154,8 +160,9 @@ void CGame::DrawFrameRateText(){
 
 void CGame::RenderFrame(){
     m_pRenderer->BeginFrame(); //required before rendering
-  
+    
     m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
+    m_pObjectManager->draw();
 
     for (auto* desc : m_vLevelSprites) { //draw level sprites
         m_pRenderer->Draw(desc);
@@ -183,6 +190,8 @@ void CGame::ProcessFrame(){
     m_pTimer->Tick([&](){ //all time-dependent function calls should go here
         const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
         m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
+        if (m_pObjectManager)
+            m_pObjectManager->tick(t);
     });
 
     RenderFrame(); //render a frame of animation

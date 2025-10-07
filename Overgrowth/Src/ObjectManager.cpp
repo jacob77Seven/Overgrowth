@@ -30,22 +30,70 @@ std::vector<OObject*> OObjectManager::OObjectList;
 /// edges and for all objects with another object, making sure that each pair
 /// of objects is processed only once.
 
+
+void OObjectManager::draw(){
+    //m_pTileManager->Draw(eSprite::Tile); //draw tiled background
+    
+    // if(m_bDrawAABBs)
+    //     m_pTileManager->DrawBoundingBoxes(eSprite::Line); //draw AABBs
+
+    for (OObject* pObj : OObjectList){ //for each object
+        //pObj->draw();
+        if (m_pRenderer && pObj)
+            //m_pRenderer->DrawBoundingBox(10, *pObj->GetBoundingBox());
+            m_pRenderer->DrawBoundingBox(eSprite::PinkSquare, *pObj->GetBoundingBox());
+            //m_pRenderer->DrawBoundingBox(12, BoundingBox(XMFLOAT3(m_vWinCenter.x, m_vWinCenter.y,0), XMFLOAT3(100, 100, 100)));
+            m_pRenderer->Draw(eSprite::Pig, pObj->GetWorldLocation());
+    } //for
+        //m_pRenderer->DrawBoundingBox(1, BoundingBox(XMFLOAT3(0, 0, 0), XMFLOAT3(500, 500, 500)));
+
+    // LBaseObjectManager::draw();
+} //draw
+
+void OObjectManager::tick(const float dt)
+{
+    BroadPhase();
+    for (OObject* pObj : OObjectList) { //for each object
+        //pObj->draw();
+        if (pObj)
+            pObj->tick(dt);
+    } //for
+}
+
+//void OObjectManager::BroadPhase() {
+//printf("COLLISON\n")
+
+
 void OObjectManager::BroadPhase() {
-    LBaseObjectManager::BroadPhase(); //collide with other objects
-
-    //collide with walls
-
+    for (auto i = OObjectList.begin(); i != OObjectList.end(); i++) { //for each object
+        // Skip static and non-collidable.
+        if ((*i)->GetObjectCollisionType() == ECollisionType::None || (*i)->GetObjectCollisionType() == ECollisionType::Static)
+            continue;
+            for (auto j = next(i); j != OObjectList.end(); j++) { //for each later object
+                if ((*i)->GetObjectCollisionType() == ECollisionType::None)
+                    continue;
+                NarrowPhase(*i, *j); //do narrow phase collision detection and response
+            }
+    }
     for (OObject* pObj : OObjectList) //for each object
         if (pObj->GetObjectCollisionType() == ECollisionType::Dynamic) { //for each Dynamic object, that is
             for (int i = 0; i < 2; i++) { //can collide with 2 edges simultaneously
                 Vector2 norm; //collision normal
                 float d = 0; //overlap distance
-                OObject* CollisionObject;
+                OObject* CollisionObject = nullptr;
                 BoundingSphere s(Vector3(pObj->GetWorldLocation()), pObj->GetRadius());
+                // Check for nearby objects.
+                // The radius sphere is going to let us check for nearby objects.
+                // Let's focus on nearby dynamic objects first.
+                // For all objects,
+                // if within boundingsphere.
+                // if dynamic
+                // narrow collision.
+                // else, static collision check maybe
 
                 if (StaticCollisionCheck(s, norm, d, CollisionObject)) { //collide with wall
                     ICollision& pObjCol = *pObj;
-                    pObjCol.CollisionResponse(norm, d, CollisionObject); //respond 
+                    pObjCol.Collision(norm, d, CollisionObject); //respond 
                 }
             } //for
         } //for
@@ -113,23 +161,31 @@ const bool OObjectManager::StaticCollisionCheck(
     } //for
 }
 
+OObjectManager::OObjectManager()
+{
+    this->m_pRenderer = OCommon::m_pRenderer;
+}
+
 /// Perform collision detection and response for a pair of objects. Makes
 /// use of the helper function Identify() because this function may be called
 /// with the objects in an arbitrary order.
 /// \param p0 Pointer to the first object.
 /// \param p1 Pointer to the second object.
 
-//void OObjectManager::NarrowPhase(OObject* p0, OObject* p1) {
-//    Vector2 vSep = p0->m_vPos - p1->m_vPos; //vector from *p1 to *p0
-//    const float d = p0->m_fRadius + p1->m_fRadius - vSep.Length(); //overlap
-//
-//    if (d > 0.0f) { //bounding circles overlap
-//        vSep.Normalize(); //vSep is now the collision normal
-//
-//        p0->CollisionResponse(vSep, d, p1); //this changes separation of objects
-//        p1->CollisionResponse(-vSep, d, p0); //same separation and opposite normal
-//    } //if
-//} //NarrowPhase
+void OObjectManager::NarrowPhase(OObject* p0, OObject* p1) {
+    Vector2 vSep = p0->GetWorldLocation() - p1->GetWorldLocation(); //vector from *p1 to *p0
+    const float d = p0->GetRadius() + p1->GetRadius() - vSep.Length(); //overlap
+
+    if (d > 0.0f) { //bounding circles overlap
+        vSep.Normalize(); //vSep is now the collision normal
+        ICollision& pObjCol = *p0;
+        ICollision& pObjCol1 = *p1;
+        //printf("COLLISON\n");
+        pObjCol.Collision(vSep, d, p1);
+        //pObjCol.CollisionResponse(vSep, d, p1); //this changes separation of objects
+        pObjCol1.Collision(-vSep, d, p0); //same separation and opposite normal
+    } //if
+} //NarrowPhase
 
 /// Create a bullet object and a flash particle effect. It is assumed that the
 /// object is round and that the bullet appears at the edge of the object in

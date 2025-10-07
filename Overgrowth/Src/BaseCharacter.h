@@ -37,7 +37,7 @@ public:
     OBaseCharacter(eSprite, const Vector2&);
     //virtual OObject(t, const Vector2&); ///< Constructor.
     virtual ~OBaseCharacter(); ///< Destructor.
-
+    virtual void tick(const float dt) override;
     void move(); ///< Move object.
     void draw(); ///< Draw object.
 }; //OObject

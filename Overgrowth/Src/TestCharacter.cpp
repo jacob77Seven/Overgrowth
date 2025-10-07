@@ -10,6 +10,7 @@ TestCharacter::TestCharacter(eSprite t, const Vector2& p)
 TestCharacter::TestCharacter(const Vector2& p)
     : OBaseCharacter(p)
 {
+    EObjectCollisionType = ECollisionType::Dynamic;
     printf("Test Character Created (Location only given)!!\n");
 }
 
@@ -17,6 +18,10 @@ TestCharacter::~TestCharacter() {
 
 }
 
+void TestCharacter::tick(const float dt) {
+    m_vPos.y -= dt * speed;
+    OBaseCharacter::tick(dt);
+}
 
 void TestCharacter::move() {
     if (!m_bDead && !m_bStatic)

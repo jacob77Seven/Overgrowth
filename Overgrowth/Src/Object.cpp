@@ -23,6 +23,11 @@
 //    m_fRadius = std::max(w, h) / 2; //bounding circle radius
 //} //constructor
 
+void OObject::tick(const float dt)
+{
+    m_BoundingBox.Center = XMFLOAT3(m_vPos.x, m_vPos.y, 0);
+}
+
 OObject::OObject(eSprite t, const Vector2& p)
     : LBaseObject(t, p)
 {
@@ -40,9 +45,28 @@ OObject::OObject(const Vector2& Position)
 
 }
 
-void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
-    printf("Object collision!\n");
+void OObject::Collision(const Vector2& norm, float d, OObject* pObj) {
+    printf("Collision at distance %f\n", d);
+    if (m_bDead || GetObjectCollisionType() == ECollisionType::None) 
+        return; //dead or no collision, bail out
+    
+    const Vector2 vOverlap = d * norm; //overlap in direction of this
+    const bool bStatic = !pObj || pObj->GetObjectCollisionType() == ECollisionType::Static; //whether other object is static
+    
+    if (GetObjectCollisionType() == ECollisionType::Dynamic && pObj->GetObjectCollisionType() == ECollisionType::Dynamic) //both objects are dynamic
+        m_vPos += vOverlap / 2; //back off this object by half
+    
+    else if (GetObjectCollisionType() == ECollisionType::Dynamic && pObj->GetObjectCollisionType() == ECollisionType::Static) //only this object is dynamic
+        m_vPos += vOverlap; //back off this object
 }
+
+//void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+//    printf("Object collision!\n");
+//}
+//void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+
+//} //CollisionResponse
+
 
 //OObject::OObject()
 //{

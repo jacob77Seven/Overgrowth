@@ -20,12 +20,13 @@ class OObjectManager :
 {
 private:
     void BroadPhase(); ///< Broad phase collision detection and response.
-    //void NarrowPhase(OObject*, OObject*); ///< Narrow phase collision detection and response.
+    void NarrowPhase(OObject*, OObject*); ///< Narrow phase collision detection and response.
     static std::vector<OObject*> OObjectList;
     // OObject* c is the collided object from the static list.
     const bool StaticCollisionCheck(BoundingSphere s, Vector2& norm, float& d, OObject* c) const;
-
+    
 public:
+    OObjectManager();
     template <typename T>
     // DEPRACATED
     //OObject* create(eSprite esp, const Vector2&); ///< Create new object.
@@ -36,8 +37,8 @@ public:
         OObjectList.push_back(pObj);
         return pObj;
     }
-
-    //virtual void draw(); ///< Draw all objects.
+    virtual void draw(); ///< Draw all objects.
+    virtual void tick(const float dt);
 
     //void FireGun(OObject*, eSprite); ///< Fire object's gun.
     //const size_t GetNumTurrets() const; ///< Get number of turrets in object list.
