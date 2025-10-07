@@ -8,37 +8,44 @@
 #include <string>
 
 using namespace tinyxml2;
+using namespace std;
 //using namespace std;
 namespace fs = std::filesystem;
 
-//std::cout << "Current working directory: " << fs::current_path() << std::endl;
+//cout << "Current working directory: " << fs::current_path() << endl;
 
 int main() {
-    const std::string xmlPath = "../Overgrowth/Media/XML/gamesettings.xml";
-    const std::string imagesDir = "../Overgrowth/Media/Images/";
+    cout << "Current working directory: " << fs::current_path() << endl;
+    //path to the proj folder
+    const string xmlPath = "../Overgrowth/Media/XML/gamesettings.xml";
+    const string imagesDir = "../Overgrowth/Media/Images/";
 
+    //tryin find bug
+    
+    cout << "XML Path: " << xmlPath << endl;
+    cout << "Images Directory" << imagesDir << endl;
 
     XMLDocument doc;
     XMLError err = doc.LoadFile(xmlPath.c_str());
     if (err != XML_SUCCESS) {
-        std::cerr << "Error: could not load " << xmlPath << std::endl;
+        cerr << "Error: could not load " << xmlPath << endl;
         return 1;
     }
 
     XMLElement* root = doc.RootElement();
     if (!root) {
-        std::cerr << "Error: XML has no root element\n";
+        cerr << "Error: XML has no root element\n";
         return 1;
     }
 
     XMLElement* spritesElem = root->FirstChildElement("sprites");
     if (!spritesElem) {
-        std::cerr << "Error: No <sprites> element found\n";
+        cerr << "Error: No <sprites> element found\n";
         return 1;
     }
 
     // Collect all existing sprite file names from XML
-    std::unordered_set<std::string> xmlSprites;
+    unordered_set<string> xmlSprites;
     for (XMLElement* spr = spritesElem->FirstChildElement("sprite"); spr; spr = spr->NextSiblingElement("sprite")) {
         const char* fileAttr = spr->Attribute("file");
         if (fileAttr)
@@ -50,10 +57,10 @@ int main() {
         if (!entry.is_regular_file()) continue;
 
         const auto& path = entry.path();
-        std::string ext = path.extension().string();
+        string ext = path.extension().string();
         if (ext == ".png" || ext == ".jpg") {
-            std::string fileName = path.filename().string();
-            std::string name = path.stem().string();
+            string fileName = path.filename().string();
+            string name = path.stem().string();
 
             if (xmlSprites.find(fileName) == xmlSprites.end()) {
                 // Add new sprite node
@@ -61,7 +68,7 @@ int main() {
                 newSprite->SetAttribute("name", name.c_str());
                 newSprite->SetAttribute("file", fileName.c_str());
                 spritesElem->InsertEndChild(newSprite);
-                std::cout << "Added sprite: " << fileName << std::endl;
+                cout << "Added sprite: " << fileName << endl;
             }
         }
     }
@@ -73,7 +80,7 @@ int main() {
         if (fileAttr) {
             fs::path fullPath = fs::path(imagesDir) / fileAttr;
             if (!fs::exists(fullPath)) {
-                std::cout << "Removed missing sprite: " << fileAttr << std::endl;
+                cout << "Removed missing sprite: " << fileAttr << endl;
                 spritesElem->DeleteChild(spr);
             }
         }
@@ -84,9 +91,9 @@ int main() {
     fs::copy_file(xmlPath, xmlPath + ".bak", fs::copy_options::overwrite_existing);
 
     if (doc.SaveFile(xmlPath.c_str()) == XML_SUCCESS)
-        std::cout << "gamesettings.xml updated successfully.\n";
+        cout << "gamesettings.xml updated successfully.\n";
     else
-        std::cerr << "Error saving gamesettings.xml\n";
+        cerr << "Error saving gamesettings.xml\n";
 
     return 0;
 }
