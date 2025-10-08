@@ -6,19 +6,17 @@
 #include <iostream>
 #include <unordered_set>
 #include <string>
-#include <windows.h>
 
 using namespace tinyxml2;
-//using namespace std;
+using namespace std;
 namespace fs = std::filesystem;
 
 //std::cout << "Current working directory: " << fs::current_path() << std::endl;
 
 int main() {
-    cout << "Current working directory: " << fs::current_path() << endl;
-    //path to the proj folder
-    const string xmlPath = "../Overgrowth/Media/XML/gamesettings.xml";
-    const string imagesDir = "../Overgrowth/Media/Images/";
+    
+    const string xmlPath = "../OvergrowthFolder/Media/XML/gamesettings.xml";
+    const string imagesDir = "../OvergrowthFolder/Media/Images/";
 
     //tryin find bug
     
@@ -94,11 +92,6 @@ int main() {
         cout << "gamesettings.xml updated successfully.\n";
     else
         cerr << "Error saving gamesettings.xml\n";
-
-    } catch (const std::exception& e) {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
-
 
     return 0;
 }
