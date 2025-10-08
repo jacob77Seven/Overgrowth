@@ -10,7 +10,6 @@
 #include "SpriteRenderer.h"
 #include "Common.h"
 #include "UIManager.h"
-#include "Timer.h"
 
 /// \brief The game class.
 ///
@@ -38,8 +37,6 @@ class CGame:
     void KeyboardHandler(); ///< The keyboard handler.
     void RenderFrame(); ///< Render an animation frame.
     void DrawFrameRateText(); ///< Draw frame rate text to screen.
-
-    LTimer m_pSwitchCharTimer;
 
   public:
     ~CGame(); ///< Destructor.

@@ -89,14 +89,16 @@ void CGame::BeginGame(){
 void CGame::KeyboardHandler(){
   m_pKeyboard->GetState(); //get current keyboard state 
 
-  if (m_pKeyboard->TriggerDown('1')) {
-	  m_pUIManager->ActiveCharFrame((UINT)eSprite::RogueCharFrame);
-  }
-  else if (m_pKeyboard->TriggerDown('2')) {
-	  m_pUIManager->ActiveCharFrame((UINT)eSprite::WarriorCharFrame);
-  }
-  else if (m_pKeyboard->TriggerDown('3')) {
-	  m_pUIManager->ActiveCharFrame((UINT)eSprite::DruidCharFrame);
+  if (m_pTimer->GetTime() - m_pUIManager->GetCharSwitchTime() > m_pUIManager->GetCharSwitchCooldown()) {
+	  if (m_pKeyboard->TriggerDown('1')) {
+		  m_pUIManager->ActiveCharFrame((UINT)eSprite::RogueCharFrame);
+	  }
+	  else if (m_pKeyboard->TriggerDown('2')) {
+		  m_pUIManager->ActiveCharFrame((UINT)eSprite::WarriorCharFrame);
+	  }
+	  else if (m_pKeyboard->TriggerDown('3')) {
+		  m_pUIManager->ActiveCharFrame((UINT)eSprite::DruidCharFrame);
+	  }
   }
 } //KeyboardHandler
 
@@ -130,6 +132,9 @@ void CGame::RenderFrame(){
 void CGame::ProcessFrame(){
   KeyboardHandler(); //handle keyboard input
   m_pAudio->BeginFrame(); //notify audio player that frame has begun
+
+  m_pTimer->Tick([&]() {
+	});
 
   RenderFrame(); //render a frame of animation
 } //ProcessFrame
