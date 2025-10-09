@@ -168,6 +168,7 @@
     <ClCompile Include="Src\LevelImporter.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UIWidgetCharFrame.cpp" />
+    <ClCompile Include="UIWidgetHealthbar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Src\LevelImporter.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIWidgetCharFrame.h" />
+    <ClInclude Include="UIWidgetHealthbar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

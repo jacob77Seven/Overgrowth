@@ -20,14 +20,6 @@ public:
 	void CalcTargetScale(float m_fTargetHeight);
 
 	void SetSprite(UINT index, const LSpriteRenderer* m_pRenderer);
-	void SetSpritePosX(float pos) { m_pSprite.m_vPos.x = pos; };
-	void SetSpritePosY(float pos) { m_pSprite.m_vPos.y = pos; };
-	void SetSpriteScaleX(float scale) { m_pSprite.m_fXScale = scale; };
-	void SetSpriteScaleY(float scale) { m_pSprite.m_fYScale = scale; };
 
 	LSpriteDesc2D& GetSprite() { return m_pSprite; };
-	float GetSpriteSizeX() { return m_fSpriteSizeX; };
-	float GetSpriteSizeY() { return m_fSpriteSizeY; };
-	float GetSpriteScaleX() { return m_pSprite.m_fXScale; };
-	float GetSpriteScaleY() { return m_pSprite.m_fYScale; };
 };
