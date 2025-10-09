@@ -50,6 +50,8 @@ void CGame::LoadImages(){
   m_pRenderer->Load(eSprite::RogueCharFrame, "roguecharframe");
   m_pRenderer->Load(eSprite::WarriorCharFrame, "warriorcharframe");
   m_pRenderer->Load(eSprite::DruidCharFrame, "druidcharframe");
+  m_pRenderer->Load(eSprite::HealthbarBackground, "healthbarbackground");
+  m_pRenderer->Load(eSprite::Healthbar, "healthbar");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
@@ -91,13 +93,13 @@ void CGame::KeyboardHandler(){
 
   if (m_pTimer->GetTime() - m_pUIManager->GetCharSwitchTime() > m_pUIManager->GetCharSwitchCooldown()) {
 	  if (m_pKeyboard->TriggerDown('1')) {
-		  m_pUIManager->ActiveCharFrame((UINT)eSprite::RogueCharFrame);
+		  m_pUIManager->SetActiveCharFrame((UINT)eSprite::RogueCharFrame);
 	  }
 	  else if (m_pKeyboard->TriggerDown('2')) {
-		  m_pUIManager->ActiveCharFrame((UINT)eSprite::WarriorCharFrame);
+		  m_pUIManager->SetActiveCharFrame((UINT)eSprite::WarriorCharFrame);
 	  }
 	  else if (m_pKeyboard->TriggerDown('3')) {
-		  m_pUIManager->ActiveCharFrame((UINT)eSprite::DruidCharFrame);
+		  m_pUIManager->SetActiveCharFrame((UINT)eSprite::DruidCharFrame);
 	  }
   }
 } //KeyboardHandler

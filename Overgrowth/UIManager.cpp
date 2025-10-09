@@ -5,118 +5,66 @@
 #include "ComponentIncludes.h"
 
 void CUIManager::InitializeUI() {
-	m_pRogueFrame.m_nSpriteIndex = (UINT)eSprite::RogueCharFrame;
-	m_pWarriorFrame.m_nSpriteIndex = (UINT)eSprite::WarriorCharFrame;
-	m_pDruidFrame.m_nSpriteIndex = (UINT)eSprite::DruidCharFrame;
+	m_pRogueFrame.SetSprite((UINT)eSprite::RogueCharFrame, m_pRenderer);
+	m_pWarrior.SetSprite((UINT)eSprite::WarriorCharFrame, m_pRenderer);
+	m_pDruid.SetSprite((UINT)eSprite::DruidCharFrame, m_pRenderer);
 
-	m_pRenderer->GetSize(eSprite::RogueCharFrame, m_vRogueSpriteSize.x, m_vRogueSpriteSize.y);
-	m_pRenderer->GetSize(eSprite::WarriorCharFrame, m_vWarriorSpriteSize.x, m_vWarriorSpriteSize.y);
-	m_pRenderer->GetSize(eSprite::DruidCharFrame, m_vDruidSpriteSize.x, m_vDruidSpriteSize.y);
-
-	ActiveCharFrame((UINT)eSprite::RogueCharFrame);
+	SetActiveCharFrame((UINT)eSprite::RogueCharFrame);
 
 	m_fCharSwitchTime = -1.0f;
 }
 
-void CUIManager::CalcTargetPos() {
-	m_vTargetRogueFramePos.x = m_vRogueSpriteSize.x * m_vTargetRogueFrameScale.x / 2;
-	m_vTargetRogueFramePos.y = m_nWinHeight - (m_vRogueSpriteSize.y * m_vTargetRogueFrameScale.y / 2);
-
-	m_vTargetWarriorFramePos.x = m_vWarriorSpriteSize.x * m_vTargetWarriorFrameScale.x / 2;
-	m_vTargetWarriorFramePos.y = m_vTargetRogueFramePos.y - m_vTargetRogueFramePos.x - m_fOffset - (m_vWarriorSpriteSize.y * m_vTargetWarriorFrameScale.y / 2);
-
-	m_vTargetDruidFramePos.x = m_vDruidSpriteSize.x * m_vTargetDruidFrameScale.x / 2;
-	m_vTargetDruidFramePos.y = m_vTargetWarriorFramePos.y - m_vTargetWarriorFramePos.x - m_fOffset - (m_vDruidSpriteSize.y * m_vTargetDruidFrameScale.y / 2);
+void CUIManager::CalcFramesTargetPos() {
+	m_pRogueFrame.CalcTargetPos(m_nWinHeight);
+	m_pWarrior.CalcTargetPos(m_pRogueFrame.m_fTargetPosY - m_pRogueFrame.m_fTargetPosX - m_fOffset);
+	m_pDruid.CalcTargetPos(m_pWarrior.m_fTargetPosY - m_pWarrior.m_fTargetPosX - m_fOffset);
 
 	m_fCharSwitchTime = m_pTimer->GetTime();
 }
 
-void CUIManager::MoveCharFrames() {
+void CUIManager::MoveFrames() {
 	float m_fElapsedTime = m_pTimer->GetTime() - m_fCharSwitchTime;
 
 	if (m_fElapsedTime > m_fCharSwitchCooldown) {
-		m_pRogueFrame.m_vPos = m_vTargetRogueFramePos;
-		m_pWarriorFrame.m_vPos = m_vTargetWarriorFramePos;
-		m_pDruidFrame.m_vPos = m_vTargetDruidFramePos;
-
-		m_pRogueFrame.m_fXScale = m_vTargetRogueFrameScale.x;
-		m_pRogueFrame.m_fYScale = m_vTargetRogueFrameScale.y;
-
-		m_pWarriorFrame.m_fXScale = m_vTargetWarriorFrameScale.x;
-		m_pWarriorFrame.m_fYScale = m_vTargetWarriorFrameScale.y;
-
-		m_pDruidFrame.m_fXScale = m_vTargetDruidFrameScale.x;
-		m_pDruidFrame.m_fYScale = m_vTargetDruidFrameScale.y;
+		m_pRogueFrame.SetToTargets();
+		m_pWarrior.SetToTargets();
+		m_pDruid.SetToTargets();
 		return;
 	}
 
 	float t = m_fElapsedTime / m_fCharSwitchCooldown;
 
-	m_pRogueFrame.m_vPos.x = m_pRogueFrame.m_vPos.x + (m_vTargetRogueFramePos.x - m_pRogueFrame.m_vPos.x) * t;
-	m_pRogueFrame.m_vPos.y = m_pRogueFrame.m_vPos.y + (m_vTargetRogueFramePos.y - m_pRogueFrame.m_vPos.y) * t;
-	m_pRogueFrame.m_fXScale = m_pRogueFrame.m_fXScale + (m_vTargetRogueFrameScale.x - m_pRogueFrame.m_fXScale) * t;
-	m_pRogueFrame.m_fYScale = m_pRogueFrame.m_fYScale + (m_vTargetRogueFrameScale.y - m_pRogueFrame.m_fYScale) * t;
-
-	m_pWarriorFrame.m_vPos.x = m_pWarriorFrame.m_vPos.x + (m_vTargetWarriorFramePos.x - m_pWarriorFrame.m_vPos.x) * t;
-	m_pWarriorFrame.m_vPos.y = m_pWarriorFrame.m_vPos.y + (m_vTargetWarriorFramePos.y - m_pWarriorFrame.m_vPos.y) * t;
-	m_pWarriorFrame.m_fXScale = m_pWarriorFrame.m_fXScale + (m_vTargetWarriorFrameScale.x - m_pWarriorFrame.m_fXScale) * t;
-	m_pWarriorFrame.m_fYScale = m_pWarriorFrame.m_fYScale + (m_vTargetWarriorFrameScale.y - m_pWarriorFrame.m_fYScale) * t;
-
-	m_pDruidFrame.m_vPos.x = m_pDruidFrame.m_vPos.x + (m_vTargetDruidFramePos.x - m_pDruidFrame.m_vPos.x) * t;
-	m_pDruidFrame.m_vPos.y = m_pDruidFrame.m_vPos.y + (m_vTargetDruidFramePos.y - m_pDruidFrame.m_vPos.y) * t;
-	m_pDruidFrame.m_fXScale = m_pDruidFrame.m_fXScale + (m_vTargetDruidFrameScale.x - m_pDruidFrame.m_fXScale) * t;
-	m_pDruidFrame.m_fYScale = m_pDruidFrame.m_fYScale + (m_vTargetDruidFrameScale.y - m_pDruidFrame.m_fYScale) * t;
+	m_pRogueFrame.InterpToTargets(t);
+	m_pWarrior.InterpToTargets(t);
+	m_pDruid.InterpToTargets(t);
 }
 
-void CUIManager::ActiveCharFrame(UINT c) {
+void CUIManager::SetActiveCharFrame(UINT c) {
 	switch (c) {
 		case (UINT)eSprite::RogueCharFrame:
-			m_vTargetRogueFrameScale.x = 1 / (m_vRogueSpriteSize.x / m_fActiveHeight);
-			m_vTargetRogueFrameScale.y = 1 / (m_vRogueSpriteSize.y / m_fActiveHeight);
-			
-			InactiveCharFrame((UINT)eSprite::WarriorCharFrame);
-			InactiveCharFrame((UINT)eSprite::DruidCharFrame);
+			m_pRogueFrame.CalcTargetScale(m_fActiveHeight);
+			m_pWarrior.CalcTargetScale(m_fInactiveHeight);
+			m_pDruid.CalcTargetScale(m_fInactiveHeight);
 			break;
 		case (UINT)eSprite::WarriorCharFrame:
-			m_vTargetWarriorFrameScale.x = 1 / (m_vWarriorSpriteSize.x / m_fActiveHeight);
-			m_vTargetWarriorFrameScale.y = 1 / (m_vWarriorSpriteSize.y / m_fActiveHeight);
-
-			InactiveCharFrame((UINT)eSprite::RogueCharFrame);
-			InactiveCharFrame((UINT)eSprite::DruidCharFrame);
+			m_pRogueFrame.CalcTargetScale(m_fInactiveHeight);
+			m_pWarrior.CalcTargetScale(m_fActiveHeight);
+			m_pDruid.CalcTargetScale(m_fInactiveHeight);
 			break;
 		case (UINT)eSprite::DruidCharFrame:
-			m_vTargetDruidFrameScale.x = 1 / (m_vDruidSpriteSize.x / m_fActiveHeight);
-			m_vTargetDruidFrameScale.y = 1 / (m_vDruidSpriteSize.y / m_fActiveHeight);
-
-			InactiveCharFrame((UINT)eSprite::RogueCharFrame);
-			InactiveCharFrame((UINT)eSprite::WarriorCharFrame);
+			m_pRogueFrame.CalcTargetScale(m_fInactiveHeight);
+			m_pWarrior.CalcTargetScale(m_fInactiveHeight);
+			m_pDruid.CalcTargetScale(m_fActiveHeight);
 			break;
 	}
 
-	CalcTargetPos();
-}
-
-void CUIManager::InactiveCharFrame(UINT c) {
-	switch (c) {
-		case (UINT)eSprite::RogueCharFrame:
-			m_vTargetRogueFrameScale.x = 1 / (m_vRogueSpriteSize.x / m_fInactiveHeight);
-			m_vTargetRogueFrameScale.y = 1 / (m_vRogueSpriteSize.y / m_fInactiveHeight);
-			break;
-		case (UINT)eSprite::WarriorCharFrame:
-			m_vTargetWarriorFrameScale.x = 1 / (m_vWarriorSpriteSize.x / m_fInactiveHeight);
-			m_vTargetWarriorFrameScale.y = 1 / (m_vWarriorSpriteSize.y / m_fInactiveHeight);
-			break;
-		case (UINT)eSprite::DruidCharFrame:
-			m_vTargetDruidFrameScale.x = 1 / (m_vDruidSpriteSize.x / m_fInactiveHeight);
-			m_vTargetDruidFrameScale.y = 1 / (m_vDruidSpriteSize.y / m_fInactiveHeight);
-			break;
-	}
+	CalcFramesTargetPos();
 }
 
 void CUIManager::DrawUI() {
-	MoveCharFrames();
+	MoveFrames();
 
-	m_pRenderer->Draw(&m_pRogueFrame);
-	m_pRenderer->Draw(&m_pWarriorFrame);
-	m_pRenderer->Draw(&m_pDruidFrame);
+	m_pRenderer->Draw(&m_pRogueFrame.GetSprite());
+	m_pRenderer->Draw(&m_pWarrior.GetSprite());
+	m_pRenderer->Draw(&m_pDruid.GetSprite());
 }

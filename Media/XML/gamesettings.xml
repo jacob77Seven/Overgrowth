@@ -16,6 +16,8 @@
 	<sprite name="roguecharframe" file="roguecharframe.jpg"/>
 	<sprite name="warriorcharframe" file="warriorcharframe.jpg"/>
 	<sprite name="druidcharframe" file="druidcharframe.jpg"/>
+	  <sprite name="healthbarbackground" file="healthbarbackground.png"/>
+	  <sprite name="healthbar" file="healthbar.png"/>
   </sprites>
 
   <!-- sound -->
