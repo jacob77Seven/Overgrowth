@@ -13,7 +13,14 @@
 	<sprite name="background" file="background.png"/>
 	<sprite name="textwheel" file="textwheel.png"/>
 	<sprite name="pig" file="pig.png"/>
-	<sprite name="pinksquare" file="PinkSquare.png"/>
+  <sprite name="pink_sheet" file="pinksquare.png" frames="4" />
+  <!-- Define a sprite that uses regions within that sheet -->
+  <sprite name="pinksquare" sheet="pink_sheet" frames="4">
+    <frame index="0" left="0"  top="0"  right="8"  bottom="8"  />
+    <frame index="1" left="8"  top="0"  right="16" bottom="8"  />
+    <frame index="2" left="16" top="0"  right="24" bottom="8"  />
+    <frame index="3" left="24" top="0"  right="32" bottom="8"  />
+  </sprite>
   </sprites>
 
   <!-- sound -->

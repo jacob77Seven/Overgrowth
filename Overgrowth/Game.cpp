@@ -45,6 +45,8 @@ void CGame::LoadImages(){
     m_pRenderer->Load(eSprite::Background, "background"); 
     m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
     m_pRenderer->Load(eSprite::Pig,  "pig"); 
+    m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
+
     m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
     m_pRenderer->EndResourceUpload();
@@ -85,13 +87,14 @@ void CGame::BeginGame(){
     delete m_pSquareDesc;
     m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter); // SCALING BELOW IS JUST FOR TESTING
-    m_pSquareDesc->m_fXScale = 1.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
-    m_pSquareDesc->m_fYScale = 1.0f;
+    m_pSquareDesc->m_nCurrentFrame = 0;
+    m_pSquareDesc->m_fXScale = 50.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
+    m_pSquareDesc->m_fYScale = 50.0f;
 
     TestCharacter* character = m_pObjectManager->create<TestCharacter>(Vector2(m_vWinCenter.x, m_vWinCenter.y + 400));
     TestCharacter* character2 = m_pObjectManager->create<TestCharacter>(Vector2(m_vWinCenter.x, m_vWinCenter.y - 400));
-    character2->speed = character2->speed * -1;
-    character2->SetObjectCollisionType(ECollisionType::Static);
+    character2->speed = character2->speed * -2;
+    character2->SetObjectCollisionType(ECollisionType::Dynamic);
 
     // Debug print tiles
     for (auto& t : LvlImporter->GetLevelData().tiles) {
@@ -105,6 +108,7 @@ void CGame::BeginGame(){
     // Build sprite descriptors for each tile
     for (auto& t : LvlImporter->GetLevelData().tiles) {
         auto* desc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, Vector2((float)t.posX, (float)t.posY));
+        desc->m_nCurrentFrame = 1;
         m_vLevelSprites.push_back(desc);
     }
 } //BeginGame
