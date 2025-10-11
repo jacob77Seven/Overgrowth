@@ -12,23 +12,7 @@
 #include <iostream>
 #include <type_traits>
 
-std::vector<OObject*> OObjectManager::OObjectList;
-
-
-/// Draw the tiled background and the objects in the object list.
-
-//void OObjectManager::draw() {
-//    m_pTileManager->Draw(eSprite::Tile); //draw tiled background
-//
-//    if (m_bDrawAABBs)
-//        m_pTileManager->DrawBoundingBoxes(eSprite::Line); //draw AABBs
-//
-//    LBaseObjectManager::draw();
-//} //draw
-
-/// Perform collision detection and response for each object with the world
-/// edges and for all objects with another object, making sure that each pair
-/// of objects is processed only once.
+std::vector<std::shared_ptr<OObject>> OObjectManager::OObjectList;
 
 
 void OObjectManager::draw(){
@@ -37,7 +21,7 @@ void OObjectManager::draw(){
     // if(m_bDrawAABBs)
     //     m_pTileManager->DrawBoundingBoxes(eSprite::Line); //draw AABBs
 
-    for (OObject* pObj : OObjectList){ //for each object
+    for (std::shared_ptr<OObject> pObj : OObjectList){ //for each object
         //pObj->draw();
         if (m_pRenderer && pObj)
             //m_pRenderer->DrawBoundingBox(10, *pObj->GetBoundingBox());
@@ -53,7 +37,7 @@ void OObjectManager::draw(){
 void OObjectManager::tick(const float dt)
 {
     BroadPhase();
-    for (OObject* pObj : OObjectList) { //for each object
+    for (std::shared_ptr<OObject> pObj : OObjectList) { //for each object
         //pObj->draw();
         if (pObj)
             pObj->tick(dt);
@@ -75,12 +59,12 @@ void OObjectManager::BroadPhase() {
                 NarrowPhase(*i, *j); //do narrow phase collision detection and response
             }
     }
-    for (OObject* pObj : OObjectList) //for each object
+    for (std::shared_ptr<OObject> pObj : OObjectList) //for each object
         if (pObj->GetObjectCollisionType() == ECollisionType::Dynamic) { //for each Dynamic object, that is
             for (int i = 0; i < 2; i++) { //can collide with 2 edges simultaneously
                 Vector2 norm; //collision normal
                 float d = 0; //overlap distance
-                OObject* CollisionObject = nullptr;
+                std::shared_ptr<OObject> CollisionObject = nullptr;
                 BoundingSphere s(Vector3(pObj->GetWorldLocation()), pObj->GetRadius());
                 // Check for nearby objects.
                 // The radius sphere is going to let us check for nearby objects.
@@ -100,11 +84,11 @@ void OObjectManager::BroadPhase() {
 } //BroadPhase
 
 const bool OObjectManager::StaticCollisionCheck(
-    BoundingSphere s, Vector2& norm, float& d, OObject* c) const
+    BoundingSphere s, Vector2& norm, float& d, std::shared_ptr<OObject> c) const
 {
     bool hit = false; //return result, true if there is a collision with a wall
     return false;
-    for (OObject* pObj : OObjectList){ //for each object
+    for (std::shared_ptr<OObject> pObj : OObjectList){ //for each object
         if (pObj->GetObjectCollisionType() == ECollisionType::Dynamic) // skip Dynamic objects
             continue;
         const BoundingBox& aabb = *(pObj->GetBoundingBox());
@@ -172,7 +156,7 @@ OObjectManager::OObjectManager()
 /// \param p0 Pointer to the first object.
 /// \param p1 Pointer to the second object.
 
-void OObjectManager::NarrowPhase(OObject* p0, OObject* p1) {
+void OObjectManager::NarrowPhase(std::shared_ptr<OObject> p0, std::shared_ptr<OObject> p1) {
     Vector2 vSep = p0->GetWorldLocation() - p1->GetWorldLocation(); //vector from *p1 to *p0
     const float d = p0->GetRadius() + p1->GetRadius() - vSep.Length(); //overlap
 
@@ -186,60 +170,3 @@ void OObjectManager::NarrowPhase(OObject* p0, OObject* p1) {
         pObjCol1.Collision(-vSep, d, p0); //same separation and opposite normal
     } //if
 } //NarrowPhase
-
-/// Create a bullet object and a flash particle effect. It is assumed that the
-/// object is round and that the bullet appears at the edge of the object in
-/// the direction that it is facing and continues moving in that direction.
-/// \param pObj Pointer to an object.
-/// \param bullet Sprite type of bullet.
-
-
-// DEPRECATED
-//void OObjectManager::FireGun(OObject* pObj, eSprite bullet) {
-//    m_pAudio->play(eSound::Gun);
-//
-//    const Vector2 view = pObj->GetViewVector(); //firing object view vector
-//    const float w0 = 0.5f * m_pRenderer->GetWidth(pObj->m_nSpriteIndex); //firing object width
-//    const float w1 = m_pRenderer->GetWidth(bullet); //bullet width
-//    const Vector2 pos = pObj->m_vPos + (w0 + w1) * view; //bullet initial position
-//
-//    //create bullet object
-//
-//    OObject* pBullet = create(bullet, pos); //create bullet
-//
-//    const Vector2 norm = VectorNormalCC(view); //normal to view direction
-//    const float m = 2.0f * m_pRandom->randf() - 1.0f; //random deflection magnitude
-//    const Vector2 deflection = 0.01f * m * norm; //random deflection
-//
-//    pBullet->m_vVelocity = pObj->m_vVelocity + 500.0f * (view + deflection);
-//    pBullet->m_fRoll = pObj->m_fRoll;
-//
-//    //particle effect for gun fire
-//
-//    LParticleDesc2D d;
-//
-//    d.m_nSpriteIndex = (UINT)eSprite::Spark;
-//    d.m_vPos = pos;
-//    d.m_vVel = pObj->m_fSpeed * view;
-//    d.m_fLifeSpan = 0.25f;
-//    d.m_fScaleInFrac = 0.4f;
-//    d.m_fFadeOutFrac = 0.5f;
-//    d.m_fMaxScale = 0.5f;
-//    d.m_f4Tint = XMFLOAT4(Colors::Yellow);
-//
-//    m_pParticleEngine->create(d);
-//} //FireGun
-
-/// Reader function for the number of turrets. 
-/// \return Number of turrets in the object list.
-
-// DEPRECATED
-//const size_t OObjectManager::GetNumTurrets() const {
-//    size_t n = 0; //number of turrets
-//
-//    for (OObject* pObj : m_stdObjectList) //for each object
-//        if (pObj->m_nSpriteIndex == (UINT)eSprite::Turret)
-//            n++;
-//
-//    return n;
-//} //GetNumTurrets

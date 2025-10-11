@@ -48,7 +48,7 @@ protected:
     bool m_bStatic = true; ///< Is static (does not move).
     bool m_bIsTarget = true; ///< Is a target.
     bool m_bIsBullet = false; ///< Is a bullet.
-    virtual void Collision(const Vector2& norm, float d, OObject* pObj) override;
+    virtual void Collision(const Vector2& norm, float d, std::shared_ptr<OObject> pObj) override;
     LEventTimer* m_pGunFireEvent = nullptr; ///< Gun fire event.
     BoundingBox m_BoundingBox = BoundingBox(XMFLOAT3(m_vPos.x, m_vPos.y, 0), XMFLOAT3(100, 100, 100));
     //const Vector2 GetViewVector() const; ///< Compute view vector.

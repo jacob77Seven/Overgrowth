@@ -45,7 +45,7 @@ OObject::OObject(const Vector2& Position)
 
 }
 
-void OObject::Collision(const Vector2& norm, float d, OObject* pObj) {
+void OObject::Collision(const Vector2& norm, float d, std::shared_ptr<OObject> pObj) {
     printf("Collision at distance %f\n", d);
     if (m_bDead || GetObjectCollisionType() == ECollisionType::None) 
         return; //dead or no collision, bail out

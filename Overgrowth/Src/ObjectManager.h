@@ -10,6 +10,8 @@
 #include "Object.h"
 #include "Common.h"
 #include "CollisionInterface.h"
+#include <memory>
+#include <type_traits>
 
 /// \brief The object manager handles calling rendering and running 
 /// collision checks on all the game objects.
@@ -20,10 +22,10 @@ class OObjectManager :
 {
 private:
     void BroadPhase(); ///< Broad phase collision detection and response.
-    void NarrowPhase(OObject*, OObject*); ///< Narrow phase collision detection and response.
-    static std::vector<OObject*> OObjectList;
+    void NarrowPhase(std::shared_ptr<OObject>, std::shared_ptr<OObject>); ///< Narrow phase collision detection and response.
+    static std::vector<std::shared_ptr<OObject>> OObjectList;
     // OObject* c is the collided object from the static list.
-    const bool StaticCollisionCheck(BoundingSphere s, Vector2& norm, float& d, OObject* c) const;
+    const bool StaticCollisionCheck(BoundingSphere s, Vector2& norm, float& d, std::shared_ptr<OObject> c) const;
     
 public:
     OObjectManager();
@@ -31,9 +33,9 @@ public:
     // DEPRACATED
     //OObject* create(eSprite esp, const Vector2&); ///< Create new object.
     // The Factory is now much simpler.
-    static T* create(const Vector2& pos) {
+    static std::shared_ptr<T> create(const Vector2& pos) {
         static_assert(std::is_base_of<OObject, T>::value, "T must be a descendant of OObject");
-        T* pObj = new T(pos);
+        std::shared_ptr<T> pObj = std::make_shared<T>(pos);
         OObjectList.push_back(pObj);
         return pObj;
     }
