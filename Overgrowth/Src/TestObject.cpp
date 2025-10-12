@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseCharacter.h"
+#include "TestObject.h"
 
 /// \file Object.cpp
 /// \brief Code for the game object class OBaseCharacter
@@ -25,28 +25,29 @@
 //    m_fRadius = std::max(w, h) / 2; //bounding circle radius
 //} //constructor
 
-void OBaseCharacter::BeginPlay()
+void TestObject::BeginPlay()
 {
     OObject::BeginPlay(); // Call to parent class.
     printf("Character Begin Play!");
 }
 
-OBaseCharacter::OBaseCharacter(const Vector3& p)
+TestObject::TestObject(const Vector3& p)
     : OObject(p)
 {
     printf("OBaseCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
 }
 
-OBaseCharacter::~OBaseCharacter() {
-    OObject::~OObject(); // Call to parent destructor.
-} //destructor
+//TestObject::~TestObject() {
+//    OObject::~OObject(); // Call to parent destructor.
+//} //destructor
 
 
-void OBaseCharacter::OnDestroy() {
+void TestObject::OnDestroy() {
     OObject::OnDestroy();
+    printf("Test object has been Destroyed.\n");
 }
 
-void OBaseCharacter::tick(const float dt) {
+void TestObject::tick(const float dt) {
 
     OObject::tick(dt);
 }
@@ -58,7 +59,7 @@ void OBaseCharacter::tick(const float dt) {
 /// `OObject*` to `LSpriteDesc2D*`, effectively drawing the object from its
 /// sprite descriptor.
 
-void OBaseCharacter::draw() {
+void TestObject::draw() {
     m_pRenderer->Draw(this);
 } //draw
 
@@ -69,7 +70,7 @@ void OBaseCharacter::draw() {
 /// \param pObj Pointer to object being collided with (defaults to `nullptr`,
 /// which means collision with a wall).
 
-void OBaseCharacter::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+void TestObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
     //if (m_bPendingDestruction)return; //dead, bail out
 
     //const Vector2 vOverlap = d * norm; //overlap in direction of this

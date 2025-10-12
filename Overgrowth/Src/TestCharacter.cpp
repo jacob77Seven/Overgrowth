@@ -1,32 +1,33 @@
 #include "TestCharacter.h"
 
-TestCharacter::TestCharacter(eSprite t, const Vector2& p)
-    : OBaseCharacter(t, p)
+#include "ObjectManager.h"
+#include "TestObject.h"
+
+void TestCharacter::BeginPlay()
 {
-    printf("Test Character Created!!\n");
+    OBaseCharacter::BeginPlay(); // Call to parent class.
+    printf("Character Begin Play!");
+
+    // This code is a test of the garbage collection system.
+    //std::weak_ptr<TestObject> object = OCommon::m_pObjectManager->create<TestObject>(m_vPos + Vector3(100, 100, 0));
+    //if (auto obj = object.lock())
+    //    obj->Destroy();
 }
 
-
-TestCharacter::TestCharacter(const Vector2& p)
+TestCharacter::TestCharacter(const Vector3& p) 
     : OBaseCharacter(p)
 {
-    EObjectCollisionType = ECollisionType::Dynamic;
-    printf("Test Character Created (Location only given)!!\n");
+    printf("TestCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
 }
 
-TestCharacter::~TestCharacter() {
-
+void TestCharacter::OnDestroy() {
+    OBaseCharacter::OnDestroy();
 }
 
 void TestCharacter::tick(const float dt) {
     m_vPos.y -= dt * speed;
     OBaseCharacter::tick(dt);
 }
-
-void TestCharacter::move() {
-    if (!m_bDead && !m_bStatic)
-        m_vPos += m_vVelocity * m_pTimer->GetFrameTime();
-} //move
 
 /// Ask the renderer to draw the sprite described in the sprite descriptor.
 /// Note that `OObject` is derived from `LBaseObject` which is inherited from

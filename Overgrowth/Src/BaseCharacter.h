@@ -30,14 +30,14 @@ protected:
 
     //const Vector2 GetViewVector() const; ///< Compute view vector.
     eSprite Sprite;
+    virtual void OnDestroy() override;
+    virtual void BeginPlay() override;
 
 public:
+    OBaseCharacter(const Vector3& p);
     //OObject();
-    OBaseCharacter(const Vector2& p); ///< Constructor.
-    OBaseCharacter(eSprite, const Vector2&);
     //virtual OObject(t, const Vector2&); ///< Constructor.
     virtual ~OBaseCharacter(); ///< Destructor.
     virtual void tick(const float dt) override;
-    void move(); ///< Move object.
     void draw(); ///< Draw object.
 }; //OObject

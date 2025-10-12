@@ -1,17 +1,30 @@
+/// \file Object.h
+/// \brief Interface for the game object class OObject.
+
 #pragma once
 
 #include "..\GameDefines.h"
-#include "BaseCharacter.h"
+#include "SpriteRenderer.h"
+#include "Common.h"
+#include "Component.h"
+#include "SpriteDesc.h"
+#include "Object.h"
+#include "EventTimer.h"
+#include "ComponentIncludes.h"
 
 /// \brief The game object. 
 ///
 /// The abstract representation of an object. This class must contain public member
 /// functions `move()` and `draw()` to move and draw the object, respectively.
-class TestObject;
-class TestCharacter :
-    public OBaseCharacter
+
+class TestObject :
+    public OObject
 {
 protected:
+    float m_fRadius = 0; ///< Bounding circle radius.
+
+    float m_fSpeed = 0; ///< Speed.
+
     virtual void CollisionResponse(const Vector2&, float,
         OObject* = nullptr); ///< Collision response.
 
@@ -19,14 +32,11 @@ protected:
     eSprite Sprite;
     virtual void OnDestroy() override;
     virtual void BeginPlay() override;
+    virtual void tick(const float dt) override;
+    void draw() override; ///< Draw object.
 
 public:
-    TestCharacter(const Vector3& p);
-    float speed = 180.f;
+    TestObject(const Vector3& p);
     //OObject();
     //virtual OObject(t, const Vector2&); ///< Constructor.
-    //virtual ~TestCharacter(); ///< Destructor.
-    virtual void tick(const float dt) override;
-
-    void draw(); ///< Draw object.
 }; //OObject

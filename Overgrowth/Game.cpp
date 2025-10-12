@@ -91,10 +91,10 @@ void CGame::BeginGame(){
     m_pSquareDesc->m_fXScale = 50.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
     m_pSquareDesc->m_fYScale = 50.0f;
 
-    std::shared_ptr<TestCharacter> character = m_pObjectManager->create<TestCharacter>(Vector2(m_vWinCenter.x, m_vWinCenter.y + 400));
-    std::shared_ptr<TestCharacter> character2 = m_pObjectManager->create<TestCharacter>(Vector2(m_vWinCenter.x, m_vWinCenter.y - 400));
-    character2->speed = character2->speed * -2;
-    character2->SetObjectCollisionType(ECollisionType::Dynamic);
+    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 0, 0));
+    //std::shared_ptr<TestCharacter> character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 0, 0));
+    //character2->speed = character2->speed * -1;
+    //character2->SetObjectCollisionType(ECollisionType::Dynamic);
 
     // Debug print tiles
     for (auto& t : LvlImporter->GetLevelData().tiles) {

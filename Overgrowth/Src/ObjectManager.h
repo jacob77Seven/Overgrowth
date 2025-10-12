@@ -10,6 +10,7 @@
 #include "Object.h"
 #include "Common.h"
 #include "CollisionInterface.h"
+#include "ObjectUtilitiesInterface.h"
 #include <memory>
 #include <type_traits>
 
@@ -17,7 +18,8 @@
 /// collision checks on all the game objects.
 
 class OObjectManager :
-    public LBaseObjectManager<OObject>,
+    public LComponent,
+    public LSettings,
     public OCommon
 {
 private:
@@ -26,17 +28,17 @@ private:
     static std::vector<std::shared_ptr<OObject>> OObjectList;
     // OObject* c is the collided object from the static list.
     const bool StaticCollisionCheck(BoundingSphere s, Vector2& norm, float& d, std::shared_ptr<OObject> c) const;
+    void CleanUp();
     
 public:
     OObjectManager();
-    template <typename T>
-    // DEPRACATED
-    //OObject* create(eSprite esp, const Vector2&); ///< Create new object.
-    // The Factory is now much simpler.
-    static std::shared_ptr<T> create(const Vector2& pos) {
+    template <typename T, typename... Args>
+    static std::weak_ptr<T> create(Args&&... args) {
         static_assert(std::is_base_of<OObject, T>::value, "T must be a descendant of OObject");
-        std::shared_ptr<T> pObj = std::make_shared<T>(pos);
+        std::shared_ptr<T> pObj = std::make_shared<T>(std::forward<Args>(args)...); // Create the specified type and forward the arguments
         OObjectList.push_back(pObj);
+        IObjectUtilities& pObjUtil = *pObj;
+        pObjUtil.BeginPlay();
         return pObj;
     }
     virtual void draw(); ///< Draw all objects.

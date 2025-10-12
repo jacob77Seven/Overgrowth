@@ -27,7 +27,9 @@ void OObjectManager::draw(){
             //m_pRenderer->DrawBoundingBox(10, *pObj->GetBoundingBox());
             m_pRenderer->DrawBoundingBox(eSprite::PinkSquare, *pObj->GetBoundingBox());
             //m_pRenderer->DrawBoundingBox(12, BoundingBox(XMFLOAT3(m_vWinCenter.x, m_vWinCenter.y,0), XMFLOAT3(100, 100, 100)));
-            m_pRenderer->Draw(eSprite::Pig, pObj->GetWorldLocation());
+            m_pRenderer->Draw(eSprite::Pig, Vector2(pObj->GetWorldLocation().x, pObj->GetWorldLocation().y));
+            //IObjectUtilities& pObjUtil = *pObj;
+            //pObjUtil.draw();
     } //for
         //m_pRenderer->DrawBoundingBox(1, BoundingBox(XMFLOAT3(0, 0, 0), XMFLOAT3(500, 500, 500)));
 
@@ -39,9 +41,10 @@ void OObjectManager::tick(const float dt)
     BroadPhase();
     for (std::shared_ptr<OObject> pObj : OObjectList) { //for each object
         //pObj->draw();
-        if (pObj)
-            pObj->tick(dt);
+        IObjectUtilities& pObjUtil = *pObj;
+        pObjUtil.tick(dt);
     } //for
+    CleanUp();
 }
 
 //void OObjectManager::BroadPhase() {
@@ -144,6 +147,57 @@ const bool OObjectManager::StaticCollisionCheck(
         } //if
     } //for
 }
+
+void OObjectManager::CleanUp()
+{
+    for (auto it = OObjectList.begin(); it != OObjectList.end(); ) {
+        auto& pObj = *it;
+        if (pObj && pObj->GetPendingDestruction()) {
+            IObjectUtilities& pObjUtil = *pObj;
+            pObjUtil.OnDestroy();
+            it = OObjectList.erase(it); // returns next iterator
+            pObj.reset();
+        }
+        else {
+            ++it;
+        }
+    }
+}
+
+
+
+//void OObjectManager::CleanUp()
+//{
+//    // Call OnDestroy for each object that needs it, first.
+//    for (auto const& pObj : OObjectList) {
+//        if (pObj && pObj->GetPendingDestruction()) {
+//            IObjectUtilities& pObjUtil = *pObj;
+//            pObjUtil.OnDestroy();
+//        }
+//    }
+//
+//    // Remove those objects from the vector.
+//    OObjectList.erase(
+//        std::remove_if(OObjectList.begin(), OObjectList.end(),
+//            [](const std::shared_ptr<OObject>& p) {
+//                return !p || p->GetPendingDestruction();
+//            }),
+//        OObjectList.end());
+//}
+
+
+//void OObjectManager::CleanUp()
+//{
+//    for (std::shared_ptr<OObject> pObj : OObjectList) { //for each object
+//        if (pObj->GetPendingDestruction()) {
+//            IObjectUtilities& pObjUtil = *pObj;
+//            pObjUtil.OnDestroy();
+//            pObj.reset();
+//            OObjectList.erase(std::remove(OObjectList.begin(), OObjectList.end(), pObj), OObjectList.end());
+//        }
+//    }
+//}
+
 
 OObjectManager::OObjectManager()
 {

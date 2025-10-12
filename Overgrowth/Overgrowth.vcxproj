@@ -172,6 +172,7 @@
     <ClCompile Include="Src\Object.cpp" />
     <ClCompile Include="Src\ObjectManager.cpp" />
     <ClCompile Include="Src\TestCharacter.cpp" />
+    <ClCompile Include="Src\TestObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -185,7 +186,9 @@
     <ClInclude Include="Src\LevelImporter.h" />
     <ClInclude Include="Src\Object.h" />
     <ClInclude Include="Src\ObjectManager.h" />
+    <ClInclude Include="Src\ObjectUtilitiesInterface.h" />
     <ClInclude Include="Src\TestCharacter.h" />
+    <ClInclude Include="Src\TestObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />
