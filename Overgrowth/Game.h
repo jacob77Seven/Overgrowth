@@ -29,10 +29,13 @@ class CGame:
   private:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
-    LSpriteDesc2D* m_pSquareDesc = nullptr;
+    LSpriteDesc3D* m_pSquareDesc = nullptr;
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     LevelImporter* LvlImporter = nullptr;
-    
+    Vector2 m_vCameraPos;
+    LBaseCamera* m_pCamera = nullptr;
+
+
     void LoadImages(); ///< Load images.
     void LoadSounds(); ///< Load sounds.
     void LoadLevels(); ///< Load levels.
@@ -43,7 +46,7 @@ class CGame:
     void DrawFrameRateText(); ///< Draw frame rate text to screen.
 
   public:
-    std::vector<LSpriteDesc2D*> m_vLevelSprites; //container for storing tiles
+    std::vector<LSpriteDesc3D*> m_vLevelSprites; //container for storing tiles
     ~CGame(); ///< Destructor.
 
     void Initialize(); ///< Initialize the game.

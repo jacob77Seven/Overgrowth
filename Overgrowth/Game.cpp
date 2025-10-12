@@ -21,15 +21,20 @@ CGame::~CGame(){
 /// begin the game.
 
 void CGame::Initialize(){
-    m_pRenderer = new LSpriteRenderer(eSpriteMode::Batched2D); 
-    m_pRenderer->Initialize(eSprite::Size); 
-    OCommon::m_pRenderer = m_pRenderer;
-    LoadImages(); //load images from xml file list
-    LoadSounds(); //load the sounds for this game
-    LoadLevels();
-    m_pObjectManager = new OObjectManager; //set up the object manager;
-    OCommon::m_pObjectManager = m_pObjectManager;
-    BeginGame();
+  // Initialize the camera
+  m_pCamera = new LBaseCamera();
+  m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, 1024.0f / 768.0f, 0.1f, 1000.0f);
+  m_pCamera->MoveTo(Vector3(0, 0, 50));
+  m_pCamera->MoveTo(m_pCamera->GetPos());
+
+  m_pRenderer = new LSpriteRenderer(eSpriteMode::Unbatched3D); 
+  m_pRenderer->Initialize(eSprite::Size); 
+
+
+  LoadImages(); //load images from xml file list
+  LoadSounds(); //load the sounds for this game
+  LoadLevels();
+  BeginGame();
 } //Initialize
 
 /// Load the specific images needed for this game. This is where `eSprite`
@@ -83,34 +88,46 @@ void CGame::Release(){
 /// program.
 
 void CGame::BeginGame(){  
-    delete m_pSpriteDesc;
-    delete m_pSquareDesc;
-    m_pSpriteDesc = new LSpriteDesc2D((UINT)eSprite::TextWheel, m_vWinCenter);
-    m_pSquareDesc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, m_vWinCenter); // SCALING BELOW IS JUST FOR TESTING
-    m_pSquareDesc->m_nCurrentFrame = 0;
-    m_pSquareDesc->m_fXScale = 50.0f;                                             // Scaling proof of concept. Will try to scale tiles based on layer/depth later
-    m_pSquareDesc->m_fYScale = 50.0f;
+  delete m_pSpriteDesc;
+  delete m_pSquareDesc;
+  //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
+  m_pSquareDesc = new LSpriteDesc3D();
+  m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
+  m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
 
-    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 0, 0));
-    //std::shared_ptr<TestCharacter> character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 0, 0));
+  if ((LvlImporter == nullptr)) {
+      printf("No levels loaded!\n");
+	  return;
+  }
+    //auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 0, 0));
+    //auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 0, 0));
     //character2->speed = character2->speed * -1;
     //character2->SetObjectCollisionType(ECollisionType::Dynamic);
 
-    // Debug print tiles
-    for (auto& t : LvlImporter->GetLevelData().tiles) {
-        printf("Tile %d at (%d,%d), src=(%d,%d)\n",
-            t.tileID, t.posX, t.posY, t.srcX, t.srcY);
-    }
+  LevelData& data = LvlImporter->GetLevelData(); //get first level for now
+
+  // Debug print tiles
+  for (auto& t : data.tiles) {
+      printf("Tile %d at (%d,%d), src=(%d,%d)\n",
+          t.tileID, t.posX, t.posY, t.srcX, t.srcY);
+  }
 
     for (auto* s : m_vLevelSprites) delete s; //clean up old level sprites
     m_vLevelSprites.clear();
 
-    // Build sprite descriptors for each tile
-    for (auto& t : LvlImporter->GetLevelData().tiles) {
-        auto* desc = new LSpriteDesc2D((UINT)eSprite::PinkSquare, Vector2((float)t.posX, (float)t.posY));
-        desc->m_nCurrentFrame = 1;
-        m_vLevelSprites.push_back(desc);
-    }
+  // Build sprite descriptors for each tile
+  for (auto& t : data.tiles) {
+      auto* desc3D = new LSpriteDesc3D();
+      desc3D->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
+      desc3D->m_vPos = Vector3((float)t.posX, (float)t.posY, t.posZ);
+      desc3D->m_fXScale = 1.0f;
+      desc3D->m_fYScale = 1.0f;
+      desc3D->m_fRoll = 0.0f;
+      desc3D->m_fAlpha = 1.0f;
+      desc3D->m_f4Tint = Vector4(1, 1, 1, 1);
+      m_vLevelSprites.push_back(desc3D);
+  }
+
 } //BeginGame
 
 /// Poll the keyboard state and respond to the key presses that happened since
@@ -164,19 +181,27 @@ void CGame::DrawFrameRateText(){
 
 void CGame::RenderFrame(){
     m_pRenderer->BeginFrame(); //required before rendering
-    
-    m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
-    m_pObjectManager->draw();
 
-    for (auto* desc : m_vLevelSprites) { //draw level sprites
-        m_pRenderer->Draw(desc);
+    for (auto* desc3D : m_vLevelSprites) {
+        m_pRenderer->Draw(desc3D);
     }
 
-    if (m_pSquareDesc)
-        m_pRenderer->Draw(m_pSquareDesc);
-    m_pRenderer->Draw(m_pSpriteDesc); //draw text sprite
-    if(m_bDrawFrameRate) 
-        DrawFrameRateText(); //draw frame rate, if required
+    if (m_pSquareDesc) {
+        LSpriteDesc3D desc3D;
+        desc3D.m_nSpriteIndex = m_pSquareDesc->m_nSpriteIndex;
+        desc3D.m_vPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, 1000.0f);
+        desc3D.m_fXScale = 4.0f;
+        desc3D.m_fYScale = 4.0f;
+        desc3D.m_fRoll = 0.0f;
+        desc3D.m_fAlpha = 1.0f;
+        desc3D.m_f4Tint = Vector4(1, 1, 1, 1);
+        //m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
+        //m_pObjectManager->draw();
+
+        m_pRenderer->Draw(&desc3D);
+    }
+
+    if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
     m_pRenderer->EndFrame(); //required after rendering
 } //RenderFrame
@@ -191,9 +216,23 @@ void CGame::ProcessFrame(){
     KeyboardHandler(); //handle keyboard input
     m_pAudio->BeginFrame(); //notify audio player that frame has begun
 
+  m_pTimer->Tick([&](){ //all time-dependent function calls should go here
+    const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
+    //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
+
+    if (m_pSquareDesc) {
+        // Follow player smoothly
+        const float followSpeed = 5.0f;
+        Vector3 playerPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, m_pSquareDesc->m_vPos.z);
+        m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
+
+        if (m_pCamera)
+            m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, 50.0f));
+    }
+  });
     m_pTimer->Tick([&](){ //all time-dependent function calls should go here
         const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
-        m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
+        //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
         if (m_pObjectManager)
             m_pObjectManager->tick(t);
     });

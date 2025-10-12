@@ -69,16 +69,16 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Media\XML\gamesettings.xml">
-      <Filter>Media\XML</Filter>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="Media\Sounds\clang.wav">
       <Filter>Media\Sounds</Filter>
     </Media>
     <Media Include="Media\Sounds\umph.wav">
       <Filter>Media\Sounds</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Media\XML\gamesettings.xml">
+      <Filter>Media\XML</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
