@@ -39,5 +39,5 @@ public:
     //virtual OObject(t, const Vector2&); ///< Constructor.
     virtual ~OBaseCharacter(); ///< Destructor.
     virtual void tick(const float dt) override;
-    void draw(); ///< Draw object.
+    //void draw(); ///< Draw object.
 }; //OObject

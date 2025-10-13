@@ -16,3 +16,4 @@ bool OCommon::m_bGodMode = false;
 
 Vector2 OCommon::m_vWorldSize = Vector2::Zero;
 CPlayer* OCommon::m_pPlayer = nullptr;
+float OCommon::m_fTile = 1000.f;

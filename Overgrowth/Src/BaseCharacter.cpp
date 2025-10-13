@@ -58,9 +58,9 @@ void OBaseCharacter::tick(const float dt) {
 /// `OObject*` to `LSpriteDesc2D*`, effectively drawing the object from its
 /// sprite descriptor.
 
-void OBaseCharacter::draw() {
-    m_pRenderer->Draw(this);
-} //draw
+//void OBaseCharacter::draw() {
+//    //m_pRenderer->Draw(this);
+//} //draw
 
 /// Response to collision. Move back the overlap distance along the collision
 /// normal. 

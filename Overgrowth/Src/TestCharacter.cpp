@@ -16,7 +16,9 @@ void TestCharacter::BeginPlay()
 TestCharacter::TestCharacter(const Vector3& p) 
     : OBaseCharacter(p)
 {
+    speed = 200.f * OCommon::m_fTile;
     m_nSpriteIndex = (UINT)eSprite::Pig;
+    EObjectCollisionType = ECollisionType::Dynamic;
     m_nCurrentFrame = 0;
     printf("TestCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
 }
@@ -26,7 +28,9 @@ void TestCharacter::OnDestroy() {
 }
 
 void TestCharacter::tick(const float dt) {
+
     m_vPos.y -= dt * speed;
+    //printf("m_vPos.y = %f & dt = %f\n", m_vPos.y, dt);
     OBaseCharacter::tick(dt);
 }
 

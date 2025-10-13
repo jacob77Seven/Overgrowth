@@ -23,7 +23,7 @@ protected:
 
 public:
     TestCharacter(const Vector3& p);
-    float speed = 180.f;
+    float speed;
     //OObject();
     //virtual OObject(t, const Vector2&); ///< Constructor.
     //virtual ~TestCharacter(); ///< Destructor.

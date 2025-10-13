@@ -32,4 +32,5 @@ protected:
 
     static Vector2 m_vWorldSize; ///< World height and width.
     static CPlayer* m_pPlayer; ///< Pointer to player character.
+    static float m_fTile;
 }; //OCommon

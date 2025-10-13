@@ -23,7 +23,7 @@ void OObjectManager::draw(){
 
     for (std::shared_ptr<OObject> pObj : OObjectList){ //for each object
         //pObj->draw();
-        if (m_pRenderer && pObj.get())
+        //if (m_pRenderer && pObj.get())
             //m_pRenderer->DrawBoundingBox(10, *pObj->GetBoundingBox());
             //m_pRenderer->DrawBoundingBox(eSprite::PinkSquare, *pObj->GetBoundingBox());
             //m_pRenderer->DrawBoundingBox(12, BoundingBox(XMFLOAT3(m_vWinCenter.x, m_vWinCenter.y,0), XMFLOAT3(100, 100, 100)));
@@ -37,9 +37,9 @@ void OObjectManager::draw(){
             //desc3D.m_fRoll = 0.0f;
             //desc3D.m_fAlpha = 1.0f;
             //desc3D.m_f4Tint = Vector4(1, 1, 1, 1);
-            m_pRenderer->Draw(pObj.get());
-            //IObjectUtilities& pObjUtil = *pObj;
-            //pObjUtil.draw();
+            //m_pRenderer->Draw(pObj.get());
+        IObjectUtilities& pObjUtil = *pObj;
+        pObjUtil.draw();
     } //for
         //m_pRenderer->DrawBoundingBox(1, BoundingBox(XMFLOAT3(0, 0, 0), XMFLOAT3(500, 500, 500)));
 
@@ -48,12 +48,12 @@ void OObjectManager::draw(){
 
 void OObjectManager::tick(const float dt)
 {
-    BroadPhase();
     for (std::shared_ptr<OObject> pObj : OObjectList) { //for each object
         //pObj->draw();
         IObjectUtilities& pObjUtil = *pObj;
         pObjUtil.tick(dt);
     } //for
+    BroadPhase();
     CleanUp();
 }
 

@@ -64,6 +64,7 @@ OObject::OObject(const Vector3& p)
 }
 
 void OObject::BeginPlay() {
+    m_BoundingBox = BoundingBox(XMFLOAT3(m_vPos.x, m_vPos.y, 0), XMFLOAT3(100, 100, 100));
     printf("Object BeginPlay!\n");
 }
 
@@ -131,6 +132,9 @@ OObject::~OObject() {
 
 void OObject::draw() {
     m_pRenderer->Draw(this);
+    //m_pRenderer->DrawBoundingBox(eSprite::PinkSquare, m_BoundingBox);
+    //printf("bb xyz - %f %f %f\n", m_BoundingBox.Center.x, m_BoundingBox.Center.y, m_BoundingBox.Center.z);
+    //printf("bb xyz - %f %f %f\n", m_BoundingBox.Extents.x, m_BoundingBox.Extents.y, m_BoundingBox.Extents.z);
 } //draw
 
 /// Response to collision. Move back the overlap distance along the collision
