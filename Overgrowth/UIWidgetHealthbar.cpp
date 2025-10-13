@@ -41,7 +41,7 @@ void UIWidgetHealthbar::CalcTargets(float m_fFrameTargetPosX, float m_fFrameTarg
 	m_fBackgroundTargetScaleX = 1 / (m_fBackgroundSpriteSizeX / m_fTargetWidth);
 	m_fBackgroundTargetScaleY = 1 / (m_fBackgroundSpriteSizeY / m_fTargetHeight);
 
-	m_fHealthbarTargetScaleX = (1 / (m_fHealthbarSpriteSizeX / m_fTargetWidth)) * 0.5f;
+	m_fHealthbarTargetScaleX = 1 / (m_fHealthbarSpriteSizeX / m_fTargetWidth);
 	m_fHealthbarTargetScaleY = 1 / (m_fHealthbarSpriteSizeY / m_fTargetHeight);
 
 	m_fBackgroundTargetPosX = m_fBottomLeftCornerX + (m_fBackgroundSpriteSizeX * m_fBackgroundTargetScaleX / 2);
