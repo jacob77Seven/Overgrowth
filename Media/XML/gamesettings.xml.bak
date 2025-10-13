@@ -10,7 +10,6 @@
         <sprite name="textwheel" file="textwheel.png"/>
         <sprite name="PinkSquare" file="PinkSquare.png"/>
         <sprite name="SylvaraTest" file="SylvaraTest.png"/>
-        <sprite name="img" file="img.png"/>
     </sprites>
     <!-- sound -->
     <sounds path="Media\Sounds">

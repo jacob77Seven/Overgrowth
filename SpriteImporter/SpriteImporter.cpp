@@ -15,8 +15,8 @@ namespace fs = std::filesystem;
 
 int main() {
     
-    const string xmlPath = "../OvergrowthFolder/Media/XML/gamesettings.xml";
-    const string imagesDir = "../OvergrowthFolder/Media/Images/";
+    const string xmlPath = "../Media/XML/gamesettings.xml";
+    const string imagesDir = "../Media/Images/";
 
     //tryin find bug
     
