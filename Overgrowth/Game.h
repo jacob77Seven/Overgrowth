@@ -31,6 +31,7 @@ class CGame:
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
     LSpriteDesc3D* m_pSquareDesc = nullptr;
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
+    OObjectManager* m_pObjectManager = nullptr; ///< Pointer to renderer.
     LevelImporter* LvlImporter = nullptr;
     Vector2 m_vCameraPos;
     LBaseCamera* m_pCamera = nullptr;

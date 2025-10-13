@@ -7,7 +7,6 @@ void TestCharacter::BeginPlay()
 {
     OBaseCharacter::BeginPlay(); // Call to parent class.
     printf("Character Begin Play!");
-
     // This code is a test of the garbage collection system.
     //std::weak_ptr<TestObject> object = OCommon::m_pObjectManager->create<TestObject>(m_vPos + Vector3(100, 100, 0));
     //if (auto obj = object.lock())
@@ -17,6 +16,8 @@ void TestCharacter::BeginPlay()
 TestCharacter::TestCharacter(const Vector3& p) 
     : OBaseCharacter(p)
 {
+    m_nSpriteIndex = (UINT)eSprite::Pig;
+    m_nCurrentFrame = 0;
     printf("TestCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
 }
 
@@ -35,10 +36,6 @@ void TestCharacter::tick(const float dt) {
 /// will accept `this` as a parameter, automatically down-casting it from
 /// `OObject*` to `LSpriteDesc2D*`, effectively drawing the object from its
 /// sprite descriptor.
-
-void TestCharacter::draw() {
-    m_pRenderer->Draw(this);
-} //draw
 
 void TestCharacter::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
 

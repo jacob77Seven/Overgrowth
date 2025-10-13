@@ -65,9 +65,6 @@ OObject::OObject(const Vector3& p)
 
 void OObject::BeginPlay() {
     printf("Object BeginPlay!\n");
-    const float w = m_pRenderer->GetWidth(m_nSpriteIndex);
-    const float h = m_pRenderer->GetHeight(m_nSpriteIndex);
-    m_fRadius = std::max(w, h) / 2;
 }
 
 void OObject::OnDestroy()

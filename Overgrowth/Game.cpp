@@ -28,8 +28,10 @@ void CGame::Initialize(){
   m_pCamera->MoveTo(m_pCamera->GetPos());
 
   m_pRenderer = new LSpriteRenderer(eSpriteMode::Unbatched3D); 
+  OCommon::m_pRenderer = m_pRenderer;
   m_pRenderer->Initialize(eSprite::Size); 
-
+  m_pObjectManager = new OObjectManager();
+  OCommon::m_pObjectManager = m_pObjectManager;
 
   LoadImages(); //load images from xml file list
   LoadSounds(); //load the sounds for this game
@@ -99,10 +101,14 @@ void CGame::BeginGame(){
       printf("No levels loaded!\n");
 	  return;
   }
-    //auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 0, 0));
-    //auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 0, 0));
-    //character2->speed = character2->speed * -1;
-    //character2->SetObjectCollisionType(ECollisionType::Dynamic);
+  m_pObjectManager;
+    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 0));
+    //printf("object manager: %d\n", m_pObjectManager);
+    auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 400, 0));
+    if (auto char2 = character2.lock()) {
+        char2->speed = char2->speed * -1;
+        char2->SetObjectCollisionType(ECollisionType::Dynamic);
+    }
 
   LevelData& data = LvlImporter->GetLevelData(); //get first level for now
 
@@ -189,17 +195,17 @@ void CGame::RenderFrame(){
     if (m_pSquareDesc) {
         LSpriteDesc3D desc3D;
         desc3D.m_nSpriteIndex = m_pSquareDesc->m_nSpriteIndex;
-        desc3D.m_vPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, 1000.0f);
+        desc3D.m_vPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, 0.0f);
         desc3D.m_fXScale = 4.0f;
         desc3D.m_fYScale = 4.0f;
         desc3D.m_fRoll = 0.0f;
         desc3D.m_fAlpha = 1.0f;
         desc3D.m_f4Tint = Vector4(1, 1, 1, 1);
         //m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
-        //m_pObjectManager->draw();
-
+        
         m_pRenderer->Draw(&desc3D);
     }
+    OCommon::m_pObjectManager->draw();
 
     if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
@@ -227,14 +233,14 @@ void CGame::ProcessFrame(){
         m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
 
         if (m_pCamera)
-            m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, 50.0f));
+            m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, -1000.0f));
     }
   });
     m_pTimer->Tick([&](){ //all time-dependent function calls should go here
         const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
         //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
-        if (m_pObjectManager)
-            m_pObjectManager->tick(t);
+        if (OCommon::m_pObjectManager)
+            OCommon::m_pObjectManager->tick(t);
     });
 
     RenderFrame(); //render a frame of animation

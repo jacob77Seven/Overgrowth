@@ -23,11 +23,21 @@ void OObjectManager::draw(){
 
     for (std::shared_ptr<OObject> pObj : OObjectList){ //for each object
         //pObj->draw();
-        if (m_pRenderer && pObj)
+        if (m_pRenderer && pObj.get())
             //m_pRenderer->DrawBoundingBox(10, *pObj->GetBoundingBox());
-            m_pRenderer->DrawBoundingBox(eSprite::PinkSquare, *pObj->GetBoundingBox());
+            //m_pRenderer->DrawBoundingBox(eSprite::PinkSquare, *pObj->GetBoundingBox());
             //m_pRenderer->DrawBoundingBox(12, BoundingBox(XMFLOAT3(m_vWinCenter.x, m_vWinCenter.y,0), XMFLOAT3(100, 100, 100)));
-            m_pRenderer->Draw(eSprite::Pig, Vector2(pObj->GetWorldLocation().x, pObj->GetWorldLocation().y));
+            //IObjectUtilities& pObjUtil = *pObj;
+            //pObjUtil.draw();
+            //LSpriteDesc3D desc3D;
+            //desc3D.m_nSpriteIndex = eSprite::PinkSquare;
+            //desc3D.m_vPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, 0.0f);
+            //desc3D.m_fXScale = 4.0f;
+            //desc3D.m_fYScale = 4.0f;
+            //desc3D.m_fRoll = 0.0f;
+            //desc3D.m_fAlpha = 1.0f;
+            //desc3D.m_f4Tint = Vector4(1, 1, 1, 1);
+            m_pRenderer->Draw(pObj.get());
             //IObjectUtilities& pObjUtil = *pObj;
             //pObjUtil.draw();
     } //for
@@ -201,6 +211,7 @@ void OObjectManager::CleanUp()
 
 OObjectManager::OObjectManager()
 {
+    printf("Object Manager Created.\n");
     this->m_pRenderer = OCommon::m_pRenderer;
 }
 

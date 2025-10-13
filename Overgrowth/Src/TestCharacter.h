@@ -15,6 +15,7 @@ protected:
     virtual void CollisionResponse(const Vector2&, float,
         OObject* = nullptr); ///< Collision response.
 
+
     //const Vector2 GetViewVector() const; ///< Compute view vector.
     eSprite Sprite;
     virtual void OnDestroy() override;
@@ -27,6 +28,4 @@ public:
     //virtual OObject(t, const Vector2&); ///< Constructor.
     //virtual ~TestCharacter(); ///< Destructor.
     virtual void tick(const float dt) override;
-
-    void draw(); ///< Draw object.
 }; //OObject

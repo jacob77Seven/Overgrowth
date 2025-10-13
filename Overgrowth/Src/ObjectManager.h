@@ -34,6 +34,7 @@ public:
     OObjectManager();
     template <typename T, typename... Args>
     static std::weak_ptr<T> create(Args&&... args) {
+        printf("Object Manager must exist!\n");
         static_assert(std::is_base_of<OObject, T>::value, "T must be a descendant of OObject");
         std::shared_ptr<T> pObj = std::make_shared<T>(std::forward<Args>(args)...); // Create the specified type and forward the arguments
         OObjectList.push_back(pObj);
