@@ -16,20 +16,21 @@ void CUIManager::InitializeUI() {
 	m_pDruidHealthbar.SetBackgroundSprite((UINT)eSprite::HealthbarBackground, m_pRenderer);
 	m_pDruidHealthbar.SetHealthbarSprite((UINT)eSprite::Healthbar, m_pRenderer);
 
-	SetActiveCharFrame((UINT)eSprite::RogueCharFrame);
-
-	m_fCharSwitchTime = -1.0f;
+	SetActiveCharFrame(eInput::KeyOne);
+	CalcHealthbarsTargets(eInput::KeyOne);
+	MoveUI();
 }
 
-void CUIManager::CalcFramesTargetPos() {
-	m_pRogueFrame.CalcTargetPos((float)m_nWinHeight);
-	m_pWarriorFrame.CalcTargetPos(m_pRogueFrame.m_fTargetPosY - m_pRogueFrame.m_fTargetPosX - m_fFrameOffset);
-	m_pDruidFrame.CalcTargetPos(m_pWarriorFrame.m_fTargetPosY - m_pWarriorFrame.m_fTargetPosX - m_fFrameOffset);
-
-	m_fCharSwitchTime = m_pTimer->GetTime();
+void CUIManager::Input(const eInput input) {
+	if (m_pTimer->GetTime() - m_fCharSwitchTime > m_fCharSwitchCooldown)
+		if (input == eInput::KeyOne || input == eInput::KeyTwo || input == eInput::KeyThree) {
+			SetActiveCharFrame(input);
+			CalcHealthbarsTargets(input);
+			m_fCharSwitchTime = m_pTimer->GetTime();
+		}
 }
 
-void CUIManager::MoveFrames() {
+void CUIManager::MoveUI() {
 	float m_fElapsedTime = m_pTimer->GetTime() - m_fCharSwitchTime;
 
 	if (m_fElapsedTime > m_fCharSwitchCooldown) {
@@ -54,51 +55,52 @@ void CUIManager::MoveFrames() {
 	m_pDruidHealthbar.InterpToTargets(t);
 }
 
-void CUIManager::SetActiveCharFrame(UINT c) {
-	switch (c) {
-		case (UINT)eSprite::RogueCharFrame:
+void CUIManager::SetActiveCharFrame(const eInput input) {
+	switch (input) {
+		case eInput::KeyOne:
 			m_pRogueFrame.CalcTargetScale(m_fActiveFrameHeight);
 			m_pWarriorFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pDruidFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			break;
-		case (UINT)eSprite::WarriorCharFrame:
+		case eInput::KeyTwo:
 			m_pRogueFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pWarriorFrame.CalcTargetScale(m_fActiveFrameHeight);
 			m_pDruidFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			break;
-		case (UINT)eSprite::DruidCharFrame:
+		case eInput::KeyThree:
 			m_pRogueFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pWarriorFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pDruidFrame.CalcTargetScale(m_fActiveFrameHeight);
 			break;
 	}
 
-	CalcFramesTargetPos();
-	CalcHealthbarsTargets(c);
+	m_pRogueFrame.CalcTargetPos((float)m_nWinHeight);
+	m_pWarriorFrame.CalcTargetPos(m_pRogueFrame.m_fTargetPosY - m_pRogueFrame.m_fTargetPosX - m_fFrameOffset);
+	m_pDruidFrame.CalcTargetPos(m_pWarriorFrame.m_fTargetPosY - m_pWarriorFrame.m_fTargetPosX - m_fFrameOffset);
 }
 
-void CUIManager::CalcHealthbarsTargets(UINT c) {
-	switch (c) {
-	case (UINT)eSprite::RogueCharFrame:
-		m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
-		m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
-		m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
-		break;
-	case (UINT)eSprite::WarriorCharFrame:
-		m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
-		m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
-		m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
-		break;
-	case (UINT)eSprite::DruidCharFrame:
-		m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
-		m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
-		m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
-		break;
+void CUIManager::CalcHealthbarsTargets(const eInput input) {
+	switch (input) {
+		case eInput::KeyOne:
+			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
+			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			break;
+		case eInput::KeyTwo:
+			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
+			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			break;
+		case eInput::KeyThree:
+			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
+			break;
 	}
 }
 
 void CUIManager::DrawUI() {
-	MoveFrames();
+	MoveUI();
 
 	m_pRenderer->Draw(&m_pRogueFrame.GetSprite());
 	m_pRenderer->Draw(&m_pWarriorFrame.GetSprite());

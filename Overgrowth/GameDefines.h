@@ -30,4 +30,9 @@ enum class eSound: UINT{
   Size  //MUST BE LAST
 }; //eSound
 
+enum class eInput : UINT {
+	KeyOne, KeyTwo, KeyThree, KeyW, KeyA, KeyS, KeyD,
+	Size
+};
+
 #endif //__L4RC_GAME_GAMEDEFINES_H__

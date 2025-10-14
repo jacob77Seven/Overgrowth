@@ -1,12 +1,14 @@
 #pragma once
 #include "Common.h"
+#include "InputInterface.h"
 #include "UIWidgetCharFrame.h"
 #include "UIWidgetHealthbar.h"
 
 class CUIManager :
     public LComponent,
 	public LSettings,
-    public CCommon {
+    public CCommon,
+    public IInput {
 private:
     UIWidgetCharFrame m_pRogueFrame;
     UIWidgetCharFrame m_pWarriorFrame;
@@ -26,15 +28,15 @@ private:
     float m_fInactiveHealthbarWidth = m_fInactiveHealthbarHeight * 10.0f;
 
     float m_fCharSwitchCooldown = 0.5f;
-    float m_fCharSwitchTime = 0.0f;
+    float m_fCharSwitchTime = -1.0f;
 
-    void CalcFramesTargetPos();
-    void MoveFrames();
-    void CalcHealthbarsTargets(UINT c);
+    void MoveUI();
+    void CalcHealthbarsTargets(const eInput input);
+    void SetActiveCharFrame(const eInput input);
 public:
     void InitializeUI();
     void DrawUI();
-    void SetActiveCharFrame(UINT c);
+    void Input(const eInput input);
 
     float GetCharSwitchCooldown() { return m_fCharSwitchCooldown; };
     float GetCharSwitchTime() { return m_fCharSwitchTime; };

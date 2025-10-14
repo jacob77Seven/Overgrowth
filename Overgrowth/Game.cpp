@@ -91,17 +91,17 @@ void CGame::BeginGame(){
 void CGame::KeyboardHandler(){
   m_pKeyboard->GetState(); //get current keyboard state 
 
-  if (m_pTimer->GetTime() - m_pUIManager->GetCharSwitchTime() > m_pUIManager->GetCharSwitchCooldown()) {
 	  if (m_pKeyboard->TriggerDown('1')) {
-		  m_pUIManager->SetActiveCharFrame((UINT)eSprite::RogueCharFrame);
+		  m_pUIManager->Input(eInput::KeyOne);
 	  }
-	  else if (m_pKeyboard->TriggerDown('2')) {
-		  m_pUIManager->SetActiveCharFrame((UINT)eSprite::WarriorCharFrame);
+
+	  if (m_pKeyboard->TriggerDown('2')) {
+		  m_pUIManager->Input(eInput::KeyTwo);
 	  }
-	  else if (m_pKeyboard->TriggerDown('3')) {
-		  m_pUIManager->SetActiveCharFrame((UINT)eSprite::DruidCharFrame);
+
+	  if (m_pKeyboard->TriggerDown('3')) {
+		  m_pUIManager->Input(eInput::KeyThree);
 	  }
-  }
 } //KeyboardHandler
 
 /// Draw the current frame rate to a hard-coded position in the window.
