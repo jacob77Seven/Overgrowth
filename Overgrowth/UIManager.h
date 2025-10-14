@@ -31,12 +31,12 @@ private:
     float m_fCharSwitchTime = -1.0f;
 
     void MoveUI();
-    void CalcHealthbarsTargets(const eInput input);
-    void SetActiveCharFrame(const eInput input);
+    void CalcHealthbarsTargets(const eInput& input);
+    void SetActiveCharFrame(const eInput& input);
 public:
     void InitializeUI();
     void DrawUI();
-    void Input(const eInput input);
+    void Input(const eInput& input) override;
 
     float GetCharSwitchCooldown() { return m_fCharSwitchCooldown; };
     float GetCharSwitchTime() { return m_fCharSwitchTime; };

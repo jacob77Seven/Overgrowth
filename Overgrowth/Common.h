@@ -8,11 +8,13 @@
 
 // Forward declarations
 class CUIManager;
+class IInput;
 
 class CCommon {
 	protected:
 		static LSpriteRenderer* m_pRenderer;
 		static CUIManager* m_pUIManager;
+		static std::vector<IInput*> m_pInputManager;
 };
 
 #endif

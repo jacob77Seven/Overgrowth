@@ -4,5 +4,5 @@
 
 class IInput {
 public:
-	virtual void Input(const eInput input) = 0;
+	virtual void Input(const eInput& input) = 0;
 };

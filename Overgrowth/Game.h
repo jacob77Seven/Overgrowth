@@ -37,6 +37,7 @@ class CGame:
     void KeyboardHandler(); ///< The keyboard handler.
     void RenderFrame(); ///< Render an animation frame.
     void DrawFrameRateText(); ///< Draw frame rate text to screen.
+    void SendInput(const eInput& input);
 
   public:
     ~CGame(); ///< Destructor.

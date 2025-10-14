@@ -21,7 +21,7 @@ void CUIManager::InitializeUI() {
 	MoveUI();
 }
 
-void CUIManager::Input(const eInput input) {
+void CUIManager::Input(const eInput& input) {
 	if (m_pTimer->GetTime() - m_fCharSwitchTime > m_fCharSwitchCooldown)
 		if (input == eInput::KeyOne || input == eInput::KeyTwo || input == eInput::KeyThree) {
 			SetActiveCharFrame(input);
@@ -55,7 +55,7 @@ void CUIManager::MoveUI() {
 	m_pDruidHealthbar.InterpToTargets(t);
 }
 
-void CUIManager::SetActiveCharFrame(const eInput input) {
+void CUIManager::SetActiveCharFrame(const eInput& input) {
 	switch (input) {
 		case eInput::KeyOne:
 			m_pRogueFrame.CalcTargetScale(m_fActiveFrameHeight);
@@ -79,7 +79,7 @@ void CUIManager::SetActiveCharFrame(const eInput input) {
 	m_pDruidFrame.CalcTargetPos(m_pWarriorFrame.m_fTargetPosY - m_pWarriorFrame.m_fTargetPosX - m_fFrameOffset);
 }
 
-void CUIManager::CalcHealthbarsTargets(const eInput input) {
+void CUIManager::CalcHealthbarsTargets(const eInput& input) {
 	switch (input) {
 		case eInput::KeyOne:
 			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);

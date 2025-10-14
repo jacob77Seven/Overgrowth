@@ -24,11 +24,15 @@ CGame::~CGame(){
 void CGame::Initialize(){
   m_pRenderer = new LSpriteRenderer(eSpriteMode::Batched2D); 
   m_pRenderer->Initialize(eSprite::Size); 
-  m_pUIManager = new CUIManager;
+
+  m_pUIManager = new CUIManager();
+
   LoadImages(); //load images from xml file list
   LoadSounds(); //load the sounds for this game
 
   m_pUIManager->InitializeUI();
+  
+  m_pInputManager.push_back(m_pUIManager);
 
   BeginGame();
 } //Initialize
@@ -92,17 +96,22 @@ void CGame::KeyboardHandler(){
   m_pKeyboard->GetState(); //get current keyboard state 
 
 	  if (m_pKeyboard->TriggerDown('1')) {
-		  m_pUIManager->Input(eInput::KeyOne);
+		  SendInput(eInput::KeyOne);
 	  }
 
 	  if (m_pKeyboard->TriggerDown('2')) {
-		  m_pUIManager->Input(eInput::KeyTwo);
+		  SendInput(eInput::KeyTwo);
 	  }
 
 	  if (m_pKeyboard->TriggerDown('3')) {
-		  m_pUIManager->Input(eInput::KeyThree);
+		  SendInput(eInput::KeyThree);
 	  }
 } //KeyboardHandler
+
+void CGame::SendInput(const eInput& input) {
+	for (auto listener : m_pInputManager)
+		listener->Input(input);
+}
 
 /// Draw the current frame rate to a hard-coded position in the window.
 /// The frame rate will be drawn in a hard-coded position using the font
