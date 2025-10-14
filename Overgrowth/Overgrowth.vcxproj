@@ -168,8 +168,9 @@
     <ClCompile Include="Src\LevelImporter.cpp" />
     <ClCompile Include="Src\UIManager.cpp" />
     <ClCompile Include="Src\UIWidgetCharFrame.cpp" />
-    <ClCompile Include="Src\UIWidgetHealthbar.cpp" />
-    <ClCompile Include="Src\UIWidgetManabar.cpp" />
+    <ClCompile Include="Src\UIWidgetHealthBar.cpp" />
+    <ClCompile Include="Src\UIWidgetManaBar.cpp" />
+    <ClCompile Include="Src\UIWidgetResourceBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -179,8 +180,9 @@
     <ClInclude Include="Src\LevelImporter.h" />
     <ClInclude Include="Src\UIManager.h" />
     <ClInclude Include="Src\UIWidgetCharFrame.h" />
-    <ClInclude Include="Src\UIWidgetHealthbar.h" />
-    <ClInclude Include="Src\UIWidgetManabar.h" />
+    <ClInclude Include="Src\UIWidgetHealthBar.h" />
+    <ClInclude Include="Src\UIWidgetManaBar.h" />
+    <ClInclude Include="Src\UIWidgetResourceBar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

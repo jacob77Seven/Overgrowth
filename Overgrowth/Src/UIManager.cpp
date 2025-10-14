@@ -10,16 +10,16 @@ void CUIManager::InitializeUI() {
 	m_pDruidFrame.SetSprite((UINT)eSprite::DruidCharFrame, m_pRenderer);
 
 	m_pRogueHealthbar.SetBackgroundSprite((UINT)eSprite::HealthbarBackground, m_pRenderer);
-	m_pRogueHealthbar.SetHealthbarSprite((UINT)eSprite::Healthbar, m_pRenderer);
+	m_pRogueHealthbar.SetBarSprite((UINT)eSprite::Healthbar, m_pRenderer);
 
 	m_pWarriorHealthbar.SetBackgroundSprite((UINT)eSprite::HealthbarBackground, m_pRenderer);
-	m_pWarriorHealthbar.SetHealthbarSprite((UINT)eSprite::Healthbar, m_pRenderer);
+	m_pWarriorHealthbar.SetBarSprite((UINT)eSprite::Healthbar, m_pRenderer);
 
 	m_pDruidHealthbar.SetBackgroundSprite((UINT)eSprite::HealthbarBackground, m_pRenderer);
-	m_pDruidHealthbar.SetHealthbarSprite((UINT)eSprite::Healthbar, m_pRenderer);
+	m_pDruidHealthbar.SetBarSprite((UINT)eSprite::Healthbar, m_pRenderer);
 
 	m_pDruidManabar.SetBackgroundSprite((UINT)eSprite::ManabarBackground, m_pRenderer);
-	m_pDruidManabar.SetManabarSprite((UINT)eSprite::Manabar, m_pRenderer);
+	m_pDruidManabar.SetBarSprite((UINT)eSprite::Manabar, m_pRenderer);
 
 	SetActiveCharFrame(eInput::KeyOne);
 	CalcHealthbarsTargets(eInput::KeyOne);
@@ -122,14 +122,14 @@ void CUIManager::DrawUI() {
 	m_pRenderer->Draw(&m_pDruidFrame.GetSprite());
 
 	m_pRenderer->Draw(&m_pRogueHealthbar.GetBackgroundSprite());
-	m_pRenderer->Draw(&m_pRogueHealthbar.GetHealthbarSprite());
+	m_pRenderer->Draw(&m_pRogueHealthbar.GetBarSprite());
 
 	m_pRenderer->Draw(&m_pWarriorHealthbar.GetBackgroundSprite());
-	m_pRenderer->Draw(&m_pWarriorHealthbar.GetHealthbarSprite());
+	m_pRenderer->Draw(&m_pWarriorHealthbar.GetBarSprite());
 
 	m_pRenderer->Draw(&m_pDruidHealthbar.GetBackgroundSprite());
-	m_pRenderer->Draw(&m_pDruidHealthbar.GetHealthbarSprite());
+	m_pRenderer->Draw(&m_pDruidHealthbar.GetBarSprite());
 
 	m_pRenderer->Draw(&m_pDruidManabar.GetBackgroundSprite());
-	m_pRenderer->Draw(&m_pDruidManabar.GetManabarSprite());
+	m_pRenderer->Draw(&m_pDruidManabar.GetBarSprite());
 }
