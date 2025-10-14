@@ -3,6 +3,7 @@
 #include "InputInterface.h"
 #include "UIWidgetCharFrame.h"
 #include "UIWidgetHealthbar.h"
+#include "UIWidgetManabar.h"
 
 class CUIManager :
     public LComponent,
@@ -17,6 +18,7 @@ private:
     UIWidgetHealthbar m_pRogueHealthbar;
     UIWidgetHealthbar m_pWarriorHealthbar;
     UIWidgetHealthbar m_pDruidHealthbar;
+    UIWidgetManabar m_pDruidManabar;
 
     float m_fActiveFrameHeight = m_nWinHeight * 0.15f;
     float m_fInactiveFrameHeight = m_nWinHeight * 0.1f;

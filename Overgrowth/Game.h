@@ -8,8 +8,8 @@
 #include "Settings.h"
 #include "SpriteDesc.h"
 #include "SpriteRenderer.h"
-#include "Common.h"
-#include "UIManager.h"
+#include "Src/Common.h"
+#include "Src/UIManager.h"
 
 /// \brief The game class.
 ///

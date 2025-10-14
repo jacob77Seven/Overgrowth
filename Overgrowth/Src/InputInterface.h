@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameDefines.h"
+#include "../GameDefines.h"
 
 class IInput {
 public:

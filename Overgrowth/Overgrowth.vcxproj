@@ -162,26 +162,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Common.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Src\Common.cpp" />
     <ClCompile Include="Src\LevelImporter.cpp" />
-    <ClCompile Include="UIManager.cpp" />
-    <ClCompile Include="UIWidgetCharFrame.cpp" />
-    <ClCompile Include="UIWidgetHealthbar.cpp" />
+    <ClCompile Include="Src\UIManager.cpp" />
+    <ClCompile Include="Src\UIWidgetCharFrame.cpp" />
+    <ClCompile Include="Src\UIWidgetHealthbar.cpp" />
+    <ClCompile Include="Src\UIWidgetManabar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameDefines.h" />
-    <ClInclude Include="InputInterface.h" />
+    <ClInclude Include="Src\Common.h" />
+    <ClInclude Include="Src\InputInterface.h" />
     <ClInclude Include="Src\LevelImporter.h" />
-    <ClInclude Include="UIManager.h" />
-    <ClInclude Include="UIWidgetCharFrame.h" />
-    <ClInclude Include="UIWidgetHealthbar.h" />
+    <ClInclude Include="Src\UIManager.h" />
+    <ClInclude Include="Src\UIWidgetCharFrame.h" />
+    <ClInclude Include="Src\UIWidgetHealthbar.h" />
+    <ClInclude Include="Src\UIWidgetManabar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Media\XML\gamesettings.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

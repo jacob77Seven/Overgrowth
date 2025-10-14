@@ -56,6 +56,8 @@ void CGame::LoadImages(){
   m_pRenderer->Load(eSprite::DruidCharFrame, "druidcharframe");
   m_pRenderer->Load(eSprite::HealthbarBackground, "healthbarbackground");
   m_pRenderer->Load(eSprite::Healthbar, "healthbar");
+  m_pRenderer->Load(eSprite::ManabarBackground, "manabarbackground");
+  m_pRenderer->Load(eSprite::Manabar, "manabar");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages

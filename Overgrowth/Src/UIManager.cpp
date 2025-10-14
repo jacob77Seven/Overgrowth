@@ -1,4 +1,4 @@
-#include "GameDefines.h"
+#include "../GameDefines.h"
 
 #include "UIManager.h"
 #include "Settings.h"
@@ -11,10 +11,15 @@ void CUIManager::InitializeUI() {
 
 	m_pRogueHealthbar.SetBackgroundSprite((UINT)eSprite::HealthbarBackground, m_pRenderer);
 	m_pRogueHealthbar.SetHealthbarSprite((UINT)eSprite::Healthbar, m_pRenderer);
+
 	m_pWarriorHealthbar.SetBackgroundSprite((UINT)eSprite::HealthbarBackground, m_pRenderer);
 	m_pWarriorHealthbar.SetHealthbarSprite((UINT)eSprite::Healthbar, m_pRenderer);
+
 	m_pDruidHealthbar.SetBackgroundSprite((UINT)eSprite::HealthbarBackground, m_pRenderer);
 	m_pDruidHealthbar.SetHealthbarSprite((UINT)eSprite::Healthbar, m_pRenderer);
+
+	m_pDruidManabar.SetBackgroundSprite((UINT)eSprite::ManabarBackground, m_pRenderer);
+	m_pDruidManabar.SetManabarSprite((UINT)eSprite::Manabar, m_pRenderer);
 
 	SetActiveCharFrame(eInput::KeyOne);
 	CalcHealthbarsTargets(eInput::KeyOne);
@@ -41,6 +46,8 @@ void CUIManager::MoveUI() {
 		m_pRogueHealthbar.SetToTargets();
 		m_pWarriorHealthbar.SetToTargets();
 		m_pDruidHealthbar.SetToTargets();
+
+		m_pDruidManabar.SetToTargets();
 		return;
 	}
 
@@ -53,6 +60,8 @@ void CUIManager::MoveUI() {
 	m_pRogueHealthbar.InterpToTargets(t);
 	m_pWarriorHealthbar.InterpToTargets(t);
 	m_pDruidHealthbar.InterpToTargets(t);
+
+	m_pDruidManabar.InterpToTargets(t);
 }
 
 void CUIManager::SetActiveCharFrame(const eInput& input) {
@@ -85,16 +94,22 @@ void CUIManager::CalcHealthbarsTargets(const eInput& input) {
 			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
 			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			
+			m_pDruidManabar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			break;
 		case eInput::KeyTwo:
 			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
 			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
+			
+			m_pDruidManabar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			break;
 		case eInput::KeyThree:
 			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
+			
+			m_pDruidManabar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
 			break;
 	}
 }
@@ -108,8 +123,13 @@ void CUIManager::DrawUI() {
 
 	m_pRenderer->Draw(&m_pRogueHealthbar.GetBackgroundSprite());
 	m_pRenderer->Draw(&m_pRogueHealthbar.GetHealthbarSprite());
+
 	m_pRenderer->Draw(&m_pWarriorHealthbar.GetBackgroundSprite());
 	m_pRenderer->Draw(&m_pWarriorHealthbar.GetHealthbarSprite());
+
 	m_pRenderer->Draw(&m_pDruidHealthbar.GetBackgroundSprite());
 	m_pRenderer->Draw(&m_pDruidHealthbar.GetHealthbarSprite());
+
+	m_pRenderer->Draw(&m_pDruidManabar.GetBackgroundSprite());
+	m_pRenderer->Draw(&m_pDruidManabar.GetManabarSprite());
 }

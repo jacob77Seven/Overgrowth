@@ -3,7 +3,6 @@
 #ifndef __L4RC_GAME_COMMON_H__
 #define __L4RC_GAME_COMMON_H__
 
-#include "GameDefines.h"
 #include "SpriteRenderer.h"
 
 // Forward declarations

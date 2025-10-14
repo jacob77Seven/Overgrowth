@@ -15,7 +15,7 @@
 
 enum class eSprite: UINT{
   Background, TextWheel, pig, 
-  RogueCharFrame, WarriorCharFrame, DruidCharFrame, HealthbarBackground, Healthbar,
+  RogueCharFrame, WarriorCharFrame, DruidCharFrame, HealthbarBackground, Healthbar, ManabarBackground, Manabar,
   Size  //MUST BE LAST
 }; //eSprite
 
