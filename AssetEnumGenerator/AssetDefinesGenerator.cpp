@@ -1,28 +1,30 @@
+#include "tinyxml2.h""
 #include <iostream>
 #include <filesystem>
 #include <fstream>
 #include <string>
 #include <vector>
-#include "tinyxml2.h"
 #include <windows.h>
 
-namespace fs = std::filesystem;
 using namespace tinyxml2;
+using namespace std;
+namespace fs = std::filesystem;
+
 
 //Utility to make valid C++ enum names
-std::string sanitizeName(const std::string& name) {
-    std::string clean = name;
+string sanitizeName(const string& name) {
+    string clean = name;
     for (char& c : clean) {
         if (!isalnum(c)) c = '_'; // replace non-alphanumeric with _
     }
     return clean;
 }
 
-std::vector<std::string> parseElements(XMLElement* parent, const char* elementTag) {
-    std::vector<std::string> names;
+vector<string> parseElements(XMLElement* parent, const char* elementTag) {
+    vector<string> names;
     for (XMLElement* elem = parent->FirstChildElement(elementTag);
-         elem != nullptr;
-         elem = elem->NextSiblingElement(elementTag)) {
+        elem != nullptr;
+        elem = elem->NextSiblingElement(elementTag)) {
         const char* name = elem->Attribute("name");
         if (name)
             names.push_back(sanitizeName(name));
@@ -37,45 +39,45 @@ int main() {
         GetModuleFileNameW(NULL, buffer, MAX_PATH);
         fs::path exePath = fs::path(buffer).parent_path();
 
-        //check path for modification
-        fs::path xmlPath = exePath / "../Overgrowth/Media/XML/gamesettings.xml";
-        fs::path outputPath = exePath / "../Overgrowth/assetDefines.h";
+        //path for generalization
+        fs::path xmlPath = exePath / "../../Media/XML/gamesettings.xml";
+        fs::path outputPath = exePath / "../../Overgrowth/assetDefines.h";
 
         xmlPath = fs::weakly_canonical(xmlPath);
         outputPath = fs::weakly_canonical(outputPath);
 
-        std::cout << "Using XML: " << xmlPath << "\n";
-        std::cout << "Output File: " << outputPath << "\n";
+        cout << "XML Path: " << xmlPath << "\n";
+        cout << "Output File: " << outputPath << "\n";
 
         //Load XML
-        XMLDocument doc;
+        tinyxml2::XMLDocument doc;
         if (doc.LoadFile(xmlPath.string().c_str()) != XML_SUCCESS) {
-            std::cerr << "ERROR: Could not load XML file.\n";
+            cerr << "ERROR: Could not load XML file.\n";
             return 1;
         }
 
         XMLElement* root = doc.FirstChildElement("settings");
         if (!root) {
-            std::cerr << "ERROR: No <settings> root found.\n";
+            cerr << "ERROR: No <settings> root found.\n";
             return 1;
         }
 
         //Parse sprites
         XMLElement* sprites = root->FirstChildElement("sprites");
-        std::vector<std::string> spriteNames;
+        vector<string> spriteNames;
         if (sprites)
             spriteNames = parseElements(sprites, "sprite");
 
-        // 4️⃣ Parse sounds
+        // 4?? Parse sounds
         XMLElement* sounds = root->FirstChildElement("sounds");
-        std::vector<std::string> soundNames;
+        vector<string> soundNames;
         if (sounds)
             soundNames = parseElements(sounds, "sound");
 
-        // 5️⃣ Write assetDefines.h
-        std::ofstream out(outputPath);
+        // 5?? Write assetDefines.h
+        ofstream out(outputPath);
         if (!out.is_open()) {
-            std::cerr << "ERROR: Could not open output file for writing.\n";
+            cerr << "ERROR: Could not open output file for writing.\n";
             return 1;
         }
 
@@ -105,12 +107,13 @@ int main() {
         out << "#endif // __AUTO_ASSET_DEFINES__\n";
         out.close();
 
-        std::cout << "Generated assetDefines.h successfully.\n";
-        std::cout << "Sprites: " << spriteNames.size()
-                  << " | Sounds: " << soundNames.size() << "\n";
+        cout << "Generated assetDefines.h successfully.\n";
+        cout << "Sprites: " << spriteNames.size()
+            << " | Sounds: " << soundNames.size() << "\n";
 
-    } catch (const std::exception& e) {
-        std::cerr << "Exception: " << e.what() << "\n";
+    }
+    catch (const exception& e) {
+        cerr << "Exception: " << e.what() << "\n";
         return 1;
     }
     return 0;
