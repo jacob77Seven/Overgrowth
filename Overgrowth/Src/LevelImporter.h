@@ -23,6 +23,13 @@ struct TileData {
 	float posZ = 0.0f;   // Z position for layering
 };
 
+struct EntityData {
+	std::string name;   // e.g. "Pig"
+	float posX;
+	float posY;
+	float posZ;
+};
+
 struct LevelData {
 	float val;
 	std::vector<TileData> tiles;
