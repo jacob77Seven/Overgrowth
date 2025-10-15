@@ -33,6 +33,7 @@ struct EntityData {
 struct LevelData {
 	float val;
 	std::vector<TileData> tiles;
+	std::vector<EntityData> entities;
 };
 
 class LevelImporter: public LSettingsManager {

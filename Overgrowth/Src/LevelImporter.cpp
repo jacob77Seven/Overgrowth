@@ -52,6 +52,19 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
                 lvlDat.tiles.push_back(t);
             }
         }
+        if (layer.contains("entityInstances")) {
+            for (auto& ent : layer["entityInstances"]) {
+                EntityData e;
+                e.name = ent["__identifier"];
+                e.posX = ent["__worldX"];
+                e.posY = (float)ent["__worldY"] * -1 + 750; // same Y inversion logic
+                e.posZ = 1000.0f;
+
+                lvlDat.entities.push_back(e);
+
+                printf("Entity '%s' at (%.1f, %.1f)\n", e.name.c_str(), e.posX, e.posY);
+            }
+        }
     }
 
     printf("Imported %zu tiles total.\n", lvlDat.tiles.size());
