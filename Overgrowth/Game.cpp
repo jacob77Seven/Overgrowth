@@ -4,7 +4,6 @@
 #include "Game.h"
 
 #include "GameDefines.h"
-#include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
 #include "Src\TestCharacter.h"
 #include "shellapi.h"
@@ -27,7 +26,7 @@ void CGame::Initialize(){
     m_pCamera->MoveTo(Vector3(0, 0, 50));
     m_pCamera->MoveTo(m_pCamera->GetPos());
 
-    m_pRenderer = new LSpriteRenderer(eSpriteMode::Unbatched3D);
+    m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
     m_pRenderer->Initialize(eSprite::Size); 
     m_pObjectManager = new OObjectManager();
@@ -53,6 +52,11 @@ void CGame::LoadImages(){
     m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
     m_pRenderer->Load(eSprite::Pig,  "pig"); 
     m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
+    //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
+
+    //std::vector<LTextureDesc*> out_textures;
+    //m_pRenderer->SplitTextureFile("\\Media\\Images\\pinksquare2.png", out_textures, 4, 4);
+    //m_pRenderer->LoadTextureDescriptors(out_textures);
 
     m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
@@ -94,8 +98,8 @@ void CGame::BeginGame(){
     delete m_pSquareDesc;
     //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc3D();
-    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::Pink_sheet;
-    m_pSquareDesc->m_nCurrentFrame = 1;
+    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
+    //m_pSquareDesc->m_nCurrentFrame = 1;
     m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
     m_pSquareDesc->m_fXScale = 4.0f;
     m_pSquareDesc->m_fYScale = 4.0f;
@@ -108,11 +112,11 @@ void CGame::BeginGame(){
 	    return;
     }
     m_pObjectManager;
-    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 0));
+    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x + 0, m_vWinCenter.y + 400, 0));
     auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 400, 0));
     if (auto char2 = character2.lock()) {
-        char2->speed = char2->speed * -1;
-        char2->SetObjectCollisionType(ECollisionType::Dynamic);
+        char2->speed = char2->speed * 0;
+        char2->SetObjectCollisionType(ECollisionType::Static);
     }
 
     LevelData& data = LvlImporter->GetLevelData(); //get first level for now

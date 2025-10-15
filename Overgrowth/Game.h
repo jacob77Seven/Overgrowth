@@ -7,7 +7,7 @@
 #include "Component.h"
 #include "Settings.h"
 #include "SpriteDesc.h"
-#include "SpriteRenderer.h"
+#include "Src/Renderer.h"
 #include "Src/LevelImporter.h"
 #include "Src/Common.h"
 #include "Src/ObjectManager.h"
@@ -30,7 +30,7 @@ class CGame:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
     LSpriteDesc3D* m_pSquareDesc = nullptr;
-    LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
+    ORenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     OObjectManager* m_pObjectManager = nullptr; ///< Pointer to renderer.
     LevelImporter* LvlImporter = nullptr;
     Vector2 m_vCameraPos;

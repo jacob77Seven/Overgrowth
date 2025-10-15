@@ -16,7 +16,7 @@ void TestCharacter::BeginPlay()
 TestCharacter::TestCharacter(const Vector3& p) 
     : OBaseCharacter(p)
 {
-    speed = 200.f * OCommon::m_fTile;
+    speed = 50.f * OCommon::m_fTile;
     m_nSpriteIndex = (UINT)eSprite::Pig;
     EObjectCollisionType = ECollisionType::Dynamic;
     m_nCurrentFrame = 0;
