@@ -41,7 +41,7 @@ int main() {
 
         //path for generalization
         fs::path xmlPath = exePath / "../../Media/XML/gamesettings.xml";
-        fs::path outputPath = exePath / "../../Overgrowth/assetDefines.h";
+        fs::path outputPath = exePath / "../../Overgrowth/AssetDefines.h";
 
         xmlPath = fs::weakly_canonical(xmlPath);
         outputPath = fs::weakly_canonical(outputPath);
@@ -104,7 +104,30 @@ int main() {
         out << "    ,Size // MUST BE LAST\n";
         out << "}; // eSound\n\n";
 
-        out << "#endif // __AUTO_ASSET_DEFINES__\n";
+
+        //creating array of the handles
+        // ---Sprites---
+        out << "string spriteHandles[" << spriteNames.size() << "] = {";
+        for (size_t i = 0; i < spriteNames.size(); ++i)
+            if (i == spriteNames.size() - 1) {
+                out << spriteNames[i] << "};" << endl;
+            }
+            else {
+                out << spriteNames[i] << ", ";
+            }
+
+        // ---Sounds---
+        out << "string soundHandles[" << soundNames.size() << "] = {";
+        for (size_t i = 0; i < soundNames.size(); ++i)
+            if (i == soundNames.size() - 1) {
+                out << soundNames[i] << "};" << endl;
+            }
+            else {
+                out << soundNames[i] << ", ";
+            }
+
+
+        out << "\n #endif // __AUTO_ASSET_DEFINES__\n";
         out.close();
 
         cout << "Generated assetDefines.h successfully.\n";

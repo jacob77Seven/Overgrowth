@@ -25,4 +25,7 @@ enum class eSound : UINT {
     ,Size // MUST BE LAST
 }; // eSound
 
-#endif // __AUTO_ASSET_DEFINES__
+string spriteHandles[4] = {background, textwheel, PinkSquare, SylvaraTest};
+string soundHandles[4] = {piano, oink, clang, grunt};
+
+ #endif // __AUTO_ASSET_DEFINES__
