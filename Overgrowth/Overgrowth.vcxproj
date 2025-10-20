@@ -167,6 +167,7 @@
     <ClCompile Include="Src\Common.cpp" />
     <ClCompile Include="Src\LevelImporter.cpp" />
     <ClCompile Include="Src\UIManager.cpp" />
+    <ClCompile Include="Src\UIWidgetAbility.cpp" />
     <ClCompile Include="Src\UIWidgetCharFrame.cpp" />
     <ClCompile Include="Src\UIWidgetHealthBar.cpp" />
     <ClCompile Include="Src\UIWidgetManaBar.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Src\InputInterface.h" />
     <ClInclude Include="Src\LevelImporter.h" />
     <ClInclude Include="Src\UIManager.h" />
+    <ClInclude Include="Src\UIWidgetAbility.h" />
     <ClInclude Include="Src\UIWidgetCharFrame.h" />
     <ClInclude Include="Src\UIWidgetHealthBar.h" />
     <ClInclude Include="Src\UIWidgetManaBar.h" />

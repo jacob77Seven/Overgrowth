@@ -21,18 +21,37 @@ void CUIManager::InitializeUI() {
 	m_pDruidManabar.SetBackgroundSprite((UINT)eSprite::ManabarBackground, m_pRenderer);
 	m_pDruidManabar.SetBarSprite((UINT)eSprite::Manabar, m_pRenderer);
 
-	SetActiveCharFrame(eInput::KeyOne);
-	CalcHealthbarsTargets(eInput::KeyOne);
+	m_pRogueAbilityOne.SetBackgroundSprite((UINT)eSprite::RogueAbilityOne, m_pRenderer);
+	m_pRogueAbilityOne.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+
+	charSelected = eCharSelected::Rogue;
+	CalcFrameTargets();
+	CalcHealthbarsTargets();
 	MoveUI();
 }
 
 void CUIManager::Input(const eInput& input) {
-	if (m_pTimer->GetTime() - m_fCharSwitchTime > m_fCharSwitchCooldown)
-		if (input == eInput::KeyOne || input == eInput::KeyTwo || input == eInput::KeyThree) {
-			SetActiveCharFrame(input);
-			CalcHealthbarsTargets(input);
-			m_fCharSwitchTime = m_pTimer->GetTime();
+	if (m_pTimer->GetTime() - m_fCharSwitchTime > m_fCharSwitchCooldown) {
+		switch (input) {
+		case eInput::KeyOne:
+			charSelected = eCharSelected::Rogue;
+			break;
+		case eInput::KeyTwo:
+			charSelected = eCharSelected::Warrior;
+			break;
+		case eInput::KeyThree:
+			charSelected = eCharSelected::Druid;
+			break;
 		}
+
+		CalcFrameTargets();
+		CalcHealthbarsTargets();
+		m_fCharSwitchTime = m_pTimer->GetTime();
+	}
+
+	if (input == eInput::KeyQ) {
+		printf("Ability 1\n");
+	}
 }
 
 void CUIManager::MoveUI() {
@@ -50,61 +69,66 @@ void CUIManager::MoveUI() {
 		m_pDruidManabar.SetToTargets();
 		return;
 	}
+	else {
+		float t = m_fElapsedTime / m_fCharSwitchCooldown;
 
-	float t = m_fElapsedTime / m_fCharSwitchCooldown;
+		m_pRogueFrame.InterpToTargets(t);
+		m_pWarriorFrame.InterpToTargets(t);
+		m_pDruidFrame.InterpToTargets(t);
 
-	m_pRogueFrame.InterpToTargets(t);
-	m_pWarriorFrame.InterpToTargets(t);
-	m_pDruidFrame.InterpToTargets(t);
+		m_pRogueHealthbar.InterpToTargets(t);
+		m_pWarriorHealthbar.InterpToTargets(t);
+		m_pDruidHealthbar.InterpToTargets(t);
 
-	m_pRogueHealthbar.InterpToTargets(t);
-	m_pWarriorHealthbar.InterpToTargets(t);
-	m_pDruidHealthbar.InterpToTargets(t);
-
-	m_pDruidManabar.InterpToTargets(t);
+		m_pDruidManabar.InterpToTargets(t);
+	}
 }
 
-void CUIManager::SetActiveCharFrame(const eInput& input) {
-	switch (input) {
-		case eInput::KeyOne:
+void CUIManager::CalcAbilitiesTargets() {
+
+}
+
+void CUIManager::CalcFrameTargets() {
+	switch (charSelected) {
+		case eCharSelected::Rogue:
 			m_pRogueFrame.CalcTargetScale(m_fActiveFrameHeight);
 			m_pWarriorFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pDruidFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			break;
-		case eInput::KeyTwo:
+		case eCharSelected::Warrior:
 			m_pRogueFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pWarriorFrame.CalcTargetScale(m_fActiveFrameHeight);
 			m_pDruidFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			break;
-		case eInput::KeyThree:
+		case eCharSelected::Druid:
 			m_pRogueFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pWarriorFrame.CalcTargetScale(m_fInactiveFrameHeight);
 			m_pDruidFrame.CalcTargetScale(m_fActiveFrameHeight);
 			break;
 	}
 
-	m_pRogueFrame.CalcTargetPos((float)m_nWinHeight);
+	m_pRogueFrame.CalcTargetPos(m_nWinHeight);
 	m_pWarriorFrame.CalcTargetPos(m_pRogueFrame.m_fTargetPosY - m_pRogueFrame.m_fTargetPosX - m_fFrameOffset);
 	m_pDruidFrame.CalcTargetPos(m_pWarriorFrame.m_fTargetPosY - m_pWarriorFrame.m_fTargetPosX - m_fFrameOffset);
 }
 
-void CUIManager::CalcHealthbarsTargets(const eInput& input) {
-	switch (input) {
-		case eInput::KeyOne:
+void CUIManager::CalcHealthbarsTargets() {
+	switch (charSelected) {
+		case eCharSelected::Rogue:
 			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
 			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			
 			m_pDruidManabar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			break;
-		case eInput::KeyTwo:
+		case eCharSelected::Warrior:
 			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);
 			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			
 			m_pDruidManabar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			break;
-		case eInput::KeyThree:
+		case eCharSelected::Druid:
 			m_pRogueHealthbar.CalcTargets(m_pRogueFrame.m_fTargetPosX, m_pRogueFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pWarriorHealthbar.CalcTargets(m_pWarriorFrame.m_fTargetPosX, m_pWarriorFrame.m_fTargetPosY, m_fInactiveHealthbarWidth, m_fInactiveHealthbarHeight);
 			m_pDruidHealthbar.CalcTargets(m_pDruidFrame.m_fTargetPosX, m_pDruidFrame.m_fTargetPosY, m_fActiveHealthbarWidth, m_fActiveHealthbarHeight);

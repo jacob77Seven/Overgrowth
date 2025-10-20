@@ -20,6 +20,16 @@
 	<sprite name="healthbar" file="healthbar.png"/>
 	<sprite name="manabarbackground" file="manabarbackground.png"/>
 	<sprite name="manabar" file="manabar.png"/>
+	<sprite name="rogueabilityone" file="rogueabilityone.png"/>
+	<sprite name="rogueabilitytwo" file="rogueabilitytwo.png"/>
+	<sprite name="rogueabilitythree" file="rogueabilitythree.png"/>
+	<sprite name="warriorabilityone" file="warriorabilityone.png"/>
+	<sprite name="warriorabilitytwo" file="warriorabilitytwo.png"/>
+	<sprite name="warriorabilitythree" file="warriorabilitythree.png"/>
+	<sprite name="druidabilityone" file="druidabilityone.png"/>
+	<sprite name="druidabilitytwo" file="druidabilitytwo.png"/>
+	<sprite name="druidabilitythree" file="druidabilitythree.png"/>
+	<sprite name="abilitycooldown" file="abilitycooldown.png"/>
   </sprites>
 
   <!-- sound -->

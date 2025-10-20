@@ -58,6 +58,19 @@ void CGame::LoadImages(){
   m_pRenderer->Load(eSprite::Healthbar, "healthbar");
   m_pRenderer->Load(eSprite::ManabarBackground, "manabarbackground");
   m_pRenderer->Load(eSprite::Manabar, "manabar");
+  m_pRenderer->Load(eSprite::AbilityCooldown, "abilitycooldown");
+
+  m_pRenderer->Load(eSprite::RogueAbilityOne, "rogueabilityone");
+  m_pRenderer->Load(eSprite::RogueAbilityTwo, "rogueabilitytwo");
+  m_pRenderer->Load(eSprite::RogueAbilityThree, "rogueabilitythree");
+
+  m_pRenderer->Load(eSprite::WarriorAbilityOne, "warriorabilityone");
+  m_pRenderer->Load(eSprite::WarriorAbilityTwo, "warriorabilitytwo");
+  m_pRenderer->Load(eSprite::WarriorAbilityThree, "warriorabilitythree");
+
+  m_pRenderer->Load(eSprite::DruidAbilityOne, "druidabilityone");
+  m_pRenderer->Load(eSprite::DruidAbilityTwo, "druidabilitytwo");
+  m_pRenderer->Load(eSprite::DruidAbilityThree, "druidabilitythree");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
@@ -107,6 +120,18 @@ void CGame::KeyboardHandler(){
 
 	  if (m_pKeyboard->TriggerDown('3')) {
 		  SendInput(eInput::KeyThree);
+	  }
+
+	  if (m_pKeyboard->TriggerDown('Q')) {
+		  SendInput(eInput::KeyQ);
+	  }
+
+	  if (m_pKeyboard->TriggerDown('E')) {
+		  SendInput(eInput::KeyE);
+	  }
+
+	  if (m_pKeyboard->TriggerDown('R')) {
+		  SendInput(eInput::KeyR);
 	  }
 } //KeyboardHandler
 

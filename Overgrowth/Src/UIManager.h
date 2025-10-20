@@ -4,6 +4,9 @@
 #include "UIWidgetCharFrame.h"
 #include "UIWidgetHealthBar.h"
 #include "UIWidgetManaBar.h"
+#include "UIWidgetAbility.h"
+
+
 
 class CUIManager :
     public LComponent,
@@ -11,6 +14,10 @@ class CUIManager :
     public CCommon,
     public IInput {
 private:
+    enum class eCharSelected : UINT {
+        Rogue, Warrior, Druid
+    };
+
     UIWidgetCharFrame m_pRogueFrame;
     UIWidgetCharFrame m_pWarriorFrame;
     UIWidgetCharFrame m_pDruidFrame;
@@ -19,6 +26,10 @@ private:
     UIWidgetHealthBar m_pWarriorHealthbar;
     UIWidgetHealthBar m_pDruidHealthbar;
     UIWidgetManaBar m_pDruidManabar;
+
+    UIWidgetAbility m_pRogueAbilityOne;
+
+    eCharSelected charSelected = eCharSelected::Rogue;
 
     float m_fActiveFrameHeight = m_nWinHeight * 0.15f;
     float m_fInactiveFrameHeight = m_nWinHeight * 0.1f;
@@ -32,9 +43,12 @@ private:
     float m_fCharSwitchCooldown = 0.5f;
     float m_fCharSwitchTime = -1.0f;
 
+    float m_fAbilityCooldown = 0.5f;
+
     void MoveUI();
-    void CalcHealthbarsTargets(const eInput& input);
-    void SetActiveCharFrame(const eInput& input);
+    void CalcHealthbarsTargets();
+    void CalcAbilitiesTargets();
+    void CalcFrameTargets();
 public:
     void InitializeUI();
     void DrawUI();
