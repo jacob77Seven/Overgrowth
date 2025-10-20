@@ -28,7 +28,7 @@ void CGame::Initialize(){
 
     m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
-    m_pRenderer->Initialize(eSprite::Size); 
+    m_pRenderer->Initialize(21); 
     m_pObjectManager = new OObjectManager();
     OCommon::m_pObjectManager = m_pObjectManager;
 
@@ -54,9 +54,9 @@ void CGame::LoadImages(){
     m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
     //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
 
-    //std::vector<LTextureDesc*> out_textures;
-    //m_pRenderer->SplitTextureFile("\\Media\\Images\\pinksquare2.png", out_textures, 4, 4);
-    //m_pRenderer->LoadTextureDescriptors(out_textures);
+    std::vector<LTextureDesc*> out_textures;
+    m_pRenderer->SplitTextureFile("C:\\Users\\jacob\\Documents\\UNT\\GameDevelopment\\Overgrowth\\Media\\Images\\PinkSquare.png", out_textures, 4, 4);
+    m_pRenderer->LoadTextureDescriptors(out_textures);
 
     m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
@@ -98,7 +98,8 @@ void CGame::BeginGame(){
     delete m_pSquareDesc;
     //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc3D();
-    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
+    //m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
+    m_pSquareDesc->m_nSpriteIndex = (UINT)7;
     //m_pSquareDesc->m_nCurrentFrame = 1;
     m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
     m_pSquareDesc->m_fXScale = 4.0f;
@@ -202,15 +203,6 @@ void CGame::RenderFrame(){
     }
 
     if (m_pSquareDesc) {
-        //LSpriteDesc3D desc3D;
-        //desc3D.m_nSpriteIndex = m_pSquareDesc->m_nSpriteIndex;
-        //desc3D.m_vPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, 0.0f);
-        //desc3D.m_fXScale = 4.0f;
-        //desc3D.m_fYScale = 4.0f;
-        //desc3D.m_fRoll = 0.0f;
-        //desc3D.m_fAlpha = 1.0f;
-        //desc3D.m_f4Tint = Vector4(1, 1, 1, 1);
-        //m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
         
         m_pRenderer->Draw(m_pSquareDesc);
     }
