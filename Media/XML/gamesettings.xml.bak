@@ -10,6 +10,10 @@
         <sprite name="textwheel" file="textwheel.png"/>
         <sprite name="PinkSquare" file="PinkSquare.png"/>
         <sprite name="SylvaraTest" file="SylvaraTest.png"/>
+        <sprite name="healthbar" file="healthbar.png"/>
+        <sprite name="healthbarbackground" file="healthbarbackground.png"/>
+        <sprite name="LyingPinkSquare" file="LyingPinkSquare.png"/>
+        <sprite name="manabar" file="manabar.png"/>
     </sprites>
     <!-- sound -->
     <sounds path="Media\Sounds">

@@ -12,7 +12,11 @@ enum class eSprite : UINT {
     background,
     textwheel,
     PinkSquare,
-    SylvaraTest
+    SylvaraTest,
+    healthbar,
+    healthbarbackground,
+    LyingPinkSquare,
+    manabar
     ,Size // MUST BE LAST
 }; // eSprite
 
@@ -25,7 +29,7 @@ enum class eSound : UINT {
     ,Size // MUST BE LAST
 }; // eSound
 
-string spriteHandles[4] = {background, textwheel, PinkSquare, SylvaraTest};
-string soundHandles[4] = {piano, oink, clang, grunt};
+string spriteHandles[8] = {"background", "textwheel", "PinkSquare", "SylvaraTest", "healthbar", "healthbarbackground", "LyingPinkSquare", "manabar"};
+string soundHandles[4] = {"piano", "oink", "clang", "grunt"};
 
  #endif // __AUTO_ASSET_DEFINES__
