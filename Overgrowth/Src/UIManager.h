@@ -28,6 +28,8 @@ private:
     UIWidgetManaBar m_pDruidManabar;
 
     UIWidgetAbility m_pRogueAbilityOne;
+    UIWidgetAbility m_pRogueAbilityTwo;
+    UIWidgetAbility m_pRogueAbilityThree;
 
     eCharSelected charSelected = eCharSelected::Rogue;
 
@@ -40,10 +42,15 @@ private:
     float m_fInactiveHealthbarHeight = m_fInactiveFrameHeight * 0.15f;
     float m_fInactiveHealthbarWidth = m_fInactiveHealthbarHeight * 10.0f;
 
+    float m_fAbilityOffset = m_nWinWidth * 0.1f;
+    float m_fAbilityTwoPosX = m_nWinWidth / 2.0;
+    float m_fAbilityOnePosX = m_fAbilityTwoPosX - m_fAbilityOffset;
+    float m_fAbilityThreePosX = m_fAbilityTwoPosX + m_fAbilityOffset;
+
     float m_fCharSwitchCooldown = 0.5f;
     float m_fCharSwitchTime = -1.0f;
 
-    float m_fAbilityCooldown = 0.5f;
+    float m_fAbilityCooldown = 2.0f;
 
     void MoveUI();
     void CalcHealthbarsTargets();

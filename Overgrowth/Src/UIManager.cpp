@@ -23,39 +23,75 @@ void CUIManager::InitializeUI() {
 
 	m_pRogueAbilityOne.SetBackgroundSprite((UINT)eSprite::RogueAbilityOne, m_pRenderer);
 	m_pRogueAbilityOne.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+	m_pRogueAbilityTwo.SetBackgroundSprite((UINT)eSprite::RogueAbilityTwo, m_pRenderer);
+	m_pRogueAbilityTwo.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+	m_pRogueAbilityThree.SetBackgroundSprite((UINT)eSprite::RogueAbilityThree, m_pRenderer);
+	m_pRogueAbilityThree.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
 
 	charSelected = eCharSelected::Rogue;
 	CalcFrameTargets();
 	CalcHealthbarsTargets();
+	CalcAbilitiesTargets();
 	MoveUI();
 }
 
 void CUIManager::Input(const eInput& input) {
-	if (m_pTimer->GetTime() - m_fCharSwitchTime > m_fCharSwitchCooldown) {
+	float currentTime = m_pTimer->GetTime();
+
+	if (currentTime - m_fCharSwitchTime > m_fCharSwitchCooldown) {
 		switch (input) {
 		case eInput::KeyOne:
 			charSelected = eCharSelected::Rogue;
+			CalcFrameTargets();
+			CalcHealthbarsTargets();
+			m_fCharSwitchTime = m_pTimer->GetTime();
 			break;
 		case eInput::KeyTwo:
 			charSelected = eCharSelected::Warrior;
+			CalcFrameTargets();
+			CalcHealthbarsTargets();
+			m_fCharSwitchTime = m_pTimer->GetTime();
 			break;
 		case eInput::KeyThree:
 			charSelected = eCharSelected::Druid;
+			CalcFrameTargets();
+			CalcHealthbarsTargets();
+			m_fCharSwitchTime = m_pTimer->GetTime();
 			break;
 		}
-
-		CalcFrameTargets();
-		CalcHealthbarsTargets();
-		m_fCharSwitchTime = m_pTimer->GetTime();
 	}
 
 	if (input == eInput::KeyQ) {
-		printf("Ability 1\n");
+		switch (charSelected) {
+		case eCharSelected::Rogue:
+			if (currentTime - m_pRogueAbilityOne.GetPressedTime() > m_fAbilityCooldown) {
+				m_pRogueAbilityOne.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+		}
+	}
+
+	if (input == eInput::KeyE) {
+		switch (charSelected) {
+		case eCharSelected::Rogue:
+			if (currentTime - m_pRogueAbilityTwo.GetPressedTime() > m_fAbilityCooldown) {
+				m_pRogueAbilityTwo.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+		}
+	}
+
+	if (input == eInput::KeyR) {
+		switch (charSelected) {
+		case eCharSelected::Rogue:
+			if (currentTime - m_pRogueAbilityThree.GetPressedTime() > m_fAbilityCooldown) {
+				m_pRogueAbilityThree.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+		}
 	}
 }
 
 void CUIManager::MoveUI() {
-	float m_fElapsedTime = m_pTimer->GetTime() - m_fCharSwitchTime;
+	float m_fTime = m_pTimer->GetTime();
+	float m_fElapsedTime = m_fTime - m_fCharSwitchTime;
 
 	if (m_fElapsedTime > m_fCharSwitchCooldown) {
 		m_pRogueFrame.SetToTargets();
@@ -67,7 +103,6 @@ void CUIManager::MoveUI() {
 		m_pDruidHealthbar.SetToTargets();
 
 		m_pDruidManabar.SetToTargets();
-		return;
 	}
 	else {
 		float t = m_fElapsedTime / m_fCharSwitchCooldown;
@@ -82,10 +117,41 @@ void CUIManager::MoveUI() {
 
 		m_pDruidManabar.InterpToTargets(t);
 	}
+
+	switch (charSelected) {
+	case eCharSelected::Rogue:
+		m_fElapsedTime = m_fTime - m_pRogueAbilityOne.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pRogueAbilityOne.SetToTargets();
+		else
+			m_pRogueAbilityOne.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		m_fElapsedTime = m_fTime - m_pRogueAbilityTwo.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pRogueAbilityTwo.SetToTargets();
+		else
+			m_pRogueAbilityTwo.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		m_fElapsedTime = m_fTime - m_pRogueAbilityThree.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pRogueAbilityThree.SetToTargets();
+		else
+			m_pRogueAbilityThree.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		break;
+	}
 }
 
 void CUIManager::CalcAbilitiesTargets() {
-
+	switch (charSelected) {
+	case eCharSelected::Rogue:
+		m_pRogueAbilityOne.CalcTargets(m_fAbilityOnePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+		m_pRogueAbilityTwo.CalcTargets(m_fAbilityTwoPosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+		m_pRogueAbilityThree.CalcTargets(m_fAbilityThreePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+	}
 }
 
 void CUIManager::CalcFrameTargets() {
@@ -156,4 +222,15 @@ void CUIManager::DrawUI() {
 
 	m_pRenderer->Draw(&m_pDruidManabar.GetBackgroundSprite());
 	m_pRenderer->Draw(&m_pDruidManabar.GetBarSprite());
+
+	switch (charSelected) {
+	case eCharSelected::Rogue:
+		m_pRenderer->Draw(&m_pRogueAbilityOne.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pRogueAbilityOne.GetBarSprite());
+		m_pRenderer->Draw(&m_pRogueAbilityTwo.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pRogueAbilityTwo.GetBarSprite());
+		m_pRenderer->Draw(&m_pRogueAbilityThree.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pRogueAbilityThree.GetBarSprite());
+		break;
+	}
 }
