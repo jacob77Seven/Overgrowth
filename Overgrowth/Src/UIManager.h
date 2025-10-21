@@ -31,6 +31,14 @@ private:
     UIWidgetAbility m_pRogueAbilityTwo;
     UIWidgetAbility m_pRogueAbilityThree;
 
+    UIWidgetAbility m_pWarriorAbilityOne;
+    UIWidgetAbility m_pWarriorAbilityTwo;
+    UIWidgetAbility m_pWarriorAbilityThree;
+
+    UIWidgetAbility m_pDruidAbilityOne;
+    UIWidgetAbility m_pDruidAbilityTwo;
+    UIWidgetAbility m_pDruidAbilityThree;
+
     eCharSelected charSelected = eCharSelected::Rogue;
 
     float m_fActiveFrameHeight = m_nWinHeight * 0.15f;
@@ -43,7 +51,7 @@ private:
     float m_fInactiveHealthbarWidth = m_fInactiveHealthbarHeight * 10.0f;
 
     float m_fAbilityOffset = m_nWinWidth * 0.1f;
-    float m_fAbilityTwoPosX = m_nWinWidth / 2.0;
+    float m_fAbilityTwoPosX = m_nWinWidth / 2.0f;
     float m_fAbilityOnePosX = m_fAbilityTwoPosX - m_fAbilityOffset;
     float m_fAbilityThreePosX = m_fAbilityTwoPosX + m_fAbilityOffset;
 

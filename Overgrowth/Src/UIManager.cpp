@@ -28,7 +28,22 @@ void CUIManager::InitializeUI() {
 	m_pRogueAbilityThree.SetBackgroundSprite((UINT)eSprite::RogueAbilityThree, m_pRenderer);
 	m_pRogueAbilityThree.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
 
+	m_pWarriorAbilityOne.SetBackgroundSprite((UINT)eSprite::WarriorAbilityOne, m_pRenderer);
+	m_pWarriorAbilityOne.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+	m_pWarriorAbilityTwo.SetBackgroundSprite((UINT)eSprite::WarriorAbilityTwo, m_pRenderer);
+	m_pWarriorAbilityTwo.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+	m_pWarriorAbilityThree.SetBackgroundSprite((UINT)eSprite::WarriorAbilityThree, m_pRenderer);
+	m_pWarriorAbilityThree.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+
+	m_pDruidAbilityOne.SetBackgroundSprite((UINT)eSprite::DruidAbilityOne, m_pRenderer);
+	m_pDruidAbilityOne.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+	m_pDruidAbilityTwo.SetBackgroundSprite((UINT)eSprite::DruidAbilityTwo, m_pRenderer);
+	m_pDruidAbilityTwo.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+	m_pDruidAbilityThree.SetBackgroundSprite((UINT)eSprite::DruidAbilityThree, m_pRenderer);
+	m_pDruidAbilityThree.SetBarSprite((UINT)eSprite::AbilityCooldown, m_pRenderer);
+
 	charSelected = eCharSelected::Rogue;
+
 	CalcFrameTargets();
 	CalcHealthbarsTargets();
 	CalcAbilitiesTargets();
@@ -67,6 +82,17 @@ void CUIManager::Input(const eInput& input) {
 			if (currentTime - m_pRogueAbilityOne.GetPressedTime() > m_fAbilityCooldown) {
 				m_pRogueAbilityOne.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
 			}
+			break;
+		case eCharSelected::Warrior:
+			if (currentTime - m_pWarriorAbilityOne.GetPressedTime() > m_fAbilityCooldown) {
+				m_pWarriorAbilityOne.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+			break;
+		case eCharSelected::Druid:
+			if (currentTime - m_pDruidAbilityOne.GetPressedTime() > m_fAbilityCooldown) {
+				m_pDruidAbilityOne.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+			break;
 		}
 	}
 
@@ -76,6 +102,17 @@ void CUIManager::Input(const eInput& input) {
 			if (currentTime - m_pRogueAbilityTwo.GetPressedTime() > m_fAbilityCooldown) {
 				m_pRogueAbilityTwo.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
 			}
+			break;
+		case eCharSelected::Warrior:
+			if (currentTime - m_pWarriorAbilityTwo.GetPressedTime() > m_fAbilityCooldown) {
+				m_pWarriorAbilityTwo.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+			break;
+		case eCharSelected::Druid:
+			if (currentTime - m_pDruidAbilityTwo.GetPressedTime() > m_fAbilityCooldown) {
+				m_pDruidAbilityTwo.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+			break;
 		}
 	}
 
@@ -85,6 +122,17 @@ void CUIManager::Input(const eInput& input) {
 			if (currentTime - m_pRogueAbilityThree.GetPressedTime() > m_fAbilityCooldown) {
 				m_pRogueAbilityThree.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
 			}
+			break;
+		case eCharSelected::Warrior:
+			if (currentTime - m_pWarriorAbilityThree.GetPressedTime() > m_fAbilityCooldown) {
+				m_pWarriorAbilityThree.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+			break;
+		case eCharSelected::Druid:
+			if (currentTime - m_pDruidAbilityThree.GetPressedTime() > m_fAbilityCooldown) {
+				m_pDruidAbilityThree.AbilityPressed(m_pTimer->GetTime(), m_fAbilityCooldown);
+			}
+			break;
 		}
 	}
 }
@@ -142,16 +190,67 @@ void CUIManager::MoveUI() {
 			m_pRogueAbilityThree.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
 
 		break;
+	case eCharSelected::Warrior:
+		m_fElapsedTime = m_fTime - m_pWarriorAbilityOne.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pWarriorAbilityOne.SetToTargets();
+		else
+			m_pWarriorAbilityOne.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		m_fElapsedTime = m_fTime - m_pWarriorAbilityTwo.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pWarriorAbilityTwo.SetToTargets();
+		else
+			m_pWarriorAbilityTwo.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		m_fElapsedTime = m_fTime - m_pWarriorAbilityThree.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pWarriorAbilityThree.SetToTargets();
+		else
+			m_pWarriorAbilityThree.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		break;
+	case eCharSelected::Druid:
+		m_fElapsedTime = m_fTime - m_pDruidAbilityOne.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pDruidAbilityOne.SetToTargets();
+		else
+			m_pDruidAbilityOne.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		m_fElapsedTime = m_fTime - m_pDruidAbilityTwo.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pDruidAbilityTwo.SetToTargets();
+		else
+			m_pDruidAbilityTwo.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		m_fElapsedTime = m_fTime - m_pDruidAbilityThree.GetPressedTime();
+
+		if (m_fElapsedTime > m_fAbilityCooldown)
+			m_pDruidAbilityThree.SetToTargets();
+		else
+			m_pDruidAbilityThree.InterpToTargets(m_fElapsedTime / m_fAbilityCooldown);
+
+		break;
 	}
 }
 
 void CUIManager::CalcAbilitiesTargets() {
-	switch (charSelected) {
-	case eCharSelected::Rogue:
-		m_pRogueAbilityOne.CalcTargets(m_fAbilityOnePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
-		m_pRogueAbilityTwo.CalcTargets(m_fAbilityTwoPosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
-		m_pRogueAbilityThree.CalcTargets(m_fAbilityThreePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
-	}
+	m_pRogueAbilityOne.CalcTargets(m_fAbilityOnePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+	m_pRogueAbilityTwo.CalcTargets(m_fAbilityTwoPosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+	m_pRogueAbilityThree.CalcTargets(m_fAbilityThreePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+
+	m_pWarriorAbilityOne.CalcTargets(m_fAbilityOnePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+	m_pWarriorAbilityTwo.CalcTargets(m_fAbilityTwoPosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+	m_pWarriorAbilityThree.CalcTargets(m_fAbilityThreePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+
+	m_pDruidAbilityOne.CalcTargets(m_fAbilityOnePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+	m_pDruidAbilityTwo.CalcTargets(m_fAbilityTwoPosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
+	m_pDruidAbilityThree.CalcTargets(m_fAbilityThreePosX, m_fFrameOffset, m_fInactiveFrameHeight, m_fInactiveFrameHeight);
 }
 
 void CUIManager::CalcFrameTargets() {
@@ -173,7 +272,7 @@ void CUIManager::CalcFrameTargets() {
 			break;
 	}
 
-	m_pRogueFrame.CalcTargetPos(m_nWinHeight);
+	m_pRogueFrame.CalcTargetPos((float)m_nWinHeight);
 	m_pWarriorFrame.CalcTargetPos(m_pRogueFrame.m_fTargetPosY - m_pRogueFrame.m_fTargetPosX - m_fFrameOffset);
 	m_pDruidFrame.CalcTargetPos(m_pWarriorFrame.m_fTargetPosY - m_pWarriorFrame.m_fTargetPosX - m_fFrameOffset);
 }
@@ -231,6 +330,22 @@ void CUIManager::DrawUI() {
 		m_pRenderer->Draw(&m_pRogueAbilityTwo.GetBarSprite());
 		m_pRenderer->Draw(&m_pRogueAbilityThree.GetBackgroundSprite());
 		m_pRenderer->Draw(&m_pRogueAbilityThree.GetBarSprite());
+		break;
+	case eCharSelected::Warrior:
+		m_pRenderer->Draw(&m_pWarriorAbilityOne.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pWarriorAbilityOne.GetBarSprite());
+		m_pRenderer->Draw(&m_pWarriorAbilityTwo.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pWarriorAbilityTwo.GetBarSprite());
+		m_pRenderer->Draw(&m_pWarriorAbilityThree.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pWarriorAbilityThree.GetBarSprite());
+		break;
+	case eCharSelected::Druid:
+		m_pRenderer->Draw(&m_pDruidAbilityOne.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pDruidAbilityOne.GetBarSprite());
+		m_pRenderer->Draw(&m_pDruidAbilityTwo.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pDruidAbilityTwo.GetBarSprite());
+		m_pRenderer->Draw(&m_pDruidAbilityThree.GetBackgroundSprite());
+		m_pRenderer->Draw(&m_pDruidAbilityThree.GetBarSprite());
 		break;
 	}
 }

@@ -2,7 +2,7 @@
 
 void UIWidgetAbility::SetBarSprite(UINT index, const LSpriteRenderer* m_pRenderer) {
 	m_pBarSprite.m_nSpriteIndex = index;
-	m_pBarSprite.m_fAlpha = 0.75f;
+	m_pBarSprite.m_fAlpha = 0.9f;
 	m_pRenderer->GetSize(index, m_fBarSpriteSizeX, m_fBarSpriteSizeY);
 }
 
@@ -26,10 +26,10 @@ void UIWidgetAbility::CalcTargets(float m_fFrameTargetPosX, float m_fFrameTarget
 	m_fBarTargetScaleX = 1 / (m_fBarSpriteSizeX / m_fTargetWidth);
 	m_fBarTargetScaleY = m_fBarTargetScaleY = 0.0f;
 
-	m_fBackgroundTargetPosX = m_fFrameTargetPosX + (m_fBackgroundSpriteSizeX * m_fBackgroundTargetScaleX / 2);
+	m_fBackgroundTargetPosX = m_fFrameTargetPosX - (m_fBackgroundSpriteSizeX * m_fBackgroundTargetScaleX / 2);
 	m_fBackgroundTargetPosY = m_fFrameTargetPosY + (m_fBackgroundSpriteSizeY * m_fBackgroundTargetScaleY / 2);
 
-	m_fBarTargetPosX = m_fFrameTargetPosX + (m_fBarSpriteSizeX * m_fBarTargetScaleX / 2);
+	m_fBarTargetPosX = m_fFrameTargetPosX - (m_fBarSpriteSizeX * m_fBarTargetScaleX / 2);
 	m_fBarTargetPosY = m_fFrameTargetPosY;
 }
 
