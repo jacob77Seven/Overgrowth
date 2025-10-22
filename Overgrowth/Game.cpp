@@ -28,7 +28,7 @@ void CGame::Initialize(){
 
     m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
-    m_pRenderer->Initialize(21); 
+    m_pRenderer->Initialize(5, 16); 
     m_pObjectManager = new OObjectManager();
     OCommon::m_pObjectManager = m_pObjectManager;
 
@@ -54,9 +54,7 @@ void CGame::LoadImages(){
     m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
     //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
 
-    std::vector<LTextureDesc*> out_textures;
-    m_pRenderer->SplitTextureFile("C:\\Users\\jacob\\Documents\\UNT\\GameDevelopment\\Overgrowth\\Media\\Images\\PinkSquare.png", out_textures, 4, 4);
-    m_pRenderer->LoadTextureDescriptors(out_textures);
+    m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
 
     m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 

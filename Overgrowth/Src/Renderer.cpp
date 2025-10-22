@@ -11,8 +11,45 @@
 
 ORenderer::ORenderer(eSpriteMode mode)
     : LSpriteRenderer(mode) {
-    SheetSpriteSectionIndex = (UINT)m_nNumSprites;
+    //SheetSpriteSectionIndex = 0;
+    //ImageFilesSectionNum = 0;
+    //SheetSpriteSectionNum = 0;
 }
+
+
+//void ORenderer::Draw(const LSpriteDesc3D* sd) {
+//    LTextureDesc& td = m_pSprite[sd->m_nSpriteIndex]->
+//        GetTextureDesc(sd->m_nCurrentFrame);
+//
+//    const float xscale = sd->m_fXScale * td.m_nWidth;
+//    const float yscale = sd->m_fYScale * td.m_nHeight;
+//
+//    const XMVECTORF32 scale = { xscale, yscale, 1.0f };
+//
+//    const XMVECTORF32 translate = { sd->m_vPos.x, sd->m_vPos.y, sd->m_vPos.z };
+//
+//    const Quaternion q = Quaternion::CreateFromYawPitchRoll(
+//        sd->m_fYaw, sd->m_fPitch, sd->m_fRoll);
+//
+//    const XMMATRIX world = XMMatrixTransformation(
+//        g_XMZero, Quaternion::Identity, scale, g_XMZero, q, translate);
+//
+//    m_pSpriteEffect->SetTexture(
+//        m_pDescriptorHeap->GetGpuHandle(td.m_nResourceDescIndex),
+//        m_pStates->PointClamp());
+//
+//    m_pSpriteEffect->SetAlpha(sd->m_fAlpha);
+//
+//    m_pSpriteEffect->SetWorld(world);
+//    m_pSpriteEffect->SetView(XMLoadFloat4x4(&m_view));
+//
+//    m_pSpriteEffect->Apply(m_pCommandList);
+//
+//    m_pCommandList->IASetVertexBuffers(0, 1, m_pVBufView.get());
+//    m_pCommandList->IASetIndexBuffer(m_pIBufView.get());
+//    m_pCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+//    m_pCommandList->DrawIndexedInstanced(4, 1, 0, 0, 0);
+//} //Draw
 
 void ORenderer::LoadTextureDescriptors(const std::vector<LTextureDesc*>& in_textures)
 {
@@ -23,7 +60,7 @@ void ORenderer::LoadTextureDescriptors(const std::vector<LTextureDesc*>& in_text
     }
 
     for (size_t j = 0; j < in_textures.size(); ++j) {
-        size_t i = j + 5; // hardcoded offset (TODO: Replace with last spriteSheet index)
+        size_t i = j + ImageFilesSectionNum; // hardcoded offset (TODO: Replace with last spriteSheet index)
 
         if (m_pSprite[i] != nullptr) {
             delete m_pSprite[i];
@@ -41,17 +78,42 @@ void ORenderer::LoadTextureDescriptors(const std::vector<LTextureDesc*>& in_text
     }
 }
 
+void ORenderer::LoadSpriteSheet(UINT index, const char* name, int sizex, int sizey, int numSprites) {
 
-void ORenderer::SplitTextureFile(
-    const char* filename,
-    std::vector<LTextureDesc*>& out_textures,
-    int split_cols,
-    int split_rows)
-{
+    if (m_pXmlSettings == nullptr)
+        ABORT("Cannot access gamesettings.xml.");
+
+    XMLElement* pSpritesTag = m_pXmlSettings->FirstChildElement("sprites"); //sprites tag
+
+    if (pSpritesTag == nullptr)
+        ABORT("Cannot find <sprites> tag in gamesettings.xml");
+
+    std::string filepath = "";
+    std::string path(pSpritesTag->Attribute("path")); //get path
+
+    XMLElement* pSpriteTag = pSpritesTag->FirstChildElement("sprite");
+
+    while (pSpriteTag != nullptr && strcmp(name, pSpriteTag->Attribute("name")))
+        pSpriteTag = pSpriteTag->NextSiblingElement("sprite");
+
+    if (pSpriteTag == nullptr)
+        ABORT("Cannot find <sprite> tag with name \"%s\".\n", name);
+
+    LSprite* pSprite = nullptr;
+
+    if (pSpriteTag->Attribute("file")) { //from single-frame file
+        filepath = (std::string)(path + "\\" + pSpriteTag->Attribute("file"));
+        const char* extension = pSpriteTag->Attribute("ext");
+        //const int frames = std::max(1, pSpriteTag->IntAttribute("frames"));
+        //m_mapNameToIndex.insert(std::pair<std::string, UINT>(name, index));
+    } //if
+
+    std::vector<LTextureDesc*> out_textures;
+
     wchar_t* wfilename = nullptr;
-    MakeWideFileName(filename, wfilename);
+    MakeWideFileName(filepath.c_str(), wfilename);
 
-    std::ifstream file(filename);
+    std::ifstream file(filepath.c_str());
     if (!file) {
         std::cout << "Failed to open file.\n";
     }
@@ -81,13 +143,14 @@ void ORenderer::SplitTextureFile(
 
     const D3D12_RESOURCE_DESC sourceDesc = sourceTexture->GetDesc();
 
-    if (sourceDesc.Width % split_cols != 0 || sourceDesc.Height % split_rows != 0)
+    if (sourceDesc.Width % sizex != 0 || sourceDesc.Height % sizey != 0)
     {
         ABORT("Texture dimensions are not evenly divisible by split counts.");
     }
-
-    const UINT sub_width = sourceDesc.Width / split_cols;
-    const UINT sub_height = sourceDesc.Height / split_rows;
+    int numCols = sourceDesc.Width / sizex;
+    int numRows = sourceDesc.Height / sizey;
+    const UINT sub_width = sourceDesc.Width / numCols;
+    const UINT sub_height = sourceDesc.Height / numRows;
 
     // bytesPerPixel calculation
     const size_t bytesPerPixel = subresourceData.RowPitch / sourceDesc.Width;
@@ -96,12 +159,14 @@ void ORenderer::SplitTextureFile(
     const size_t sub_image_row_pitch = sub_width * bytesPerPixel;
 
     uint8_t* pSrcData = decodedData.get();
-
+    int importedSoFar = 0;
     // Create a smaller GPU resource for each tile and copy data
-    for (int y = 0; y < split_rows; ++y)
+    for (int y = 0; y < numRows; ++y)
     {
-        for (int x = 0; x < split_cols; ++x)
+        for (int x = 0; x < numCols; ++x)
         {
+            if (importedSoFar == numSprites)
+                break;
             LTextureDesc* tDesc = new LTextureDesc(); // Create temporary descriptor
 
             D3D12_RESOURCE_DESC tileDesc = sourceDesc;
@@ -148,6 +213,7 @@ void ORenderer::SplitTextureFile(
             // creates the SRV, and fills in the tDesc.
             ProcessTexture(pTileTexture, *tDesc);
             out_textures.push_back(tDesc);
+            importedSoFar++;
         }
     }
 
@@ -155,4 +221,28 @@ void ORenderer::SplitTextureFile(
     // End batch and wait for GPU to finish
     auto finished = resourceUpload.End(m_pDeviceResources->GetCommandQueue());
     finished.wait();
+
+    // Ensure the sprite array has been allocated by calling Initialize() first.
+    if (!m_pSprite || m_nNumSprites < out_textures.size() + 5) { // Check against offset
+        ABORT("Sprite renderer is not initialized or doesn't have enough space for new textures.");
+        return;
+    }
+
+    for (size_t j = 0; j < out_textures.size(); ++j) {
+        size_t i = j + ImageFilesSectionNum; // hardcoded offset (TODO: Replace with last spriteSheet index)
+
+        if (m_pSprite[i] != nullptr) {
+            delete m_pSprite[i];
+        }
+
+        // Create LSprite - allocates a tex descript
+        m_pSprite[i] = new LSprite(1);
+
+        // Get a reference to the LSprite's descriptor
+        LTextureDesc& destDesc = m_pSprite[i]->GetTextureDesc(0);
+
+        // copy from and delete temp descriptor
+        destDesc = *out_textures[j];
+        delete out_textures[j];
+    }
 }
