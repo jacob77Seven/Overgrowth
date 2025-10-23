@@ -58,6 +58,10 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
                 e.name = ent["__identifier"];
                 e.posX = ent["__worldX"];
                 e.posY = (float)ent["__worldY"] * -1 + 750; // same Y inversion logic
+				//if (layerName == "BackgroundEntities1") e.posZ = 500.0f;
+				//else if (layerName == "Background2Entities") e.posZ = 750.0f;
+				//else if (layerName == "ForegroundEntities") e.posZ = -500.0f;
+				//else e.posZ = 0.0f;
                 e.posZ = 0.0f;
 
                 lvlDat.entities.push_back(e);
