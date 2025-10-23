@@ -12,6 +12,7 @@
     <ClCompile Include="Src\Common.cpp" />
     <ClCompile Include="Src\TestCharacter.cpp" />
     <ClCompile Include="Src\TestObject.cpp" />
+    <ClCompile Include="Src\BaseLevelAsset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="Src\TestCharacter.h" />
     <ClInclude Include="Src\ObjectUtilitiesInterface.h" />
     <ClInclude Include="Src\TestObject.h" />
+    <ClInclude Include="Src\BaseLevelAsset.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />
