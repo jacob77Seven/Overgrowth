@@ -17,66 +17,43 @@ ORenderer::ORenderer(eSpriteMode mode)
 }
 
 
-//void ORenderer::Draw(const LSpriteDesc3D* sd) {
-//    LTextureDesc& td = m_pSprite[sd->m_nSpriteIndex]->
-//        GetTextureDesc(sd->m_nCurrentFrame);
-//
-//    const float xscale = sd->m_fXScale * td.m_nWidth;
-//    const float yscale = sd->m_fYScale * td.m_nHeight;
-//
-//    const XMVECTORF32 scale = { xscale, yscale, 1.0f };
-//
-//    const XMVECTORF32 translate = { sd->m_vPos.x, sd->m_vPos.y, sd->m_vPos.z };
-//
-//    const Quaternion q = Quaternion::CreateFromYawPitchRoll(
-//        sd->m_fYaw, sd->m_fPitch, sd->m_fRoll);
-//
-//    const XMMATRIX world = XMMatrixTransformation(
-//        g_XMZero, Quaternion::Identity, scale, g_XMZero, q, translate);
-//
-//    m_pSpriteEffect->SetTexture(
-//        m_pDescriptorHeap->GetGpuHandle(td.m_nResourceDescIndex),
-//        m_pStates->PointClamp());
-//
-//    m_pSpriteEffect->SetAlpha(sd->m_fAlpha);
-//
-//    m_pSpriteEffect->SetWorld(world);
-//    m_pSpriteEffect->SetView(XMLoadFloat4x4(&m_view));
-//
-//    m_pSpriteEffect->Apply(m_pCommandList);
-//
-//    m_pCommandList->IASetVertexBuffers(0, 1, m_pVBufView.get());
-//    m_pCommandList->IASetIndexBuffer(m_pIBufView.get());
-//    m_pCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-//    m_pCommandList->DrawIndexedInstanced(4, 1, 0, 0, 0);
-//} //Draw
+void ORenderer::Draw(const LSpriteDesc3D* sd) {
+    UINT SpriteIndex = sd->m_nSpriteIndex; // By default, the SpriteIndex is the m_nSpriteIndex of the sprite descriptor.
+    auto it = SheetToFirstIndex.find(sd->m_nSpriteIndex);
+    if (it != SheetToFirstIndex.end())
+        SpriteIndex = it->second + sd->m_nCurrentFrame;
 
-void ORenderer::LoadTextureDescriptors(const std::vector<LTextureDesc*>& in_textures)
-{
-    // Ensure the sprite array has been allocated by calling Initialize() first.
-    if (!m_pSprite || m_nNumSprites < in_textures.size() + 5) { // Check against offset
-        ABORT("Sprite renderer is not initialized or doesn't have enough space for new textures.");
-        return;
-    }
+    LTextureDesc& td = m_pSprite[SpriteIndex]->GetTextureDesc(0);
 
-    for (size_t j = 0; j < in_textures.size(); ++j) {
-        size_t i = j + ImageFilesSectionNum; // hardcoded offset (TODO: Replace with last spriteSheet index)
+    const float xscale = sd->m_fXScale * td.m_nWidth;
+    const float yscale = sd->m_fYScale * td.m_nHeight;
 
-        if (m_pSprite[i] != nullptr) {
-            delete m_pSprite[i];
-        }
+    const XMVECTORF32 scale = { xscale, yscale, 1.0f };
 
-        // Create LSprite - allocates a tex descript
-        m_pSprite[i] = new LSprite(1);
+    const XMVECTORF32 translate = { sd->m_vPos.x, sd->m_vPos.y, sd->m_vPos.z };
 
-        // Get a reference to the LSprite's descriptor
-        LTextureDesc& destDesc = m_pSprite[i]->GetTextureDesc(0);
+    const Quaternion q = Quaternion::CreateFromYawPitchRoll(
+        sd->m_fYaw, sd->m_fPitch, sd->m_fRoll);
 
-        // copy from and delete temp descriptor
-        destDesc = *in_textures[j];
-        delete in_textures[j];
-    }
-}
+    const XMMATRIX world = XMMatrixTransformation(
+        g_XMZero, Quaternion::Identity, scale, g_XMZero, q, translate);
+
+    m_pSpriteEffect->SetTexture(
+        m_pDescriptorHeap->GetGpuHandle(td.m_nResourceDescIndex),
+        m_pStates->PointClamp());
+
+    m_pSpriteEffect->SetAlpha(sd->m_fAlpha);
+
+    m_pSpriteEffect->SetWorld(world);
+    m_pSpriteEffect->SetView(XMLoadFloat4x4(&m_view));
+
+    m_pSpriteEffect->Apply(m_pCommandList);
+
+    m_pCommandList->IASetVertexBuffers(0, 1, m_pVBufView.get());
+    m_pCommandList->IASetIndexBuffer(m_pIBufView.get());
+    m_pCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+    m_pCommandList->DrawIndexedInstanced(4, 1, 0, 0, 0);
+} //Draw
 
 void ORenderer::LoadSpriteSheet(UINT index, const char* name, int sizex, int sizey, int numSprites) {
 
@@ -227,9 +204,10 @@ void ORenderer::LoadSpriteSheet(UINT index, const char* name, int sizex, int siz
         ABORT("Sprite renderer is not initialized or doesn't have enough space for new textures.");
         return;
     }
+    int numTex = out_textures.size();
 
     for (size_t j = 0; j < out_textures.size(); ++j) {
-        size_t i = j + ImageFilesSectionNum; // hardcoded offset (TODO: Replace with last spriteSheet index)
+        size_t i = j + SheetSpriteSectionIndex; // hardcoded offset (TODO: Replace with last spriteSheet index)
 
         if (m_pSprite[i] != nullptr) {
             delete m_pSprite[i];
@@ -245,4 +223,6 @@ void ORenderer::LoadSpriteSheet(UINT index, const char* name, int sizex, int siz
         destDesc = *out_textures[j];
         delete out_textures[j];
     }
+    SheetToFirstIndex[index] = SheetSpriteSectionIndex; // Link the index of the sprite sheet to the first corresponding sprite index
+    SheetSpriteSectionIndex += numTex;
 }

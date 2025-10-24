@@ -97,7 +97,8 @@ void CGame::BeginGame(){
     //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc3D();
     //m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
-    m_pSquareDesc->m_nSpriteIndex = (UINT)7;
+    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::Pink_sheet;
+    m_pSquareDesc->m_nCurrentFrame = 5;
     //m_pSquareDesc->m_nCurrentFrame = 1;
     m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
     m_pSquareDesc->m_fXScale = 4.0f;
