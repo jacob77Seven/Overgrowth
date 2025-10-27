@@ -28,7 +28,7 @@ void CGame::Initialize(){
 
     m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
-    m_pRenderer->Initialize(5, 16); 
+    m_pRenderer->Initialize(6, 24); 
     m_pObjectManager = new OObjectManager();
     OCommon::m_pObjectManager = m_pObjectManager;
 
@@ -55,6 +55,7 @@ void CGame::LoadImages(){
     //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
 
     m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
+    m_pRenderer->LoadSpriteSheet((UINT)eSprite::walkright, "walkright", 76, 98, 8);
 
     m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
@@ -97,12 +98,12 @@ void CGame::BeginGame(){
     //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc3D();
     //m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
-    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::Pink_sheet;
-    m_pSquareDesc->m_nCurrentFrame = 5;
+    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::Pig;
+    m_pSquareDesc->m_nCurrentFrame = 0;
     //m_pSquareDesc->m_nCurrentFrame = 1;
     m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
-    m_pSquareDesc->m_fXScale = 4.0f;
-    m_pSquareDesc->m_fYScale = 4.0f;
+    m_pSquareDesc->m_fXScale = 0.5f;
+    m_pSquareDesc->m_fYScale = 0.5f;
     m_pSquareDesc->m_fRoll = 0.0f;
     m_pSquareDesc->m_fAlpha = 1.0f;
     m_pSquareDesc->m_f4Tint = Vector4(1, 1, 1, 1);
@@ -112,10 +113,10 @@ void CGame::BeginGame(){
 	    return;
     }
     m_pObjectManager;
-    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x + 0, m_vWinCenter.y + 400, 0));
-    auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 400, 0));
+    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y -300, 0));
+    auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 260, m_vWinCenter.y -300, 30));
     if (auto char2 = character2.lock()) {
-        char2->speed = char2->speed * 0;
+        char2->speed = char2->speed * 1.5;
         char2->SetObjectCollisionType(ECollisionType::Static);
     }
 

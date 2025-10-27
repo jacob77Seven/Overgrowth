@@ -16,11 +16,13 @@ void TestCharacter::BeginPlay()
 TestCharacter::TestCharacter(const Vector3& p) 
     : OBaseCharacter(p)
 {
-    speed = 50.f * OCommon::m_fTile;
-    m_nSpriteIndex = (UINT)eSprite::Pig;
+    speed = 20.f * OCommon::m_fTile;
+    m_nSpriteIndex = (UINT)eSprite::walkright;
     EObjectCollisionType = ECollisionType::Dynamic;
     m_nCurrentFrame = 0;
     printf("TestCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
+    fps = 4.f;
+    frame = 0.f;
 }
 
 void TestCharacter::OnDestroy() {
@@ -29,9 +31,14 @@ void TestCharacter::OnDestroy() {
 
 void TestCharacter::tick(const float dt) {
 
-    m_vPos.y -= dt * speed;
+    m_vPos.x += dt * speed;
     //printf("m_vPos.y = %f & dt = %f\n", m_vPos.y, dt);
     OBaseCharacter::tick(dt);
+    frame += dt * fps * 1000;
+    if (frame >= 8.f)
+        frame = frame - 8;
+
+    m_nCurrentFrame = (UINT)floor(frame);
 }
 
 /// Ask the renderer to draw the sprite described in the sprite descriptor.
