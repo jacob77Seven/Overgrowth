@@ -25,6 +25,7 @@ protected:
 	bool collidable = false; ///< Is collidable.
 	Vector2 Scale = Vector2(1.0f, 1.0f); ///< Scale.
     eSprite Sprite;
+	int Frame = NULL; ///< Animation frame.
     virtual void OnDestroy() override;
     virtual void BeginPlay() override;
 
