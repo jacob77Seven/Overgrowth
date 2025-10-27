@@ -238,26 +238,21 @@ void CGame::ProcessFrame(){
     KeyboardHandler(); //handle keyboard input
     m_pAudio->BeginFrame(); //notify audio player that frame has begun
 
-    m_pTimer->Tick([&](){ //all time-dependent function calls should go here
-    const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
-    //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
-
-    if (m_pSquareDesc) {
-        // Follow player smoothly
-        const float followSpeed = 5.0f;
-        Vector3 playerPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, m_pSquareDesc->m_vPos.z);
-        m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
-
-        if (m_pCamera)
-            m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, -1000.0f));
-    }
-    });
-    m_pTimer->Tick([&](){ //all time-dependent function calls should go here
+    m_pTimer->Tick([&]() { //all time-dependent function calls should go here
         const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
+        //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
+        if (m_pSquareDesc) {
+            // Follow player smoothly
+            const float followSpeed = 5.0f;
+            Vector3 playerPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, m_pSquareDesc->m_vPos.z);
+            m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
+
+            if (m_pCamera)
+                m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, -1000.0f));
+        }
         //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
         if (OCommon::m_pObjectManager)
             OCommon::m_pObjectManager->tick(t);
-    });
-
+        });
     RenderFrame(); //render a frame of animation
 } //ProcessFrame

@@ -30,7 +30,7 @@ void OObject::tick(const float dt)
 
 OObject::OObject(eSprite t, const Vector2& p)
 {
-    printf("Called OObject(eSprite t, const Vector2& p)\n");
+    //printf("Called OObject(eSprite t, const Vector2& p)\n");
 
     m_vPos.x = p.x;
     m_vPos.y = p.y;
@@ -40,7 +40,7 @@ OObject::OObject(eSprite t, const Vector2& p)
 OObject::OObject(const Vector2& p)
 {
 
-    printf("Called OObject(const Vector2& p)\n");
+    //printf("Called OObject(const Vector2& p)\n");
     m_vPos.x = p.x;
     m_vPos.y = p.y;
     m_fRoll = XM_PIDIV2;
@@ -56,21 +56,21 @@ OObject::OObject()
 
 OObject::OObject(const Vector3& p)
 {
-    printf("Called OObject(const Vector3 - %f, %f, %f)\n", p.x, p.y, p.z);
+    //printf("Called OObject(const Vector3 - %f, %f, %f)\n", p.x, p.y, p.z);
     m_vPos.x = p.x;
     m_vPos.y = p.y;
     m_vPos.z = p.z;
-    printf("OObject has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
+    //printf("OObject has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
 }
 
 void OObject::BeginPlay() {
     m_BoundingBox = BoundingBox(XMFLOAT3(m_vPos.x, m_vPos.y, 0), XMFLOAT3(100, 100, 100));
-    printf("Object BeginPlay!\n");
+    //printf("Object BeginPlay!\n");
 }
 
 void OObject::OnDestroy()
 {
-    printf("Object Being Destroyed.\n");
+    //printf("Object Being Destroyed.\n");
 }
 
 void OObject::Destroy()
@@ -79,7 +79,7 @@ void OObject::Destroy()
 }
 
 void OObject::Collision(const Vector2& norm, float d, std::shared_ptr<OObject> pObj) {
-    printf("Collision at distance %f\n", d);
+    //printf("Collision at distance %f\n", d);
     if (m_bPendingDestruction || GetObjectCollisionType() == ECollisionType::None) 
         return; //dead or no collision, bail out
     
