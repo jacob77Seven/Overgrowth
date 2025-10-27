@@ -36,8 +36,8 @@
 
   <!-- levels -->
   <levels path="Media\Level">
+	<sound name="reallevel" file="Test Level Export.json" instances="8"/>
     <sound name="testlevel" file="Test Level Export 1.json" instances="8"/>
-    <sound name="reallevel" file="Test Level Export 1.json" instances="8"/>
   </levels>
   
 
