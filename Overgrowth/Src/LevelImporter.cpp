@@ -1,6 +1,9 @@
 #include "LevelImporter.h"
 #include <fstream>
 
+#include "Common.h"
+#include "ObjectManager.h"
+
 
 using json = nlohmann::json;
 
@@ -65,6 +68,21 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
                 e.posZ = 0.0f;
 
                 lvlDat.entities.push_back(e);
+
+                for (auto& e : CurrLevel.entities) {
+                    if (e.name == "Pig") {
+                        auto pigWeak = OCommon::m_pObjectManager->create<TestCharacter>(
+                            Vector3(e.posX, e.posY, e.posZ)
+                        );
+                        if (auto pig = pigWeak.lock()) {
+                            pig->SetObjectCollisionType(ECollisionType::Dynamic);
+                        }
+
+                    }
+                    //else if (e.name == "BlackTrees") {
+
+                    //}
+                }
 
                 printf("Entity '%s' at (%.1f, %.1f)\n", e.name.c_str(), e.posX, e.posY);
             }
