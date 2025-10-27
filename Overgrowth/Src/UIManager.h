@@ -60,6 +60,11 @@ private:
 
     float m_fAbilityCooldown = 2.0f;
 
+    float m_fCameraOffsetX = m_nWinWidth / 2;
+    float m_fCameraOffsetY = m_nWinHeight / 2;
+    float m_fCameraPosX = 0.0f;
+    float m_fCameraPosY = 0.0f;
+
     void MoveUI();
     void CalcHealthbarsTargets();
     void CalcAbilitiesTargets();

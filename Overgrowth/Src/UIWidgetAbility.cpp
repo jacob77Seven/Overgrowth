@@ -2,6 +2,7 @@
 
 void UIWidgetAbility::SetBarSprite(UINT index, const LSpriteRenderer* m_pRenderer) {
 	m_pBarSprite.m_nSpriteIndex = index;
+	m_pBarSprite.m_vPos = Vector3(0.0f, 0.0f, 1400.0f);
 	m_pBarSprite.m_fAlpha = 0.9f;
 	m_pRenderer->GetSize(index, m_fBarSpriteSizeX, m_fBarSpriteSizeY);
 }
@@ -35,7 +36,8 @@ void UIWidgetAbility::CalcTargets(float m_fFrameTargetPosX, float m_fFrameTarget
 
 void UIWidgetAbility::AbilityPressed(float time, float m_fCooldown) {
 	m_pBarSprite.m_fYScale = m_pBarSprite.m_fXScale;
-	m_pBarSprite.m_vPos = Vector2(m_fBarTargetPosX, m_fBarTargetPosY + (m_fBarSpriteSizeY * m_fBarTargetScaleX / 2));
+	m_pBarSprite.m_vPos.x = m_fBarTargetPosX;
+	m_pBarSprite.m_vPos.y = m_fBarTargetPosY + (m_fBarSpriteSizeY * m_fBarTargetScaleX / 2);
 
 	m_fInitialPosY = m_pBarSprite.m_vPos.y;
 	m_fInitialScaleY = m_pBarSprite.m_fYScale;

@@ -2,11 +2,13 @@
 
 void UIWidgetResourceBar::SetBackgroundSprite(UINT index, const LSpriteRenderer* m_pRenderer) {
 	m_pBackgroundSprite.m_nSpriteIndex = index;
+	m_pBackgroundSprite.m_vPos = Vector3(0.0f, 0.0f, 1400.0f);
 	m_pRenderer->GetSize(index, m_fBackgroundSpriteSizeX, m_fBackgroundSpriteSizeY);
 }
 
 void UIWidgetResourceBar::SetBarSprite(UINT index, const LSpriteRenderer* m_pRenderer) {
 	m_pBarSprite.m_nSpriteIndex = index;
+	m_pBarSprite.m_vPos = Vector3(0.0f, 0.0f, 1400.0f);
 	m_pRenderer->GetSize(index, m_fBarSpriteSizeX, m_fBarSpriteSizeY);
 }
 

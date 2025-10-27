@@ -22,7 +22,10 @@ CGame::~CGame(){
 /// begin the game.
 
 void CGame::Initialize(){
-  m_pRenderer = new LSpriteRenderer(eSpriteMode::Batched2D); 
+	m_pCamera = new LBaseCamera();
+	m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, m_nWinWidth / m_nWinHeight, 0.1f, 1000.0f);
+
+  m_pRenderer = new LSpriteRenderer(eSpriteMode::Unbatched3D); 
   m_pRenderer->Initialize(eSprite::Size); 
 
   m_pUIManager = new CUIManager();
@@ -49,7 +52,7 @@ void CGame::LoadImages(){
 
   m_pRenderer->Load(eSprite::Background, "background"); 
   m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
-  m_pRenderer->Load(eSprite::TextWheel,  "pig");
+  m_pRenderer->Load(eSprite::pig,  "pig");
 
   m_pRenderer->Load(eSprite::RogueCharFrame, "roguecharframe");
   m_pRenderer->Load(eSprite::WarriorCharFrame, "warriorcharframe");
@@ -156,7 +159,21 @@ void CGame::DrawFrameRateText(){
 void CGame::RenderFrame(){
   m_pRenderer->BeginFrame(); //required before rendering
 
+  m_pCamera->SetOrthographic(m_nWinWidth, m_nWinHeight, 0.1f, 1000.0f);
+
+  Vector3 pos = m_pCamera->GetPos();
+  m_pCamera->MoveTo(Vector3(m_nWinWidth / 2, m_nWinHeight / 2, m_fCameraPosZ));
+
   m_pUIManager->DrawUI();
+
+  m_pCamera->MoveTo(pos);
+
+  m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, m_nWinWidth / m_nWinHeight, 0.1f, 1000.0f);
+
+  LSpriteDesc3D desc;
+  desc.m_nSpriteIndex = (UINT)eSprite::pig;
+  desc.m_vPos = Vector3(0.0f, 0.0f, 1000.0f);
+  m_pRenderer->Draw(&desc);
 
   m_pRenderer->EndFrame(); //required after rendering
 } //RenderFrame
@@ -170,6 +187,12 @@ void CGame::RenderFrame(){
 void CGame::ProcessFrame(){
   KeyboardHandler(); //handle keyboard input
   m_pAudio->BeginFrame(); //notify audio player that frame has begun
+
+  Vector3 pos = m_pCamera->GetPos();
+
+  printf("X:%f, Y:%f\n", pos.x, pos.y);
+
+  m_pCamera->MoveTo(Vector3(pos.x + 1, pos.y + 1, m_fCameraPosZ));
 
   m_pTimer->Tick([&]() {
 	});

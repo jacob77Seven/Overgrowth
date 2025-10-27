@@ -3,7 +3,7 @@
 
 struct UIWidgetCharFrame {
 private:
-	LSpriteDesc2D m_pSprite;
+	LSpriteDesc3D m_pSprite;
 	
 	float m_fSpriteSizeX = 0.0f;
 	float m_fSpriteSizeY = 0.0f;
@@ -21,5 +21,5 @@ public:
 
 	void SetSprite(UINT index, const LSpriteRenderer* m_pRenderer);
 
-	LSpriteDesc2D& GetSprite() { return m_pSprite; };
+	LSpriteDesc3D& GetSprite() { return m_pSprite; };
 };

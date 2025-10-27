@@ -13,7 +13,10 @@ class CCommon {
 	protected:
 		static LSpriteRenderer* m_pRenderer;
 		static CUIManager* m_pUIManager;
+		static LBaseCamera* m_pCamera;
 		static std::vector<IInput*> m_pInputManager;
+
+		static float m_fCameraPosZ;
 };
 
 #endif

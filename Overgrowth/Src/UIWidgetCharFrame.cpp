@@ -2,6 +2,7 @@
 
 void UIWidgetCharFrame::SetSprite(UINT index, const LSpriteRenderer* m_pRenderer) {
 	m_pSprite.m_nSpriteIndex = index;
+	m_pSprite.m_vPos = Vector3(0.0f, 0.0f, 1400.0f);
 	m_pRenderer->GetSize(index, m_fSpriteSizeX, m_fSpriteSizeY);
 }
 

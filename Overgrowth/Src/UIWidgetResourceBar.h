@@ -3,8 +3,8 @@
 
 struct UIWidgetResourceBar {
 protected:
-	LSpriteDesc2D m_pBackgroundSprite;
-	LSpriteDesc2D m_pBarSprite;
+	LSpriteDesc3D m_pBackgroundSprite;
+	LSpriteDesc3D m_pBarSprite;
 
 	float m_fBackgroundSpriteSizeX = 0.0f;
 	float m_fBackgroundSpriteSizeY = 0.0f;
@@ -30,6 +30,6 @@ public:
 	void SetBackgroundSprite(UINT index, const LSpriteRenderer* m_pRenderer);
 	virtual void SetBarSprite(UINT index, const LSpriteRenderer* m_pRenderer);
 
-	LSpriteDesc2D& GetBackgroundSprite() { return m_pBackgroundSprite; };
-	LSpriteDesc2D& GetBarSprite() { return m_pBarSprite; };
+	LSpriteDesc3D& GetBackgroundSprite() { return m_pBackgroundSprite; };
+	LSpriteDesc3D& GetBarSprite() { return m_pBarSprite; };
 };
