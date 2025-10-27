@@ -3,6 +3,7 @@
 
 #include "Common.h"
 #include "ObjectManager.h"
+#include "TestCharacter.h"
 
 
 using json = nlohmann::json;
@@ -56,6 +57,7 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
             }
         }
         if (layer.contains("entityInstances")) {
+            printf("Layer has entities. \n");
             for (auto& ent : layer["entityInstances"]) {
                 EntityData e;
                 e.name = ent["__identifier"];
@@ -69,21 +71,6 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
 
                 lvlDat.entities.push_back(e);
 
-                for (auto& e : CurrLevel.entities) {
-                    if (e.name == "Pig") {
-                        auto pigWeak = OCommon::m_pObjectManager->create<TestCharacter>(
-                            Vector3(e.posX, e.posY, e.posZ)
-                        );
-                        if (auto pig = pigWeak.lock()) {
-                            pig->SetObjectCollisionType(ECollisionType::Dynamic);
-                        }
-
-                    }
-                    //else if (e.name == "BlackTrees") {
-
-                    //}
-                }
-
                 printf("Entity '%s' at (%.1f, %.1f)\n", e.name.c_str(), e.posX, e.posY);
             }
         }
@@ -91,7 +78,23 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
 
     printf("Imported %zu tiles total.\n", lvlDat.tiles.size());
     CurrLevel = lvlDat;
+    SpawnEntities();
 }
+
+void LevelImporter::SpawnEntities() {
+    for (auto& e : CurrLevel.entities) {
+        if (e.name == "Pig") {
+            auto pigWeak = OCommon::m_pObjectManager->create<TestCharacter>(
+                Vector3(e.posX, e.posY, e.posZ)
+            );
+            printf("Spawned Pig at (%.1f, %.1f, %.1f)\n", e.posX, e.posY, e.posZ);
+            if (auto pig = pigWeak.lock()) {
+                pig->SetObjectCollisionType(ECollisionType::Dynamic);
+            }
+        }
+    }
+}
+
 
 
 
@@ -117,6 +120,8 @@ void LevelImporter::Load(size_t index, const char* name) {
     const int instances = std::max(1, pLevelTag->IntAttribute("instances")); //get number of instances
 
     const std::string filename = path + "\\" + pLevelTag->Attribute("file");
+
+    printf("%s\n", filename.c_str());
 
     //wchar_t* wfilename = nullptr; //wide file name
     //MakeWideFileName(filename.c_str(), wfilename); //convert the former to the latter

@@ -139,20 +139,20 @@ void CGame::BeginGame(){
         m_vLevelSprites.push_back(desc3D);
     }
 
-    for (auto& e : data.entities) {
-        if (e.name == "Pig") {
-            auto pigWeak = m_pObjectManager->create<TestCharacter>(
-                Vector3(e.posX, e.posY, e.posZ)
-            );
-            if (auto pig = pigWeak.lock()) {
-                pig->SetObjectCollisionType(ECollisionType::Dynamic);
-            }
+    //for (auto& e : data.entities) {
+    //    if (e.name == "Pig") {
+    //        auto pigWeak = m_pObjectManager->create<TestCharacter>(
+    //            Vector3(e.posX, e.posY, e.posZ)
+    //        );
+    //        if (auto pig = pigWeak.lock()) {
+    //            pig->SetObjectCollisionType(ECollisionType::Dynamic);
+    //        }
 
-        }
-        //else if (e.name == "BlackTrees") {
+    //    }
+    //    //else if (e.name == "BlackTrees") {
 
-        //}
-    }
+    //    //}
+    //}
 
 } //BeginGame
 

@@ -13,7 +13,7 @@
 #include "Component.h"
 #include "ComponentIncludes.h"
 #include "Helpers.h"
-
+#include "Common.h"
 
 
 struct TileData {
@@ -36,10 +36,13 @@ struct LevelData {
 	std::vector<EntityData> entities;
 };
 
-class LevelImporter: public LSettingsManager {
+class LevelImporter: public LSettingsManager, public OCommon
+
+{
 
 private:
 	void ParseLevel(std::string LevelPath);
+	void SpawnEntities();
 
 public:
 	LevelImporter();
