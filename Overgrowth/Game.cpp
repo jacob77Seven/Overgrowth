@@ -281,7 +281,6 @@ void CGame::RenderFrame(){
     }
     OCommon::m_pObjectManager->draw();
 
-    m_pCamera->SetOrthographic(m_nWinWidth, m_nWinHeight, 0.1f, 1000.0f);
     Vector3 pos = m_pCamera->GetPos();
     m_pCamera->MoveTo(Vector3(m_nWinWidth / 2, m_nWinHeight / 2, m_fCameraPosZ));
 
