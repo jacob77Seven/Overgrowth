@@ -175,6 +175,12 @@
     <ClCompile Include="Src\Renderer.cpp" />
     <ClCompile Include="Src\TestCharacter.cpp" />
     <ClCompile Include="Src\TestObject.cpp" />
+    <ClCompile Include="Src\UIManager.cpp" />
+    <ClCompile Include="Src\UIWidgetAbility.cpp" />
+    <ClCompile Include="Src\UIWidgetCharFrame.cpp" />
+    <ClCompile Include="Src\UIWidgetHealthBar.cpp" />
+    <ClCompile Include="Src\UIWidgetManaBar.cpp" />
+    <ClCompile Include="Src\UIWidgetResourceBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -187,12 +193,19 @@
     <ClInclude Include="Src\BaseLevelAsset.h" />
     <ClInclude Include="Src\json.hpp" />
     <ClInclude Include="Src\LevelImporter.h" />
+    <ClInclude Include="Src\InputInterface.h" />
     <ClInclude Include="Src\Object.h" />
     <ClInclude Include="Src\ObjectManager.h" />
     <ClInclude Include="Src\ObjectUtilitiesInterface.h" />
     <ClInclude Include="Src\Renderer.h" />
     <ClInclude Include="Src\TestCharacter.h" />
     <ClInclude Include="Src\TestObject.h" />
+    <ClInclude Include="Src\UIManager.h" />
+    <ClInclude Include="Src\UIWidgetAbility.h" />
+    <ClInclude Include="Src\UIWidgetCharFrame.h" />
+    <ClInclude Include="Src\UIWidgetHealthBar.h" />
+    <ClInclude Include="Src\UIWidgetManaBar.h" />
+    <ClInclude Include="Src\UIWidgetResourceBar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

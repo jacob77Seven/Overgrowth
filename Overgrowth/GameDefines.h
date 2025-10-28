@@ -15,6 +15,10 @@
 
 enum class eSprite: UINT{
   Background, TextWheel, Pig, Pink_sheet, PinkSquare, walkright,
+  RogueCharFrame, WarriorCharFrame, DruidCharFrame, HealthbarBackground, Healthbar, ManabarBackground, Manabar, AbilityCooldown,
+  RogueAbilityOne, RogueAbilityTwo, RogueAbilityThree,
+  WarriorAbilityOne, WarriorAbilityTwo, WarriorAbilityThree,
+  DruidAbilityOne, DruidAbilityTwo, DruidAbilityThree,
   Size  //MUST BE LAST
 }; //eSprite
 
@@ -35,5 +39,10 @@ enum class eSound: UINT{
   Clang, Grunt, Oink, Piano,
   Size  //MUST BE LAST
 }; //eSound
+
+enum class eInput : UINT {
+	KeyOne, KeyTwo, KeyThree, KeyW, KeyA, KeyS, KeyD, KeyQ, KeyE, KeyR,
+	Size
+};
 
 #endif //__L4RC_GAME_GAMEDEFINES_H__

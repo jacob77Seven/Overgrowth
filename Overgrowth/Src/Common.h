@@ -4,6 +4,7 @@
 
 #include "Defines.h"
 
+#include "SpriteRenderer.h"
 //forward declarations to make the compiler less stroppy
 
 class OObjectManager;
@@ -12,6 +13,8 @@ class ORenderer;
 class LParticleEngine2D;
 class CTileManager;
 class CPlayer;
+class CUIManager;
+class IInput;
 
 /// \brief The common variables class.
 ///
@@ -22,14 +25,17 @@ class CPlayer;
 /// importantly, makes the code more readable by reducing function clutter.
 
 class OCommon {
-protected:
+	protected:
     static ORenderer* m_pRenderer; ///< Pointer to renderer.
     static OObjectManager* m_pObjectManager; ///< Pointer to object manager.
     static LParticleEngine2D* m_pParticleEngine; ///< Pointer to particle engine.
     static CTileManager* m_pTileManager; ///< Pointer to tile manager. 
+	static CUIManager* m_pUIManager;
+	static std::vector<IInput*> m_pInputManager;
 
     static bool m_bDrawAABBs; ///< Draw AABB flag.
     static bool m_bGodMode; ///< God mode flag.
+	static float m_fCameraPosZ;
 
     static Vector2 m_vWorldSize; ///< World height and width.
     static CPlayer* m_pPlayer; ///< Pointer to player character.

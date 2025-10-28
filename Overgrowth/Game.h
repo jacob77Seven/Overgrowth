@@ -7,10 +7,12 @@
 #include "Component.h"
 #include "Settings.h"
 #include "SpriteDesc.h"
+#include "SpriteRenderer.h"
 #include "Src/Renderer.h"
 #include "Src/LevelImporter.h"
 #include "Src/Common.h"
 #include "Src/ObjectManager.h"
+#include "Src/UIManager.h"
 
 /// \brief The game class.
 ///
@@ -45,6 +47,7 @@ class CGame:
     void KeyboardHandler(); ///< The keyboard handler.
     void RenderFrame(); ///< Render an animation frame.
     void DrawFrameRateText(); ///< Draw frame rate text to screen.
+    void SendInput(const eInput& input);
 
   public:
     std::vector<LSpriteDesc3D*> m_vLevelSprites; //container for storing tiles

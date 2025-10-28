@@ -2,8 +2,8 @@
 <!-- Game settings -->
 
 <settings>
-  <game name="Blank 2D Game" />
-  <renderer width="1024" height="768"/>
+  <game name="Overgrowth" />
+  <renderer width="1920" height="1080"/>
    
   <font file="Media\Fonts\AverageSans_24.spritefont"/>
 
@@ -13,6 +13,23 @@
 	<sprite name="background" file="background.png"/>
 	<sprite name="textwheel" file="textwheel.png"/>
 	<sprite name="pig" file="pig.png"/>
+	<sprite name="roguecharframe" file="roguecharframe.jpg"/>
+	<sprite name="warriorcharframe" file="warriorcharframe.jpg"/>
+	<sprite name="druidcharframe" file="druidcharframe.jpg"/>
+	<sprite name="healthbarbackground" file="healthbarbackground.png"/>
+	<sprite name="healthbar" file="healthbar.png"/>
+	<sprite name="manabarbackground" file="manabarbackground.png"/>
+	<sprite name="manabar" file="manabar.png"/>
+	<sprite name="rogueabilityone" file="rogueabilityone.png"/>
+	<sprite name="rogueabilitytwo" file="rogueabilitytwo.png"/>
+	<sprite name="rogueabilitythree" file="rogueabilitythree.png"/>
+	<sprite name="warriorabilityone" file="warriorabilityone.png"/>
+	<sprite name="warriorabilitytwo" file="warriorabilitytwo.png"/>
+	<sprite name="warriorabilitythree" file="warriorabilitythree.png"/>
+	<sprite name="druidabilityone" file="druidabilityone.png"/>
+	<sprite name="druidabilitytwo" file="druidabilitytwo.png"/>
+	<sprite name="druidabilitythree" file="druidabilitythree.png"/>
+	<sprite name="abilitycooldown" file="abilitycooldown.png"/>
 	<sprite name="walkright" file="walkright.png"/>
 
   <sprite name="pink_sheet" file="pinksquare.png" frames="4" />

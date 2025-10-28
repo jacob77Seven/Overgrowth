@@ -13,6 +13,8 @@
 /// destructor runs so it will be done elsewhere.
 
 CGame::~CGame(){
+  delete m_pSpriteDesc;
+  delete m_pUIManager;
     delete m_pSpriteDesc;
 } //destructor
 
@@ -22,15 +24,20 @@ CGame::~CGame(){
 void CGame::Initialize(){
     // Initialize the camera
     m_pCamera = new LBaseCamera();
-    m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, 1024.0f / 768.0f, 0.1f, 1000.0f);
+    m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, m_nWinWidth / m_nWinHeight, 0.1f, 1000.0f);
     m_pCamera->MoveTo(Vector3(0, 0, 50));
     m_pCamera->MoveTo(m_pCamera->GetPos());
 
     m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
-    m_pRenderer->Initialize(6, 24); 
+    m_pRenderer->Initialize(30, 24); 
     m_pObjectManager = new OObjectManager();
     OCommon::m_pObjectManager = m_pObjectManager;
+
+    m_pUIManager = new CUIManager();
+    m_pUIManager->InitializeUI();
+
+    m_pInputManager.push_back(m_pUIManager);
 
     LoadImages(); //load images from xml file list
     LoadSounds(); //load the sounds for this game
@@ -52,6 +59,27 @@ void CGame::LoadImages(){
     m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
     m_pRenderer->Load(eSprite::Pig,  "pig"); 
     m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
+
+    m_pRenderer->Load(eSprite::RogueCharFrame, "roguecharframe");
+    m_pRenderer->Load(eSprite::WarriorCharFrame, "warriorcharframe");
+    m_pRenderer->Load(eSprite::DruidCharFrame, "druidcharframe");
+    m_pRenderer->Load(eSprite::HealthbarBackground, "healthbarbackground");
+    m_pRenderer->Load(eSprite::Healthbar, "healthbar");
+    m_pRenderer->Load(eSprite::ManabarBackground, "manabarbackground");
+    m_pRenderer->Load(eSprite::Manabar, "manabar");
+    m_pRenderer->Load(eSprite::AbilityCooldown, "abilitycooldown");
+
+    m_pRenderer->Load(eSprite::RogueAbilityOne, "rogueabilityone");
+    m_pRenderer->Load(eSprite::RogueAbilityTwo, "rogueabilitytwo");
+    m_pRenderer->Load(eSprite::RogueAbilityThree, "rogueabilitythree");
+
+    m_pRenderer->Load(eSprite::WarriorAbilityOne, "warriorabilityone");
+    m_pRenderer->Load(eSprite::WarriorAbilityTwo, "warriorabilitytwo");
+    m_pRenderer->Load(eSprite::WarriorAbilityThree, "warriorabilitythree");
+
+    m_pRenderer->Load(eSprite::DruidAbilityOne, "druidabilityone");
+    m_pRenderer->Load(eSprite::DruidAbilityTwo, "druidabilitytwo");
+    m_pRenderer->Load(eSprite::DruidAbilityThree, "druidabilitythree");
     //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
 
     m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
@@ -192,10 +220,39 @@ void CGame::KeyboardHandler(){
     if (m_pKeyboard->Down(VK_UP))    m_pSquareDesc->m_vPos.y += 5.0f;
         
     if (m_pKeyboard->Down(VK_DOWN))  m_pSquareDesc->m_vPos.y -= 5.0f;
+
+    if (m_pKeyboard->TriggerDown('1')) {
+        SendInput(eInput::KeyOne);
+    }
+
+    if (m_pKeyboard->TriggerDown('2')) {
+        SendInput(eInput::KeyTwo);
+    }
+
+    if (m_pKeyboard->TriggerDown('3')) {
+        SendInput(eInput::KeyThree);
+    }
+
+    if (m_pKeyboard->TriggerDown('Q')) {
+        SendInput(eInput::KeyQ);
+    }
+
+    if (m_pKeyboard->TriggerDown('E')) {
+        SendInput(eInput::KeyE);
+    }
+
+    if (m_pKeyboard->TriggerDown('R')) {
+        SendInput(eInput::KeyR);
+    }
         
     if(m_pKeyboard->TriggerDown(VK_BACK)) //restart game
         BeginGame(); //restart game
 } //KeyboardHandler
+
+void CGame::SendInput(const eInput& input) {
+	for (auto listener : m_pInputManager)
+		listener->Input(input);
+}
 
 /// Draw the current frame rate to a hard-coded position in the window.
 /// The frame rate will be drawn in a hard-coded position using the font
@@ -222,6 +279,17 @@ void CGame::RenderFrame(){
         m_pRenderer->Draw(m_pSquareDesc);
     }
     OCommon::m_pObjectManager->draw();
+
+    m_pCamera->SetOrthographic(m_nWinWidth, m_nWinHeight, 0.1f, 1000.0f);
+
+    Vector3 pos = m_pCamera->GetPos();
+    m_pCamera->MoveTo(Vector3(m_nWinWidth / 2, m_nWinHeight / 2, m_fCameraPosZ));
+
+    m_pUIManager->DrawUI();
+
+    m_pCamera->MoveTo(pos);
+
+    m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, m_nWinWidth / m_nWinHeight, 0.1f, 1000.0f);
 
     if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
