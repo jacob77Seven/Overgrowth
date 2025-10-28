@@ -8,18 +8,24 @@
     <sprites path="Media\Images">
         <sprite name="background" file="background.png"/>
         <sprite name="textwheel" file="textwheel.png"/>
-        <sprite name="PinkSquare" file="PinkSquare.png"/>
-        <sprite name="SylvaraTest" file="SylvaraTest.png"/>
         <sprite name="healthbar" file="healthbar.png"/>
         <sprite name="healthbarbackground" file="healthbarbackground.png"/>
         <sprite name="LyingPinkSquare" file="LyingPinkSquare.png"/>
         <sprite name="manabar" file="manabar.png"/>
+        <sprite name="manabarbackground" file="manabarbackground.png"/>
+        <sprite name="PinkSquare" file="PinkSquare.png"/>
+        <sprite name="SylvaraTest" file="SylvaraTest.png"/>
     </sprites>
     <!-- sound -->
     <sounds path="Media\Sounds">
-        <sound name="piano" file="untitled.wav" instances="8"/>
-        <sound name="oink" file="oink.wav" instances="8"/>
-        <sound name="clang" file="clang.wav" instances="8"/>
-        <sound name="grunt" file="umph.wav" instances="8"/>
+        <sounds name="clang" file="clang.wav"/>
+        <sounds name="oink" file="oink.wav"/>
+        <sounds name="sound-test" file="sound-test.wav"/>
+        <sounds name="umph" file="umph.wav"/>
+        <sounds name="untitled" file="untitled.wav"/>
+        <sound name="clang" file="clang.wav"/>
+        <sound name="oink" file="oink.wav"/>
+        <sound name="sound-test" file="sound-test.wav"/>
+        <sound name="untitled" file="untitled.wav"/>
     </sounds>
 </settings>

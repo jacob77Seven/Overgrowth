@@ -1,35 +1,29 @@
-/// \file assetDefines.h
-/// \brief Auto-generated from gamesettings.xml. DO NOT EDIT BY HAND.
+#ifndef ASSETDEFINES_H
+#define ASSETDEFINES_H
 
-#ifndef __AUTO_ASSET_DEFINES__
-#define __AUTO_ASSET_DEFINES__
-
-#include "Defines.h"
-#include "Sound.h"
-
-/// \brief Sprite enumerated type (auto-generated)
-enum class eSprite : UINT {
+enum class eSprite {
     background,
-    textwheel,
-    PinkSquare,
-    SylvaraTest,
     healthbar,
     healthbarbackground,
     LyingPinkSquare,
-    manabar
-    ,Size // MUST BE LAST
-}; // eSprite
+    manabar,
+    manabarbackground,
+    PinkSquare,
+    SylvaraTest,
+    textwheel,
+    Size
+};
 
-/// \brief Sound enumerated type (auto-generated)
-enum class eSound : UINT {
-    piano,
-    oink,
+enum class eSound {
     clang,
-    grunt
-    ,Size // MUST BE LAST
-}; // eSound
+    oink,
+    sound-test,
+    untitled,
+    Size
+};
 
-string spriteHandles[8] = {"background", "textwheel", "PinkSquare", "SylvaraTest", "healthbar", "healthbarbackground", "LyingPinkSquare", "manabar"};
-string soundHandles[4] = {"piano", "oink", "clang", "grunt"};
+string spriteHandles[9] = {"background", "healthbar", "healthbarbackground", "LyingPinkSquare", "manabar", "manabarbackground", "PinkSquare", "SylvaraTest", "textwheel"};
 
- #endif // __AUTO_ASSET_DEFINES__
+string soundHandles[4] = {"clang", "oink", "sound-test", "untitled"};
+
+#endif // ASSETDEFINES_H
