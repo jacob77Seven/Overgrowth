@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteRenderer.h"
+#include "Renderer.h"
 
 struct UIWidgetResourceBar {
 protected:
@@ -27,8 +28,8 @@ public:
 
 	virtual void CalcTargets(float m_fFrameTargetPosX, float m_fFrameTargetPosY, float m_fTargetWidth, float m_fTargetHeight) = 0;
 
-	void SetBackgroundSprite(UINT index, const LSpriteRenderer* m_pRenderer);
-	virtual void SetBarSprite(UINT index, const LSpriteRenderer* m_pRenderer);
+	void SetBackgroundSprite(UINT index, const ORenderer* m_pRenderer);
+	virtual void SetBarSprite(UINT index, const ORenderer* m_pRenderer);
 
 	LSpriteDesc3D& GetBackgroundSprite() { return m_pBackgroundSprite; };
 	LSpriteDesc3D& GetBarSprite() { return m_pBarSprite; };

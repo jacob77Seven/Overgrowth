@@ -272,8 +272,6 @@ void CUIManager::CalcFrameTargets() {
 			break;
 	}
 
-	Vector3 pos = m_pCamera->GetPos();
-
 	m_pRogueFrame.CalcTargetPos((float)m_nWinHeight);
 	m_pWarriorFrame.CalcTargetPos(m_pRogueFrame.m_fTargetPosY - m_pRogueFrame.m_fTargetPosX - m_fFrameOffset);
 	m_pDruidFrame.CalcTargetPos(m_pWarriorFrame.m_fTargetPosY - m_pWarriorFrame.m_fTargetPosX - m_fFrameOffset);
@@ -307,6 +305,9 @@ void CUIManager::CalcHealthbarsTargets() {
 
 void CUIManager::DrawUI() {
 	MoveUI();
+
+	Vector3 pos = m_pRogueFrame.GetSprite().m_vPos;
+	printf("\nRogue\nX:%f Y:%f\n\n", pos.x, pos.y);
 
 	m_pRenderer->Draw(&m_pRogueFrame.GetSprite());
 	m_pRenderer->Draw(&m_pWarriorFrame.GetSprite());

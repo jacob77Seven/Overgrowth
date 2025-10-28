@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteRenderer.h"
+#include "Renderer.h"
 
 struct UIWidgetCharFrame {
 private:
@@ -19,7 +20,7 @@ public:
 	void CalcTargetPos(float m_fMaxHeight);
 	void CalcTargetScale(float m_fTargetHeight);
 
-	void SetSprite(UINT index, const LSpriteRenderer* m_pRenderer);
+	void SetSprite(UINT index, const ORenderer* m_pRenderer);
 
 	LSpriteDesc3D& GetSprite() { return m_pSprite; };
 };

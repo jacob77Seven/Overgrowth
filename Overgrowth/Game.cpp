@@ -35,13 +35,14 @@ void CGame::Initialize(){
     OCommon::m_pObjectManager = m_pObjectManager;
 
     m_pUIManager = new CUIManager();
-    m_pUIManager->InitializeUI();
-
-    m_pInputManager.push_back(m_pUIManager);
 
     LoadImages(); //load images from xml file list
     LoadSounds(); //load the sounds for this game
     LoadLevels();
+    m_pUIManager->InitializeUI();
+
+    m_pInputManager.push_back(m_pUIManager);
+
     BeginGame();
 } //Initialize
 
@@ -281,15 +282,12 @@ void CGame::RenderFrame(){
     OCommon::m_pObjectManager->draw();
 
     m_pCamera->SetOrthographic(m_nWinWidth, m_nWinHeight, 0.1f, 1000.0f);
-
     Vector3 pos = m_pCamera->GetPos();
     m_pCamera->MoveTo(Vector3(m_nWinWidth / 2, m_nWinHeight / 2, m_fCameraPosZ));
 
     m_pUIManager->DrawUI();
 
     m_pCamera->MoveTo(pos);
-
-    m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, m_nWinWidth / m_nWinHeight, 0.1f, 1000.0f);
 
     if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
@@ -316,7 +314,7 @@ void CGame::ProcessFrame(){
             m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
 
             if (m_pCamera)
-                m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, -1000.0f));
+                m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, m_fCameraPosZ));
         }
         //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
         if (OCommon::m_pObjectManager)

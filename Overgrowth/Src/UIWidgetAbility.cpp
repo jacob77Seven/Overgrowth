@@ -1,8 +1,8 @@
 #include "UIWidgetAbility.h"
 
-void UIWidgetAbility::SetBarSprite(UINT index, const LSpriteRenderer* m_pRenderer) {
+void UIWidgetAbility::SetBarSprite(UINT index, const ORenderer* m_pRenderer) {
 	m_pBarSprite.m_nSpriteIndex = index;
-	m_pBarSprite.m_vPos = Vector3(0.0f, 0.0f, 1400.0f);
+	m_pBarSprite.m_vPos = Vector3(0.0f, 0.0f, 0.0f);
 	m_pBarSprite.m_fAlpha = 0.9f;
 	m_pRenderer->GetSize(index, m_fBarSpriteSizeX, m_fBarSpriteSizeY);
 }
