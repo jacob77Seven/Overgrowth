@@ -64,11 +64,11 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
                 e.name = ent["__identifier"];
                 e.posX = ent["__worldX"];
                 e.posY = (float)ent["__worldY"] * -1 + 750; // same Y inversion logic
-				//if (layerName == "BackgroundEntities1") e.posZ = 500.0f;
-				//else if (layerName == "Background2Entities") e.posZ = 750.0f;
-				//else if (layerName == "ForegroundEntities") e.posZ = -500.0f;
-				//else e.posZ = 0.0f;
-                e.posZ = 0.0f;
+				if (layerName == "BackgroundEntities") e.posZ = 500.0f;
+				else if (layerName == "BackgroundEntities2") e.posZ = 750.0f;
+				else if (layerName == "BackgroundEntities3") e.posZ = -500.0f;
+				else e.posZ = 0.0f;
+                //e.posZ = 0.0f;
 
                 lvlDat.entities.push_back(e);
 
@@ -102,6 +102,17 @@ void LevelImporter::SpawnEntities() {
 				greentrees->SetSprite(eSprite::GreenTrees);
                 greentrees->SetObjectCollisionType(ECollisionType::None);
                 printf("Set GreenTrees sprite and collision type.\n");
+            }
+        }
+        else if (e.name == "BlackTrees") {
+            auto blacktreesWeak = OCommon::m_pObjectManager->create<BaseLevelAsset>(
+                Vector3(e.posX, e.posY, e.posZ)
+            );
+            printf("Spawned BlackTrees at (%.1f, %.1f, %.1f)\n", e.posX, e.posY, e.posZ);
+            if (auto blacktrees = blacktreesWeak.lock()) {
+                blacktrees->SetSprite(eSprite::BlackTrees);
+                blacktrees->SetObjectCollisionType(ECollisionType::None);
+                printf("Set BlackTrees sprite and collision type.\n");
             }
         }
     }
