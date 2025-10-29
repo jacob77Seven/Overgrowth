@@ -43,7 +43,7 @@ OObject::OObject(const Vector2& p)
     printf("Called OObject(const Vector2& p)\n");
     m_vPos.x = p.x;
     m_vPos.y = p.y;
-    m_fRoll = XM_PIDIV2;
+	//m_fRoll = XM_PIDIV2;    NOTE: For some reason, this causes children of OObject to be drawn at an angle, even if created with Vector3 constructor
 }
 
 OObject::OObject()
@@ -51,7 +51,7 @@ OObject::OObject()
     printf("Called OObject()\n");
     //m_vPos.x = 500;
     //m_vPos.y = 0;
-    m_fRoll = XM_PIDIV2;
+    //m_fRoll = XM_PIDIV2;      NOTE: For some reason, this causes children of OObject to be drawn at an angle, even if created with Vector3 constructor
 }
 
 OObject::OObject(const Vector3& p)
