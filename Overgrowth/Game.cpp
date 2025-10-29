@@ -53,6 +53,8 @@ void CGame::LoadImages(){
     m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
     m_pRenderer->Load(eSprite::Pig,  "pig"); 
     m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
+	m_pRenderer->Load(eSprite::GreenTrees, "greentrees");
+	m_pRenderer->Load(eSprite::BlackTrees, "blacktrees");
 
     m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
@@ -63,7 +65,8 @@ void CGame::LoadImages(){
 void CGame::LoadLevels() {
     LvlImporter = new LevelImporter();
     //LvlImporter->Initialize(eLevels::Size);
-    LvlImporter->Load((int)eLevels::RealLevel, "reallevel");
+    //LvlImporter->Load((int)eLevels::RealLevel, "reallevel");
+	LvlImporter->Load((int)eLevels::TestLevel2, "testlevel2");
 
 } //LoadLevels
 

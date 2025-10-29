@@ -21,6 +21,8 @@
     <frame index="2" left="16" top="0"  right="24" bottom="8"  />
     <frame index="3" left="24" top="0"  right="32" bottom="8"  />
   </sprite>
+	<sprite name="blacktrees" file="blacktrees.png"/>
+	<sprite name="greentrees" file="greentrees.png"/>
   </sprites>
 
   <!-- sound -->
@@ -36,6 +38,7 @@
   <levels path="Media\Level">
 	<sound name="reallevel" file="Test Level Export.json" instances="8"/>
     <sound name="testlevel" file="Test Level Export 1.json" instances="8"/>
+	  <sound name="testlevel2" file="Test Level Export2.json" instances="8"/>
   </levels>
   
 

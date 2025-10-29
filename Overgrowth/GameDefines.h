@@ -14,13 +14,13 @@
 /// memory. `Size` must be last.
 
 enum class eSprite: UINT{
-  Background, TextWheel, Pig, Pink_sheet, PinkSquare,
+  Background, TextWheel, Pig, Pink_sheet, PinkSquare, BlackTrees, GreenTrees,
   Size  //MUST BE LAST
 }; //eSprite
 
 
 enum class eLevels : UINT {
-	TestLevel, RealLevel,
+	TestLevel, RealLevel, TestLevel2,
 	Size  //MUST BE LAST
 }; //eSprite
 

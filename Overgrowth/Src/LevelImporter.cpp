@@ -4,6 +4,7 @@
 #include "Common.h"
 #include "ObjectManager.h"
 #include "TestCharacter.h"
+#include "BaseLevelAsset.h"
 
 
 using json = nlohmann::json;
@@ -90,6 +91,17 @@ void LevelImporter::SpawnEntities() {
             printf("Spawned Pig at (%.1f, %.1f, %.1f)\n", e.posX, e.posY, e.posZ);
             if (auto pig = pigWeak.lock()) {
                 pig->SetObjectCollisionType(ECollisionType::Dynamic);
+            }
+        }
+        else if (e.name == "GreenTrees") {
+            auto greentreesWeak = OCommon::m_pObjectManager->create<BaseLevelAsset>(
+                Vector3(e.posX, e.posY, e.posZ)
+            );
+			printf("Spawned GreenTrees at (%.1f, %.1f, %.1f)\n", e.posX, e.posY, e.posZ);
+            if (auto greentrees = greentreesWeak.lock()) {
+				greentrees->SetSprite(eSprite::GreenTrees);
+                greentrees->SetObjectCollisionType(ECollisionType::None);
+                printf("Set GreenTrees sprite and collision type.\n");
             }
         }
     }

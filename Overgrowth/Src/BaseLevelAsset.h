@@ -17,7 +17,7 @@
 /// The abstract representation of an object. This class must contain public member
 /// functions `move()` and `draw()` to move and draw the object, respectively.
 
-class OBaseLevelAsset :
+class BaseLevelAsset :
     public OObject
 {
 protected:
@@ -30,6 +30,7 @@ protected:
     virtual void BeginPlay() override;
 
 public:
-    OBaseLevelAsset(const Vector3& p);
-    virtual ~OBaseLevelAsset(); ///< Destructor.
+    BaseLevelAsset(const Vector3& p);
+    virtual ~BaseLevelAsset(); ///< Destructor.
+    void SetSprite(eSprite sprite) { m_nSpriteIndex = UINT(sprite); }
 }; //OObject

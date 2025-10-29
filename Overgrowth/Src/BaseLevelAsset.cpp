@@ -1,20 +1,20 @@
 #include "BaseLevelAsset.h"
 
-OBaseLevelAsset::OBaseLevelAsset(const Vector3& p)
+BaseLevelAsset::BaseLevelAsset(const Vector3& p)
 {
     m_vPos = p; // inherited from OObject
 }
 
-OBaseLevelAsset::~OBaseLevelAsset()
+BaseLevelAsset::~BaseLevelAsset()
 {
 }
 
-void OBaseLevelAsset::OnDestroy()
+void BaseLevelAsset::OnDestroy()
 {
     OObject::OnDestroy();
 }
 
-void OBaseLevelAsset::BeginPlay()
+void BaseLevelAsset::BeginPlay()
 {
 	OObject::BeginPlay();
 }
