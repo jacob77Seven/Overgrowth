@@ -79,7 +79,9 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
 
     printf("Imported %zu tiles total.\n", lvlDat.tiles.size());
     CurrLevel = lvlDat;
+    auto character3 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 0));
     SpawnEntities();
+
 }
 
 void LevelImporter::SpawnEntities() {

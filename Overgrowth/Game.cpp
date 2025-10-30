@@ -63,6 +63,7 @@ void CGame::LoadImages(){
 
 // Load Levels
 void CGame::LoadLevels() {
+    
     LvlImporter = new LevelImporter();
     //LvlImporter->Initialize(eLevels::Size);
     //LvlImporter->Load((int)eLevels::RealLevel, "reallevel");
@@ -110,8 +111,10 @@ void CGame::BeginGame(){
         printf("No levels loaded!\n");
 	    return;
     }
-    m_pObjectManager;
-    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 0));
+    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 100));
+    auto character5 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 300));
+    auto character7 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 700));
+    auto character9 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 500));
     auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 400, 0));
     if (auto char2 = character2.lock()) {
         char2->speed = char2->speed * -1;
@@ -211,9 +214,9 @@ void CGame::DrawFrameRateText(){
 void CGame::RenderFrame(){
     m_pRenderer->BeginFrame(); //required before rendering
 
-    for (auto* desc3D : m_vLevelSprites) {
-        m_pRenderer->Draw(desc3D);
-    }
+    //for (auto* desc3D : m_vLevelSprites) {
+    //    m_pRenderer->Draw(desc3D);
+    //}
 
     if (m_pSquareDesc) {
         //LSpriteDesc3D desc3D;

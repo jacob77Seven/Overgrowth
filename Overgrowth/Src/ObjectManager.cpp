@@ -20,7 +20,7 @@ void OObjectManager::draw(){
     
     // if(m_bDrawAABBs)
     //     m_pTileManager->DrawBoundingBoxes(eSprite::Line); //draw AABBs
-
+	std::vector<LSpriteDesc3D> spriteDescs;
     for (std::shared_ptr<OObject> pObj : OObjectList){ //for each object
         //pObj->draw();
         //if (m_pRenderer && pObj.get())
@@ -38,9 +38,14 @@ void OObjectManager::draw(){
             //desc3D.m_fAlpha = 1.0f;
             //desc3D.m_f4Tint = Vector4(1, 1, 1, 1);
             //m_pRenderer->Draw(pObj.get());
-        IObjectUtilities& pObjUtil = *pObj;
-        pObjUtil.draw();
+        //IObjectUtilities& pObjUtil = *pObj;
+        //pObjUtil.draw();
+		OObject* raw = pObj.get();
+		spriteDescs.push_back(*raw);
     } //for
+    OCommon::m_pRenderer->Draw(spriteDescs);
+
+
         //m_pRenderer->DrawBoundingBox(1, BoundingBox(XMFLOAT3(0, 0, 0), XMFLOAT3(500, 500, 500)));
 
     // LBaseObjectManager::draw();
