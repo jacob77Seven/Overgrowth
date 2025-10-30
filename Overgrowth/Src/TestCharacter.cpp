@@ -17,12 +17,12 @@ void TestCharacter::BeginPlay()
 TestCharacter::TestCharacter(const Vector3& p) 
     : OBaseCharacter(p)
 {
-    speed = 20.f;
+    speed = 40.f;
     m_nSpriteIndex = (UINT)eSprite::walkright;
     EObjectCollisionType = ECollisionType::Dynamic;
     m_nCurrentFrame = 0;
     //printf("TestCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
-    fps = 1.f;
+    fps = 6.f;
     frame = 0.f;
 }
 
