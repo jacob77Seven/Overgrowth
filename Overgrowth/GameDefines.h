@@ -6,6 +6,7 @@
 
 #include "Defines.h"
 #include "Sound.h"
+#include "assetDefines.h"
 
 /// \brief Sprite enumerated type.
 ///
@@ -13,10 +14,10 @@
 /// integer and used for the index of the corresponding texture in graphics
 /// memory. `Size` must be last.
 
-enum class eSprite: UINT{
-  Background, TextWheel, Pig, Pink_sheet, PinkSquare, walkright,
-  Size  //MUST BE LAST
-}; //eSprite
+//enum class eSprite: UINT{
+//  Background, TextWheel, Pig, Pink_sheet, PinkSquare,
+//  Size  //MUST BE LAST
+//}; //eSprite
 
 
 enum class eLevels : UINT {
@@ -31,9 +32,9 @@ enum class eLevels : UINT {
 /// integer and used for the index of the corresponding sample. `Size` must 
 /// be last.
 
-enum class eSound: UINT{
-  Clang, Grunt, Oink, Piano,
-  Size  //MUST BE LAST
-}; //eSound
+//enum class eSound: UINT{
+//  Clang, Grunt, Oink, Piano,
+//  Size  //MUST BE LAST
+//}; //eSound
 
 #endif //__L4RC_GAME_GAMEDEFINES_H__

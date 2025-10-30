@@ -48,16 +48,16 @@ void CGame::Initialize(){
 void CGame::LoadImages(){  
     m_pRenderer->BeginResourceUpload();
 
-    m_pRenderer->Load(eSprite::Background, "background"); 
-    m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
-    m_pRenderer->Load(eSprite::Pig,  "pig"); 
-    m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
+    m_pRenderer->Load(eSprite::background, "background");
+    m_pRenderer->Load(eSprite::textwheel,  "textwheel");
+    m_pRenderer->Load(eSprite::SylvaraTest,  "SylvaraTest"); 
+    m_pRenderer->Load(eSprite::PinkSquare,  "PinkSquare");
     //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
 
-    m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
+    m_pRenderer->LoadSpriteSheet((UINT)eSprite::PinkSquare, "PinkSquare", 8, 8, 16);
     m_pRenderer->LoadSpriteSheet((UINT)eSprite::walkright, "walkright", 76, 98, 8);
 
-    m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
+    //m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
     m_pRenderer->EndResourceUpload();
 } //LoadImages
@@ -74,10 +74,10 @@ void CGame::LoadLevels() {
 
 void CGame::LoadSounds(){
     m_pAudio->Initialize(eSound::Size);
-    m_pAudio->Load(eSound::Grunt, "grunt");
-    m_pAudio->Load(eSound::Clang, "clang");
-    m_pAudio->Load(eSound::Oink, "oink");
-    m_pAudio->Load(eSound::Piano, "piano");
+    //m_pAudio->Load(eSound::grunt, "grunt");
+    m_pAudio->Load(eSound::clang, "clang");
+    m_pAudio->Load(eSound::oink, "oink");
+    m_pAudio->Load(eSound::piano, "piano");
 
 } //LoadSounds
 
@@ -98,7 +98,7 @@ void CGame::BeginGame(){
     //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc3D();
     //m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
-    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::Pig;
+    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::SylvaraTest;
     m_pSquareDesc->m_nCurrentFrame = 0;
     //m_pSquareDesc->m_nCurrentFrame = 1;
     m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
@@ -174,16 +174,16 @@ void CGame::KeyboardHandler(){
         m_bDrawFrameRate = !m_bDrawFrameRate;
   
     if(m_pKeyboard->TriggerDown(VK_SPACE)) //play sound
-        m_pAudio->play(eSound::Clang);
+        m_pAudio->play(eSound::clang);
 
-    if(m_pKeyboard->TriggerUp(VK_SPACE)) //play sound
-        m_pAudio->play(eSound::Grunt);
+    //if(m_pKeyboard->TriggerUp(VK_SPACE)) //play sound
+    //    m_pAudio->play(eSound::grunt);
   
     if (m_pKeyboard->TriggerDown('O'))
-        m_pAudio->play(eSound::Oink);
+        m_pAudio->play(eSound::oink);
 
     if (m_pKeyboard->TriggerDown('P'))
-        m_pAudio->play(eSound::Piano);
+        m_pAudio->play(eSound::piano);
 
     if (m_pKeyboard->Down(VK_LEFT))  m_pSquareDesc->m_vPos.x -= 5.0f;
         
