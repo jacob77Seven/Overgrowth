@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Src\LevelImporter.cpp" />
+    <ClCompile Include="Src\ObjectManager.cpp" />
+    <ClCompile Include="Src\Object.cpp" />
+    <ClCompile Include="Src\BaseController.cpp" />
+    <ClCompile Include="Src\BaseCharacter.cpp" />
+    <ClCompile Include="Src\BaseAnimator.cpp" />
+    <ClCompile Include="Src\Common.cpp" />
+    <ClCompile Include="Src\TestCharacter.cpp" />
+    <ClCompile Include="Src\TestObject.cpp" />
+    <ClCompile Include="assetDefines.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameDefines.h" />
+    <ClInclude Include="Src\LevelImporter.h" />
+    <ClInclude Include="Src\ObjectManager.h" />
+    <ClInclude Include="Src\Object.h" />
+    <ClInclude Include="Src\Common.h" />
+    <ClInclude Include="Src\json.hpp" />
+    <ClInclude Include="Src\BaseController.h" />
+    <ClInclude Include="Src\BaseCharacter.h" />
+    <ClInclude Include="Src\BaseAnimator.h" />
+    <ClInclude Include="Src\CollisionInterface.h" />
+    <ClInclude Include="Src\TestCharacter.h" />
+    <ClInclude Include="Src\ObjectUtilitiesInterface.h" />
+    <ClInclude Include="Src\TestObject.h" />
+    <ClInclude Include="assetDefines.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Overgrowth.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Media">
+      <UniqueIdentifier>{ac9172ac-58f0-4f5b-a616-27991d47b640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Images">
+      <UniqueIdentifier>{0b648e35-85ab-456c-99eb-ecfdf1165e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Sounds">
+      <UniqueIdentifier>{326a9413-d4ea-4e12-8b5c-6e4a31959ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Fonts">
+      <UniqueIdentifier>{d22023dc-316c-41d9-983d-e6e8c71b8b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\XML">
+      <UniqueIdentifier>{7875e9a6-ed73-4278-9e9a-732187a62063}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Media\Images\background.png">
+      <Filter>Media\Images</Filter>
+    </Image>
+    <Image Include="Media\Images\textwheel.png">
+      <Filter>Media\Images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Media\Fonts\AverageSans_24.spritefont">
+      <Filter>Media\Fonts</Filter>
+    </None>
+    <None Include="Test Level Export.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Media\Fonts\OFL.txt">
+      <Filter>Media\Fonts</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Media\Sounds\clang.wav">
+      <Filter>Media\Sounds</Filter>
+    </Media>
+    <Media Include="Media\Sounds\umph.wav">
+      <Filter>Media\Sounds</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Media\XML\gamesettings.xml">
+      <Filter>Media\XML</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>

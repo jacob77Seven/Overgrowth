@@ -165,17 +165,56 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="assetDefines.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Src\BaseAnimator.cpp" />
+    <ClCompile Include="Src\BaseCharacter.cpp" />
+    <ClCompile Include="Src\BaseController.cpp" />
+    <ClCompile Include="Src\Common.cpp" />
     <ClCompile Include="Src\LevelImporter.cpp" />
+    <ClCompile Include="Src\Object.cpp" />
+    <ClCompile Include="Src\ObjectManager.cpp" />
+    <ClCompile Include="Src\TestCharacter.cpp" />
+    <ClCompile Include="Src\TestObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assetDefines.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameDefines.h" />
+    <ClInclude Include="Src\BaseAnimator.h" />
+    <ClInclude Include="Src\BaseCharacter.h" />
+    <ClInclude Include="Src\BaseController.h" />
+    <ClInclude Include="Src\CollisionInterface.h" />
+    <ClInclude Include="Src\Common.h" />
+    <ClInclude Include="Src\json.hpp" />
     <ClInclude Include="Src\LevelImporter.h" />
+    <ClInclude Include="Src\Object.h" />
+    <ClInclude Include="Src\ObjectManager.h" />
+    <ClInclude Include="Src\ObjectUtilitiesInterface.h" />
+    <ClInclude Include="Src\TestCharacter.h" />
+    <ClInclude Include="Src\TestObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Media\Images\background.png" />
+    <Image Include="Media\Images\textwheel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Media\Fonts\AverageSans_24.spritefont" />
+    <None Include="Test Level Export.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Media\Fonts\OFL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Media\Sounds\clang.wav" />
+    <Media Include="Media\Sounds\umph.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Media\XML\gamesettings.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

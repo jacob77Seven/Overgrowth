@@ -1,14 +1,42 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <vector>
+#include <stdio.h>
 #include "json.hpp"
+
+#include "Defines.h"
+#include "Abort.h"
+
+#include "WindowDesc.h"
+#include "Settings.h"
+#include "Component.h"
+#include "ComponentIncludes.h"
+#include "Helpers.h"
+
+
+
+struct TileData {
+	int tileID;          // LDtk tile ID ("t")
+	int srcX, srcY;      // Source rect in the tileset image ("src")
+	int posX, posY;      // World position in pixels ("px")
+	float posZ = 0.0f;   // Z position for layering
+};
 
 struct LevelData {
 	float val;
+	std::vector<TileData> tiles;
 };
 
-class LevelImporter {
+class LevelImporter: public LSettingsManager {
+
+private:
+	void ParseLevel(std::string LevelPath);
+
 public:
 	LevelImporter();
-	LevelData ParseLevel(std::string LevelPath);
+	void Load(size_t index, const char* name);
+	//std::vector<LevelData> Levels;
+	LevelData CurrLevel;
+	LevelData GetLevelData();
 };

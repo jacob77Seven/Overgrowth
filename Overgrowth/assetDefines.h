@@ -1,29 +1,29 @@
 #ifndef ASSETDEFINES_H
 #define ASSETDEFINES_H
 
-enum class eSprite {
+#include "Defines.h"
+#include <string>
+
+enum class eSprite : UINT {
     background,
-    healthbar,
-    healthbarbackground,
     LyingPinkSquare,
-    manabar,
-    manabarbackground,
     PinkSquare,
+    PinkSquare2,
     SylvaraTest,
     textwheel,
     Size
 };
 
-enum class eSound {
+enum class eSound : UINT {
     clang,
     oink,
-    sound-test,
-    untitled,
+    piano,
     Size
 };
 
-string spriteHandles[9] = {"background", "healthbar", "healthbarbackground", "LyingPinkSquare", "manabar", "manabarbackground", "PinkSquare", "SylvaraTest", "textwheel"};
-
-string soundHandles[4] = {"clang", "oink", "sound-test", "untitled"};
+class OAssetDefines {
+static std::string spriteHandles[6];
+static std::string soundHandles[3];
+};
 
 #endif // ASSETDEFINES_H

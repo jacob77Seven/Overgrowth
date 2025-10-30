@@ -7,25 +7,21 @@
     <!-- sprites -->
     <sprites path="Media\Images">
         <sprite name="background" file="background.png"/>
-        <sprite name="textwheel" file="textwheel.png"/>
-        <sprite name="healthbar" file="healthbar.png"/>
-        <sprite name="healthbarbackground" file="healthbarbackground.png"/>
         <sprite name="LyingPinkSquare" file="LyingPinkSquare.png"/>
-        <sprite name="manabar" file="manabar.png"/>
-        <sprite name="manabarbackground" file="manabarbackground.png"/>
         <sprite name="PinkSquare" file="PinkSquare.png"/>
+        <sprite name="PinkSquare2" file="PinkSquare2.png"/>
         <sprite name="SylvaraTest" file="SylvaraTest.png"/>
+        <sprite name="textwheel" file="textwheel.png"/>
     </sprites>
     <!-- sound -->
     <sounds path="Media\Sounds">
-        <sounds name="clang" file="clang.wav"/>
-        <sounds name="oink" file="oink.wav"/>
-        <sounds name="sound-test" file="sound-test.wav"/>
-        <sounds name="umph" file="umph.wav"/>
-        <sounds name="untitled" file="untitled.wav"/>
-        <sound name="clang" file="clang.wav"/>
-        <sound name="oink" file="oink.wav"/>
-        <sound name="sound-test" file="sound-test.wav"/>
-        <sound name="untitled" file="untitled.wav"/>
+        <sound name="clang" file="clang.wav" instances="8"/>
+        <sound name="oink" file="oink.wav" instances="8"/>
+        <sound name="piano" file="piano.wav" instances="8"/>
     </sounds>
+    <!-- levels -->
+    <levels path="Media\Level">
+        <sound name="reallevel" file="Test Level Export.json" instances="8"/>
+        <sound name="testlevel" file="Test Level Export 1.json" instances="8"/>
+    </levels>
 </settings>

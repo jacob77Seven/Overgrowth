@@ -45,7 +45,8 @@ int main() {
     const string xmlPath = "../Media/XML/gamesettings.xml";
     const string imagesDir = "../Media/Images/";
     const string soundsDir = "../Media/Sounds/"; //sounds
-    const string definesPath = "../Overgrowth/assetDefines.h";//assetDefines
+    const string definesPath = "../Overgrowth/assetDefines.h";//assetDefines.h
+    const string definesCPP = "../Overgrowth/assetDefines.cpp";//assetDefines.cpp
     
     //tryin find bug
      //arrays for the ENUM genertaor
@@ -202,37 +203,57 @@ int main() {
     }
 
     out << "#ifndef ASSETDEFINES_H\n#define ASSETDEFINES_H\n\n";
-
+    out << "#include \"Defines.h\"\n";
+    out << "#include <string>\n\n";
     // Sprites enum
-    out << "enum class eSprite {\n";
+    out << "enum class eSprite : UINT {\n";
     for (const auto& name : spriteNames) out << "    " << name << ",\n";
     out << "    Size\n};\n\n";
 
     // Sounds enum
-    out << "enum class eSound {\n";
+    out << "enum class eSound : UINT {\n";
     for (const auto& name : soundNames) out << "    " << name << ",\n";
     out << "    Size\n};\n\n";
 
-    // Sprite handles array
-    out << "string spriteHandles[" << spriteNames.size() << "] = {";
-    for (size_t i = 0; i < spriteNames.size(); ++i) {
-        out << "\"" << spriteNames[i] << "\"";
-        if (i != spriteNames.size() - 1) out << ", ";
-    }
+    out << "class OAssetDefines {\n";
+    out << "static std::string spriteHandles[";
+    out << spriteNames.size() << "];\n";
+    out << "static std::string soundHandles[";
+    out << soundNames.size() << "];\n";
     out << "};\n\n";
 
-    // Sound handles array
-    out << "string soundHandles[" << soundNames.size() << "] = {";
-    for (size_t i = 0; i < soundNames.size(); ++i) {
-        out << "\"" << soundNames[i] << "\"";
-        if (i != soundNames.size() - 1) out << ", ";
-    }
-    out << "};\n\n";
 
     out << "#endif // ASSETDEFINES_H\n";
     out.close();
-
     cout << "[SpriteImporter] assetDefines.h generated successfully.\n";
+
+    //creating assetDefines.h
+    ofstream header(definesCPP);
+    if (!header.is_open()) {
+        cerr << "Error: could not open " << definesPath << endl;
+        return 1;
+    }
+
+    header << "#include \"assetDefines.h\"\n\n";
+    // Sprite handles array
+    header << "std::string OAssetDefines::spriteHandles[" << spriteNames.size() << "] = {";
+    for (size_t i = 0; i < spriteNames.size(); ++i) {
+        header << "\"" << spriteNames[i] << "\"";
+        if (i != spriteNames.size() - 1) header << ", ";
+    }
+    header << "};\n\n";
+
+    // Sound handles array
+    header << "std::string OAssetDefines::soundHandles[" << soundNames.size() << "] = {";
+    for (size_t i = 0; i < soundNames.size(); ++i) {
+        header << "\"" << soundNames[i] << "\"";
+        if (i != soundNames.size() - 1) header << ", ";
+    }
+    header << "};\n\n";
+
+    header.close();
+
+    cout << "[SpriteImporter] assetDefines.cpp generated successfully.\n";
 
 
     

@@ -8,6 +8,9 @@
 #include "Settings.h"
 #include "SpriteDesc.h"
 #include "SpriteRenderer.h"
+#include "Src/LevelImporter.h"
+#include "Src/Common.h"
+#include "Src/ObjectManager.h"
 
 /// \brief The game class.
 ///
@@ -20,22 +23,31 @@
 
 class CGame: 
   public LComponent, 
-  public LSettings{ 
+  public LSettings,
+  public OCommon { 
 
   private:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
+    LSpriteDesc3D* m_pSquareDesc = nullptr;
     LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
-    
+    OObjectManager* m_pObjectManager = nullptr; ///< Pointer to renderer.
+    LevelImporter* LvlImporter = nullptr;
+    Vector2 m_vCameraPos;
+    LBaseCamera* m_pCamera = nullptr;
+
+
     void LoadImages(); ///< Load images.
     void LoadSounds(); ///< Load sounds.
+    void LoadLevels(); ///< Load levels.
     void BeginGame(); ///< Begin playing the game.
-    void CreateObjects(); ///< Create game objects.
+    //void CreateObjects(); ///< Create game objects.
     void KeyboardHandler(); ///< The keyboard handler.
     void RenderFrame(); ///< Render an animation frame.
     void DrawFrameRateText(); ///< Draw frame rate text to screen.
 
   public:
+    std::vector<LSpriteDesc3D*> m_vLevelSprites; //container for storing tiles
     ~CGame(); ///< Destructor.
 
     void Initialize(); ///< Initialize the game.
