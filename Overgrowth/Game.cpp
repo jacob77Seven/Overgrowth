@@ -8,6 +8,7 @@
 #include "Src\TestCharacter.h"
 #include "shellapi.h"
 #include "Src\Common.h"
+#include "Src\AssetLoader.h"
 
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
@@ -28,39 +29,15 @@ void CGame::Initialize(){
 
     m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
-    m_pRenderer->Initialize(6, 24); 
+    //m_pRenderer->Initialize(6, 24);
     m_pObjectManager = new OObjectManager();
     OCommon::m_pObjectManager = m_pObjectManager;
-
-    LoadImages(); //load images from xml file list
+    m_pAssetLoader = new OAssetLoader();
+    m_pAssetLoader->LoadSprites();
     LoadSounds(); //load the sounds for this game
     LoadLevels();
     BeginGame();
 } //Initialize
-
-/// Load the specific images needed for this game. This is where `eSprite`
-/// values from `GameDefines.h` get tied to the names of sprite tags in
-/// `gamesettings.xml`. Those sprite tags contain the name of the corresponding
-/// image file. If the image tag or the image file are missing, then the game
-/// should abort from deeper in the Engine code leaving you with an error
-/// message in a dialog box.
-
-void CGame::LoadImages(){  
-    m_pRenderer->BeginResourceUpload();
-
-    m_pRenderer->Load(eSprite::background, "background");
-    m_pRenderer->Load(eSprite::textwheel,  "textwheel");
-    m_pRenderer->Load(eSprite::SylvaraTest,  "SylvaraTest"); 
-    m_pRenderer->Load(eSprite::PinkSquare,  "PinkSquare");
-    //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
-
-    m_pRenderer->LoadSpriteSheet((UINT)eSprite::PinkSquare, "PinkSquare", 8, 8, 16);
-    m_pRenderer->LoadSpriteSheet((UINT)eSprite::walkright, "walkright", 76, 98, 8);
-
-    //m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
-
-    m_pRenderer->EndResourceUpload();
-} //LoadImages
 
 // Load Levels
 void CGame::LoadLevels() {

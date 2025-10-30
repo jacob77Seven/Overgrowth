@@ -17,3 +17,19 @@ bool OCommon::m_bGodMode = false;
 Vector2 OCommon::m_vWorldSize = Vector2::Zero;
 CPlayer* OCommon::m_pPlayer = nullptr;
 float OCommon::m_fTile = 1000.f;
+
+UINT OCommon::GetSpriteHandleIndex(const std::string handle) {
+    for (UINT i = 0; i < (UINT)eSprite::Size; i++) {
+        if (OAssetDefines::spriteHandles[i] == handle)
+            return i;
+    }
+    return -1;
+}
+
+UINT OCommon::GetSoundHandleIndex(const std::string handle) {
+    for (UINT i = 0; i < (UINT)eSound::Size; i++) {
+        if (OAssetDefines::soundHandles[i] == handle)
+            return i;
+    }
+    return -1;
+}

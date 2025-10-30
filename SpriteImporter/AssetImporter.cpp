@@ -216,6 +216,8 @@ int main() {
     out << "    Size\n};\n\n";
 
     out << "class OAssetDefines {\n";
+    out << "protected:\n";
+
     out << "static std::string spriteHandles[";
     out << spriteNames.size() << "];\n";
     out << "static std::string soundHandles[";

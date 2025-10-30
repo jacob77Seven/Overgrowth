@@ -8,10 +8,11 @@
 #include "ComponentIncludes.h"
 //#include <iostream>
 
-class OAssetLoader : OCommon {
+class OAssetLoader : OCommon, OAssetDefines {
 public:
     OAssetLoader();
     void LoadSprites();
 protected:
-    std::string SpriteSheetJsonDirectory = "Media\\json\\.json";
+    std::string SpriteSheetJsonDirectory;
+
 };

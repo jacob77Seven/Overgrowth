@@ -4,7 +4,7 @@
             "SheetHandle": "walkright",
             "NumSprites": 8,
             "SizeX": 76,
-            "SixeY": 98,
+            "SizeY": 98,
             "Anims": [
                 {
                     "Name": "EnemyWalkRight",
@@ -24,7 +24,7 @@
             "SheetHandle": "walkleft",
             "NumSprites": 8,
             "SizeX": 76,
-            "SixeY": 98,
+            "SizeY": 98,
             "Anims": [
                 {
                     "Name": "EnemyWalkLeft",
@@ -44,7 +44,7 @@
             "SheetHandle": "PinkSquare",
             "NumSprites": 16,
             "SizeX": 8,
-            "SixeY": 8,
+            "SizeY": 8,
             "Anims": [
                 {
                     "Name": "PinkSquareTestAnim",
@@ -56,7 +56,7 @@
                             "A": 0
                         }
                     ]
-                }
+                },
                 {
                     "Name": "ABCD",
                     "StartFrame": 0,
