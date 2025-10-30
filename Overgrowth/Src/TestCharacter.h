@@ -20,7 +20,9 @@ protected:
     eSprite Sprite;
     virtual void OnDestroy() override;
     virtual void BeginPlay() override;
-
+    float frame;
+    float fps;
+    float timeTrack;
 public:
     TestCharacter(const Vector3& p);
     float speed;

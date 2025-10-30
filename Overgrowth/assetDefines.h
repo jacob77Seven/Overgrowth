@@ -11,6 +11,7 @@ enum class eSprite : UINT {
     PinkSquare2,
     SylvaraTest,
     textwheel,
+    walkright,
     Size
 };
 
@@ -22,7 +23,7 @@ enum class eSound : UINT {
 };
 
 class OAssetDefines {
-static std::string spriteHandles[6];
+static std::string spriteHandles[7];
 static std::string soundHandles[3];
 };
 

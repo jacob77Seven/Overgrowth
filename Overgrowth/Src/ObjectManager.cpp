@@ -48,6 +48,8 @@ void OObjectManager::draw(){
 
 void OObjectManager::tick(const float dt)
 {
+    timeTrack += dt;
+    printf("time %.8f\n", timeTrack);
     for (std::shared_ptr<OObject> pObj : OObjectList) { //for each object
         //pObj->draw();
         IObjectUtilities& pObjUtil = *pObj;
@@ -211,6 +213,7 @@ void OObjectManager::CleanUp()
 
 OObjectManager::OObjectManager()
 {
+    timeTrack = 0.f;
     printf("Object Manager Created.\n");
     this->m_pRenderer = OCommon::m_pRenderer;
 }

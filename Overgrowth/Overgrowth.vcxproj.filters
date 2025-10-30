@@ -12,6 +12,8 @@
     <ClCompile Include="Src\Common.cpp" />
     <ClCompile Include="Src\TestCharacter.cpp" />
     <ClCompile Include="Src\TestObject.cpp" />
+    <ClCompile Include="Src\BaseLevelAsset.cpp" />
+    <ClCompile Include="Src\Renderer.cpp" />
     <ClCompile Include="assetDefines.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,9 @@
 
 void TestCharacter::BeginPlay()
 {
+    timeTrack = 0;
     OBaseCharacter::BeginPlay(); // Call to parent class.
-    printf("Character Begin Play!");
+    //printf("Character Begin Play!");
     // This code is a test of the garbage collection system.
     //std::weak_ptr<TestObject> object = OCommon::m_pObjectManager->create<TestObject>(m_vPos + Vector3(100, 100, 0));
     //if (auto obj = object.lock())
@@ -16,11 +17,13 @@ void TestCharacter::BeginPlay()
 TestCharacter::TestCharacter(const Vector3& p) 
     : OBaseCharacter(p)
 {
-    speed = 200.f * OCommon::m_fTile;
-    m_nSpriteIndex = (UINT)eSprite::SylvaraTest;
+    speed = 20.f;
+    m_nSpriteIndex = (UINT)eSprite::walkright;
     EObjectCollisionType = ECollisionType::Dynamic;
     m_nCurrentFrame = 0;
-    printf("TestCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
+    //printf("TestCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
+    fps = 1.f;
+    frame = 0.f;
 }
 
 void TestCharacter::OnDestroy() {
@@ -28,10 +31,16 @@ void TestCharacter::OnDestroy() {
 }
 
 void TestCharacter::tick(const float dt) {
-
-    m_vPos.y -= dt * speed;
+    //timeTrack += dt;
+    //printf("time %.8f\n", timeTrack);
+    m_vPos.x += dt * speed;
     //printf("m_vPos.y = %f & dt = %f\n", m_vPos.y, dt);
     OBaseCharacter::tick(dt);
+    frame += dt * fps;
+    if (frame >= 8.f)
+        frame = frame - 8;
+
+    m_nCurrentFrame = (UINT)floor(frame);
 }
 
 /// Ask the renderer to draw the sprite described in the sprite descriptor.

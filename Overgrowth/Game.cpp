@@ -4,7 +4,6 @@
 #include "Game.h"
 
 #include "GameDefines.h"
-#include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
 #include "Src\TestCharacter.h"
 #include "shellapi.h"
@@ -27,9 +26,9 @@ void CGame::Initialize(){
     m_pCamera->MoveTo(Vector3(0, 0, 50));
     m_pCamera->MoveTo(m_pCamera->GetPos());
 
-    m_pRenderer = new LSpriteRenderer(eSpriteMode::Unbatched3D);
+    m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
-    m_pRenderer->Initialize(eSprite::Size); 
+    m_pRenderer->Initialize(6, 24); 
     m_pObjectManager = new OObjectManager();
     OCommon::m_pObjectManager = m_pObjectManager;
 
@@ -49,10 +48,14 @@ void CGame::Initialize(){
 void CGame::LoadImages(){  
     m_pRenderer->BeginResourceUpload();
 
-    m_pRenderer->Load(eSprite::background, "background"); 
+    m_pRenderer->Load(eSprite::background, "background");
     m_pRenderer->Load(eSprite::textwheel,  "textwheel");
-    m_pRenderer->Load(eSprite::SylvaraTest,  "SylvaraTest");
+    m_pRenderer->Load(eSprite::SylvaraTest,  "SylvaraTest"); 
     m_pRenderer->Load(eSprite::PinkSquare,  "PinkSquare");
+    //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
+
+    m_pRenderer->LoadSpriteSheet((UINT)eSprite::PinkSquare, "PinkSquare", 8, 8, 16);
+    m_pRenderer->LoadSpriteSheet((UINT)eSprite::walkright, "walkright", 76, 98, 8);
 
     //m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
 
@@ -94,11 +97,13 @@ void CGame::BeginGame(){
     delete m_pSquareDesc;
     //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc3D();
-    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
-    m_pSquareDesc->m_nCurrentFrame = 1;
+    //m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
+    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::SylvaraTest;
+    m_pSquareDesc->m_nCurrentFrame = 0;
+    //m_pSquareDesc->m_nCurrentFrame = 1;
     m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
-    m_pSquareDesc->m_fXScale = 4.0f;
-    m_pSquareDesc->m_fYScale = 4.0f;
+    m_pSquareDesc->m_fXScale = 0.5f;
+    m_pSquareDesc->m_fYScale = 0.5f;
     m_pSquareDesc->m_fRoll = 0.0f;
     m_pSquareDesc->m_fAlpha = 1.0f;
     m_pSquareDesc->m_f4Tint = Vector4(1, 1, 1, 1);
@@ -108,11 +113,11 @@ void CGame::BeginGame(){
 	    return;
     }
     m_pObjectManager;
-    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y + 400, 0));
-    auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x, m_vWinCenter.y - 400, 0));
+    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y -300, 0));
+    auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 260, m_vWinCenter.y -300, 30));
     if (auto char2 = character2.lock()) {
-        char2->speed = char2->speed * -1;
-        char2->SetObjectCollisionType(ECollisionType::Dynamic);
+        char2->speed = char2->speed * 1.5;
+        char2->SetObjectCollisionType(ECollisionType::Static);
     }
 
     LevelData& data = LvlImporter->GetLevelData(); //get first level for now
@@ -138,6 +143,21 @@ void CGame::BeginGame(){
         desc3D->m_f4Tint = Vector4(1, 1, 1, 1);
         m_vLevelSprites.push_back(desc3D);
     }
+
+    //for (auto& e : data.entities) {
+    //    if (e.name == "Pig") {
+    //        auto pigWeak = m_pObjectManager->create<TestCharacter>(
+    //            Vector3(e.posX, e.posY, e.posZ)
+    //        );
+    //        if (auto pig = pigWeak.lock()) {
+    //            pig->SetObjectCollisionType(ECollisionType::Dynamic);
+    //        }
+
+    //    }
+    //    //else if (e.name == "BlackTrees") {
+
+    //    //}
+    //}
 
 } //BeginGame
 
@@ -198,15 +218,6 @@ void CGame::RenderFrame(){
     }
 
     if (m_pSquareDesc) {
-        //LSpriteDesc3D desc3D;
-        //desc3D.m_nSpriteIndex = m_pSquareDesc->m_nSpriteIndex;
-        //desc3D.m_vPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, 0.0f);
-        //desc3D.m_fXScale = 4.0f;
-        //desc3D.m_fYScale = 4.0f;
-        //desc3D.m_fRoll = 0.0f;
-        //desc3D.m_fAlpha = 1.0f;
-        //desc3D.m_f4Tint = Vector4(1, 1, 1, 1);
-        //m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
         
         m_pRenderer->Draw(m_pSquareDesc);
     }
@@ -227,26 +238,21 @@ void CGame::ProcessFrame(){
     KeyboardHandler(); //handle keyboard input
     m_pAudio->BeginFrame(); //notify audio player that frame has begun
 
-    m_pTimer->Tick([&](){ //all time-dependent function calls should go here
-    const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
-    //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
-
-    if (m_pSquareDesc) {
-        // Follow player smoothly
-        const float followSpeed = 5.0f;
-        Vector3 playerPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, m_pSquareDesc->m_vPos.z);
-        m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
-
-        if (m_pCamera)
-            m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, -1000.0f));
-    }
-    });
-    m_pTimer->Tick([&](){ //all time-dependent function calls should go here
+    m_pTimer->Tick([&]() { //all time-dependent function calls should go here
         const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
+        //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
+        if (m_pSquareDesc) {
+            // Follow player smoothly
+            const float followSpeed = 5.0f;
+            Vector3 playerPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, m_pSquareDesc->m_vPos.z);
+            m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
+
+            if (m_pCamera)
+                m_pCamera->MoveTo(Vector3(m_vCameraPos.x, m_vCameraPos.y, -1000.0f));
+        }
         //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
         if (OCommon::m_pObjectManager)
             OCommon::m_pObjectManager->tick(t);
-    });
-
+        });
     RenderFrame(); //render a frame of animation
 } //ProcessFrame

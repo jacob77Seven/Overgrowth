@@ -1,6 +1,10 @@
 #include "LevelImporter.h"
 #include <fstream>
 
+#include "Common.h"
+#include "ObjectManager.h"
+#include "TestCharacter.h"
+
 
 using json = nlohmann::json;
 
@@ -52,11 +56,45 @@ void LevelImporter::ParseLevel(std::string LevelPath) {
                 lvlDat.tiles.push_back(t);
             }
         }
+        if (layer.contains("entityInstances")) {
+            printf("Layer has entities. \n");
+            for (auto& ent : layer["entityInstances"]) {
+                EntityData e;
+                e.name = ent["__identifier"];
+                e.posX = ent["__worldX"];
+                e.posY = (float)ent["__worldY"] * -1 + 750; // same Y inversion logic
+				//if (layerName == "BackgroundEntities1") e.posZ = 500.0f;
+				//else if (layerName == "Background2Entities") e.posZ = 750.0f;
+				//else if (layerName == "ForegroundEntities") e.posZ = -500.0f;
+				//else e.posZ = 0.0f;
+                e.posZ = 0.0f;
+
+                lvlDat.entities.push_back(e);
+
+                printf("Entity '%s' at (%.1f, %.1f)\n", e.name.c_str(), e.posX, e.posY);
+            }
+        }
     }
 
     printf("Imported %zu tiles total.\n", lvlDat.tiles.size());
     CurrLevel = lvlDat;
+    SpawnEntities();
 }
+
+void LevelImporter::SpawnEntities() {
+    for (auto& e : CurrLevel.entities) {
+        if (e.name == "Pig") {
+            auto pigWeak = OCommon::m_pObjectManager->create<TestCharacter>(
+                Vector3(e.posX, e.posY, e.posZ)
+            );
+            printf("Spawned Pig at (%.1f, %.1f, %.1f)\n", e.posX, e.posY, e.posZ);
+            if (auto pig = pigWeak.lock()) {
+                pig->SetObjectCollisionType(ECollisionType::Dynamic);
+            }
+        }
+    }
+}
+
 
 
 
@@ -82,6 +120,8 @@ void LevelImporter::Load(size_t index, const char* name) {
     const int instances = std::max(1, pLevelTag->IntAttribute("instances")); //get number of instances
 
     const std::string filename = path + "\\" + pLevelTag->Attribute("file");
+
+    printf("%s\n", filename.c_str());
 
     //wchar_t* wfilename = nullptr; //wide file name
     //MakeWideFileName(filename.c_str(), wfilename); //convert the former to the latter

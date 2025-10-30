@@ -6,7 +6,7 @@
 
 #include "Common.h"
 
-LSpriteRenderer* OCommon::m_pRenderer = nullptr;
+ORenderer* OCommon::m_pRenderer = nullptr;
 OObjectManager* OCommon::m_pObjectManager = nullptr;
 LParticleEngine2D* OCommon::m_pParticleEngine = nullptr;
 CTileManager* OCommon::m_pTileManager = nullptr;

@@ -23,6 +23,7 @@ class OObjectManager :
     public OCommon
 {
 private:
+    float timeTrack;
     void BroadPhase(); ///< Broad phase collision detection and response.
     void NarrowPhase(std::shared_ptr<OObject>, std::shared_ptr<OObject>); ///< Narrow phase collision detection and response.
     static std::vector<std::shared_ptr<OObject>> OObjectList;

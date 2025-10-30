@@ -13,7 +13,7 @@
 #include "Component.h"
 #include "ComponentIncludes.h"
 #include "Helpers.h"
-
+#include "Common.h"
 
 
 struct TileData {
@@ -23,15 +23,26 @@ struct TileData {
 	float posZ = 0.0f;   // Z position for layering
 };
 
+struct EntityData {
+	std::string name;   // e.g. "Pig"
+	float posX;
+	float posY;
+	float posZ;
+};
+
 struct LevelData {
 	float val;
 	std::vector<TileData> tiles;
+	std::vector<EntityData> entities;
 };
 
-class LevelImporter: public LSettingsManager {
+class LevelImporter: public LSettingsManager, public OCommon
+
+{
 
 private:
 	void ParseLevel(std::string LevelPath);
+	void SpawnEntities();
 
 public:
 	LevelImporter();

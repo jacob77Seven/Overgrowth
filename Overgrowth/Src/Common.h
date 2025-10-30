@@ -7,7 +7,8 @@
 //forward declarations to make the compiler less stroppy
 
 class OObjectManager;
-class LSpriteRenderer;
+class ORenderer;
+//class LSpriteRenderer;
 class LParticleEngine2D;
 class CTileManager;
 class CPlayer;
@@ -22,7 +23,7 @@ class CPlayer;
 
 class OCommon {
 protected:
-    static LSpriteRenderer* m_pRenderer; ///< Pointer to renderer.
+    static ORenderer* m_pRenderer; ///< Pointer to renderer.
     static OObjectManager* m_pObjectManager; ///< Pointer to object manager.
     static LParticleEngine2D* m_pParticleEngine; ///< Pointer to particle engine.
     static CTileManager* m_pTileManager; ///< Pointer to tile manager. 

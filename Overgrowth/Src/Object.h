@@ -4,7 +4,7 @@
 #pragma once
 
 #include "..\GameDefines.h"
-#include "SpriteRenderer.h"
+#include "Renderer.h"
 #include "Common.h"
 #include "Component.h"
 #include "SpriteDesc.h"

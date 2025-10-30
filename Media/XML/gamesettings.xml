@@ -12,6 +12,7 @@
         <sprite name="PinkSquare2" file="PinkSquare2.png"/>
         <sprite name="SylvaraTest" file="SylvaraTest.png"/>
         <sprite name="textwheel" file="textwheel.png"/>
+        <sprite name="walkright" file="walkright.png"/>
     </sprites>
     <!-- sound -->
     <sounds path="Media\Sounds">
