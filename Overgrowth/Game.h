@@ -39,7 +39,6 @@ class CGame:
     Vector2 m_vCameraPos;
     LBaseCamera* m_pCamera = nullptr;
 
-    void LoadSounds(); ///< Load sounds.
     void LoadLevels(); ///< Load levels.
     void BeginGame(); ///< Begin playing the game.
     //void CreateObjects(); ///< Create game objects.

@@ -34,7 +34,7 @@ void CGame::Initialize(){
     OCommon::m_pObjectManager = m_pObjectManager;
     m_pAssetLoader = new OAssetLoader();
     m_pAssetLoader->LoadSprites();
-    LoadSounds(); //load the sounds for this game
+    m_pAssetLoader->LoadSounds(); //load the sounds for this game
     LoadLevels();
     BeginGame();
 } //Initialize
@@ -47,16 +47,6 @@ void CGame::LoadLevels() {
 
 } //LoadLevels
 
-/// Initialize the audio player and load game sounds.
-
-void CGame::LoadSounds(){
-    m_pAudio->Initialize(eSound::Size);
-    //m_pAudio->Load(eSound::grunt, "grunt");
-    m_pAudio->Load(eSound::clang, "clang");
-    m_pAudio->Load(eSound::oink, "oink");
-    m_pAudio->Load(eSound::piano, "piano");
-
-} //LoadSounds
 
 /// Release all of the DirectX12 objects by deleting the renderer.
 

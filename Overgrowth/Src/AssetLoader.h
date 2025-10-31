@@ -8,10 +8,11 @@
 #include "ComponentIncludes.h"
 //#include <iostream>
 
-class OAssetLoader : OCommon, OAssetDefines {
+class OAssetLoader : OCommon, OAssetDefines, public LComponent {
 public:
     OAssetLoader();
     void LoadSprites();
+    void LoadSounds();
 protected:
     std::string SpriteSheetJsonDirectory;
 

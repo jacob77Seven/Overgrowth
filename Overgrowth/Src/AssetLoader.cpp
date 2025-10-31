@@ -9,6 +9,14 @@ OAssetLoader::OAssetLoader()
     SpriteSheetJsonDirectory = "Media\\json\\SpriteSheetInfo.json";
 }
 
+void OAssetLoader::LoadSounds()
+{
+    m_pAudio->Initialize(eSound::Size);
+    for (UINT i = 0; i < (UINT)eSound::Size; i++) {
+        m_pAudio->Load(i, OAssetDefines::soundHandles[i].c_str());
+    }
+}
+
 void OAssetLoader::LoadSprites()
 {
     // Load JSON file
