@@ -50,6 +50,6 @@ void TestCharacter::tick(const float dt) {
 /// `OObject*` to `LSpriteDesc2D*`, effectively drawing the object from its
 /// sprite descriptor.
 
-void TestCharacter::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+void TestCharacter::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
 
 }

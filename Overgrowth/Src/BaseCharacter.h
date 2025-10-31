@@ -25,8 +25,7 @@ protected:
 
     float m_fSpeed = 0; ///< Speed.
 
-    virtual void CollisionResponse(const Vector2&, float,
-        OObject* = nullptr); ///< Collision response.
+    virtual void CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj); ///< Collision response.
 
     //const Vector2 GetViewVector() const; ///< Compute view vector.
     eSprite Sprite;

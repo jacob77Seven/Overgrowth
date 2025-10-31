@@ -69,7 +69,7 @@ void OBaseCharacter::tick(const float dt) {
 /// \param pObj Pointer to object being collided with (defaults to `nullptr`,
 /// which means collision with a wall).
 
-void OBaseCharacter::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+void OBaseCharacter::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
     //if (m_bPendingDestruction)return; //dead, bail out
 
     //const Vector2 vOverlap = d * norm; //overlap in direction of this

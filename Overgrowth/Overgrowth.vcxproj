@@ -181,6 +181,7 @@
     <ClCompile Include="Src\Renderer.cpp" />
     <ClCompile Include="Src\TestCharacter.cpp" />
     <ClCompile Include="Src\TestObject.cpp" />
+    <ClCompile Include="Src\Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assetDefines.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Src\AssetLoader.h" />
     <ClInclude Include="Src\TestCharacter.h" />
     <ClInclude Include="Src\TestObject.h" />
+    <ClInclude Include="Src\Projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

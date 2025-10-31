@@ -17,7 +17,7 @@
 /// The abstract representation of an object. This class must contain public member
 /// functions `move()` and `draw()` to move and draw the object, respectively.
 
-class TestObject :
+class Projectile :
     public OObject
 {
 protected:
@@ -33,10 +33,11 @@ protected:
     virtual void OnDestroy() override;
     virtual void BeginPlay() override;
     virtual void tick(const float dt) override;
+    
     void draw() override; ///< Draw object.
 
 public:
-    TestObject(const Vector3& p);
+    Projectile(const Vector3& p);
     //OObject();
     //virtual OObject(t, const Vector2&); ///< Constructor.
 }; //OObject

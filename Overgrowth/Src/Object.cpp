@@ -97,10 +97,10 @@ void OObject::Collision(const Vector2& norm, float d, std::shared_ptr<OObject> p
     }
 }
 
-//void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+//void OObject::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
 //    printf("Object collision!\n");
 //}
-//void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+//void OObject::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
 
 //} //CollisionResponse
 
@@ -144,7 +144,7 @@ void OObject::draw() {
 /// \param pObj Pointer to object being collided with (defaults to `nullptr`,
 /// which means collision with a wall).
 
-//void OObject::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+//void OObject::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
 //    if (m_bPendingDestruction)return; //dead, bail out
 //
 //    const Vector2 vOverlap = d * norm; //overlap in direction of this

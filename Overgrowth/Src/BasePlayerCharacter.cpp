@@ -1,6 +1,6 @@
 #include "ObjectManager.h"
 #include "TestObject.h"
-
+#include "Projectile.h"
 #include "BasePlayerCharacter.h"
 
 OBasePlayerCharacter::OBasePlayerCharacter(const Vector3& p)
@@ -27,9 +27,9 @@ void OBasePlayerCharacter::tick(const float dt) {
     //printf("m_vPos.y = %f & dt = %f\n", m_vPos.y, dt);
     OBaseCharacter::tick(dt);
     frame += dt * fps;
-    if (frame >= 8.f)
+    if (frame >= 8.f) {
         frame = frame - 8;
-
+    }
     m_nCurrentFrame = (UINT)floor(frame);
 }
 
@@ -40,7 +40,7 @@ void OBasePlayerCharacter::tick(const float dt) {
 /// `OObject*` to `LSpriteDesc2D*`, effectively drawing the object from its
 /// sprite descriptor.
 
-void OBasePlayerCharacter::CollisionResponse(const Vector2& norm, float d, OObject* pObj) {
+void OBasePlayerCharacter::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
 
 }
 
@@ -62,7 +62,7 @@ void OBasePlayerCharacter::KeyboardHandler() {
 
     if (m_pKeyboard->Down(VK_SPACE)){ //play sound
             m_pAudio->play(eSound::clang);
-            printf("Noise!!!\n");
+            
     }
 
     if (m_pKeyboard->TriggerDown('O'))
@@ -70,6 +70,7 @@ void OBasePlayerCharacter::KeyboardHandler() {
 
     if (m_pKeyboard->TriggerDown('P'))
         m_pAudio->play(eSound::piano);
+        //auto p = OCommon::m_pObjectManager->create<Projectile>(m_vPos);
 
     if (m_pKeyboard->Down(VK_LEFT))  m_vPos.x -= 5.0f;
 

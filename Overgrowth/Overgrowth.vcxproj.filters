@@ -17,6 +17,7 @@
     <ClCompile Include="assetDefines.cpp" />
     <ClCompile Include="Src\AssetLoader.cpp" />
     <ClCompile Include="Src\BasePlayerCharacter.cpp" />
+    <ClCompile Include="Src\Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Src\Renderer.h" />
     <ClInclude Include="Src\AssetLoader.h" />
     <ClInclude Include="Src\BasePlayerCharacter.h" />
+    <ClInclude Include="Src\Projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

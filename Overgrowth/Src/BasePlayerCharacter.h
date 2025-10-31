@@ -8,7 +8,7 @@ class OBasePlayerCharacter : public LComponent, public OBaseCharacter
 {
 protected:
     virtual void CollisionResponse(const Vector2&, float,
-        OObject* = nullptr); ///< Collision response.
+        std::weak_ptr<OObject> pObj); ///< Collision response.
     void KeyboardHandler();
 
     //const Vector2 GetViewVector() const; ///< Compute view vector.

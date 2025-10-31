@@ -1,6 +1,6 @@
 #pragma once
-#include "TestObject.h"
-
+#include "Projectile.h"
+#include "TestCharacter.h"
 /// \file Object.cpp
 /// \brief Code for the game object class OBaseCharacter
 
@@ -25,30 +25,33 @@
 //    m_fRadius = std::max(w, h) / 2; //bounding circle radius
 //} //constructor
 
-void TestObject::BeginPlay()
+void Projectile::BeginPlay()
 {
     OObject::BeginPlay(); // Call to parent class.
     printf("Character Begin Play!");
 }
 
-TestObject::TestObject(const Vector3& p)
+Projectile::Projectile(const Vector3& p)
     : OObject(p)
 {
+    m_fSpeed = 420.f;
+    m_nSpriteIndex = (UINT)eSprite::walkright;
+    EObjectCollisionType = ECollisionType::Dynamic;
     printf("OBaseCharacter has become -  %f, %f, %f\n", m_vPos.x, m_vPos.y, m_vPos.z);
 }
 
-//TestObject::~TestObject() {
+//Projectile::~Projectile() {
 //    OObject::~OObject(); // Call to parent destructor.
 //} //destructor
 
 
-void TestObject::OnDestroy() {
+void Projectile::OnDestroy() {
     OObject::OnDestroy();
     printf("Test object has been Destroyed.\n");
 }
 
-void TestObject::tick(const float dt) {
-
+void Projectile::tick(const float dt) {
+    m_vPos.x += dt * m_fSpeed;
     OObject::tick(dt);
 }
 
@@ -59,7 +62,7 @@ void TestObject::tick(const float dt) {
 /// `OObject*` to `LSpriteDesc2D*`, effectively drawing the object from its
 /// sprite descriptor.
 
-void TestObject::draw() {
+void Projectile::draw() {
     m_pRenderer->Draw(this);
 } //draw
 
@@ -70,7 +73,13 @@ void TestObject::draw() {
 /// \param pObj Pointer to object being collided with (defaults to `nullptr`,
 /// which means collision with a wall).
 
-void TestObject::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
+void Projectile::CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj) {
+    if (auto o = pObj.lock()) {
+        if (auto character = std::dynamic_pointer_cast<TestCharacter>(o)) {
+            //character->Destroy();
+        }
+    }
+    // CollisionResponse(const Vector2& norm, float d, std::weak_ptr<OObject> pObj)
     //if (m_bPendingDestruction)return; //dead, bail out
 
     //const Vector2 vOverlap = d * norm; //overlap in direction of this

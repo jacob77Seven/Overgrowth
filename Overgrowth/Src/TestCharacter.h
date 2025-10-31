@@ -13,7 +13,7 @@ class TestCharacter :
 {
 protected:
     virtual void CollisionResponse(const Vector2&, float,
-        OObject* = nullptr); ///< Collision response.
+        std::weak_ptr<OObject> pObj); ///< Collision response.
 
 
     //const Vector2 GetViewVector() const; ///< Compute view vector.

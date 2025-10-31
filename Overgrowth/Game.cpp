@@ -68,7 +68,13 @@ void CGame::BeginGame(){
     }
     m_pObjectManager;
     MainCharacter = m_pObjectManager->create<OBasePlayerCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y -300, 0));
-    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y -300, 0));
+    auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y - 300, 0));
+    if (auto char1 = character.lock()) {
+        //char1->speed = char1->speed * 1.5;
+        //char1->SetObjectCollisionType(ECollisionType::Static);
+        //char1->Destroy(); // TODO Fix error.
+    }
+
     auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 260, m_vWinCenter.y -300, 30));
     if (auto char2 = character2.lock()) {
         char2->speed = char2->speed * 1.5;
