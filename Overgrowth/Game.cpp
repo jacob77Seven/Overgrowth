@@ -6,6 +6,7 @@
 #include "GameDefines.h"
 #include "ComponentIncludes.h"
 #include "Src\TestCharacter.h"
+#include "Src\BasePlayerCharacter.h"
 #include "shellapi.h"
 #include "Src\Common.h"
 #include "Src\AssetLoader.h"
@@ -60,26 +61,13 @@ void CGame::Release(){
 /// program.
 
 void CGame::BeginGame(){  
-    delete m_pSpriteDesc;
-    delete m_pSquareDesc;
-    //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
-    m_pSquareDesc = new LSpriteDesc3D();
-    //m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
-    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::SylvaraTest;
-    m_pSquareDesc->m_nCurrentFrame = 0;
-    //m_pSquareDesc->m_nCurrentFrame = 1;
-    m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
-    m_pSquareDesc->m_fXScale = 0.5f;
-    m_pSquareDesc->m_fYScale = 0.5f;
-    m_pSquareDesc->m_fRoll = 0.0f;
-    m_pSquareDesc->m_fAlpha = 1.0f;
-    m_pSquareDesc->m_f4Tint = Vector4(1, 1, 1, 1);
 
     if ((LvlImporter == nullptr)) {
         printf("No levels loaded!\n");
 	    return;
     }
     m_pObjectManager;
+    MainCharacter = m_pObjectManager->create<OBasePlayerCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y -300, 0));
     auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y -300, 0));
     auto character2 = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 260, m_vWinCenter.y -300, 30));
     if (auto char2 = character2.lock()) {
@@ -140,25 +128,14 @@ void CGame::KeyboardHandler(){
     if(m_pKeyboard->TriggerDown(VK_F2)) //toggle frame rate 
         m_bDrawFrameRate = !m_bDrawFrameRate;
   
-    if(m_pKeyboard->TriggerDown(VK_SPACE)) //play sound
-        m_pAudio->play(eSound::clang);
+    //if(m_pKeyboard->TriggerDown(VK_SPACE)) //play sound
+    //    m_pAudio->play(eSound::clang);
 
     //if(m_pKeyboard->TriggerUp(VK_SPACE)) //play sound
     //    m_pAudio->play(eSound::grunt);
   
-    if (m_pKeyboard->TriggerDown('O'))
-        m_pAudio->play(eSound::oink);
-
-    if (m_pKeyboard->TriggerDown('P'))
-        m_pAudio->play(eSound::piano);
-
-    if (m_pKeyboard->Down(VK_LEFT))  m_pSquareDesc->m_vPos.x -= 5.0f;
-        
-    if (m_pKeyboard->Down(VK_RIGHT)) m_pSquareDesc->m_vPos.x += 5.0f;
-        
-    if (m_pKeyboard->Down(VK_UP))    m_pSquareDesc->m_vPos.y += 5.0f;
-        
-    if (m_pKeyboard->Down(VK_DOWN))  m_pSquareDesc->m_vPos.y -= 5.0f;
+    //if (m_pKeyboard->TriggerDown('O'))
+    //    m_pAudio->play(eSound::oink);
         
     if(m_pKeyboard->TriggerDown(VK_BACK)) //restart game
         BeginGame(); //restart game
@@ -183,11 +160,6 @@ void CGame::RenderFrame(){
     for (auto* desc3D : m_vLevelSprites) {
         m_pRenderer->Draw(desc3D);
     }
-
-    if (m_pSquareDesc) {
-        
-        m_pRenderer->Draw(m_pSquareDesc);
-    }
     OCommon::m_pObjectManager->draw();
 
     if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
@@ -208,10 +180,10 @@ void CGame::ProcessFrame(){
     m_pTimer->Tick([&]() { //all time-dependent function calls should go here
         const float t = m_pTimer->GetFrameTime(); //frame interval in seconds
         //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
-        if (m_pSquareDesc) {
+        if (auto char2 = MainCharacter.lock()) {
             // Follow player smoothly
             const float followSpeed = 5.0f;
-            Vector3 playerPos = Vector3(m_pSquareDesc->m_vPos.x, m_pSquareDesc->m_vPos.y, m_pSquareDesc->m_vPos.z);
+            Vector3 playerPos = Vector3(char2->m_vPos.x, char2->m_vPos.y, char2->m_vPos.z);
             m_vCameraPos += (playerPos - m_vCameraPos) * followSpeed * t;
 
             if (m_pCamera)

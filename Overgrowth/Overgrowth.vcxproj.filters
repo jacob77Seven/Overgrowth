@@ -15,6 +15,8 @@
     <ClCompile Include="Src\BaseLevelAsset.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
     <ClCompile Include="assetDefines.cpp" />
+    <ClCompile Include="Src\AssetLoader.cpp" />
+    <ClCompile Include="Src\BasePlayerCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -32,6 +34,10 @@
     <ClInclude Include="Src\ObjectUtilitiesInterface.h" />
     <ClInclude Include="Src\TestObject.h" />
     <ClInclude Include="assetDefines.h" />
+    <ClInclude Include="Src\BaseLevelAsset.h" />
+    <ClInclude Include="Src\Renderer.h" />
+    <ClInclude Include="Src\AssetLoader.h" />
+    <ClInclude Include="Src\BasePlayerCharacter.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

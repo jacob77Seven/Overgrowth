@@ -22,7 +22,7 @@
 /// any destructors are run.
 
 class OAssetLoader;
-
+class OBasePlayerCharacter;
 class CGame: 
   public LComponent, 
   public LSettings,
@@ -32,6 +32,7 @@ class CGame:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
     LSpriteDesc3D* m_pSquareDesc = nullptr;
+    std::weak_ptr<OBasePlayerCharacter> MainCharacter;
     ORenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     OObjectManager* m_pObjectManager = nullptr; ///< Pointer to renderer.
     LevelImporter* LvlImporter = nullptr;
