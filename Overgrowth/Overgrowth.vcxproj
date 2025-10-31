@@ -160,10 +160,15 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>false</DataExecutionPrevention>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)SpriteImporter\Debug\SpriteImporter.exe</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="assetDefines.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Src\AssetLoader.cpp" />
     <ClCompile Include="Src\BaseAnimator.cpp" />
     <ClCompile Include="Src\BaseCharacter.cpp" />
     <ClCompile Include="Src\BaseController.cpp" />
@@ -184,6 +189,7 @@
     <ClCompile Include="Src\UIWidgetResourceBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assetDefines.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameDefines.h" />
     <ClInclude Include="Src\BaseAnimator.h" />
@@ -200,6 +206,7 @@
     <ClInclude Include="Src\ObjectUtilitiesInterface.h" />
     <ClInclude Include="Src\Player.h" />
     <ClInclude Include="Src\Renderer.h" />
+    <ClInclude Include="Src\AssetLoader.h" />
     <ClInclude Include="Src\TestCharacter.h" />
     <ClInclude Include="Src\TestObject.h" />
     <ClInclude Include="Src\UIManager.h" />

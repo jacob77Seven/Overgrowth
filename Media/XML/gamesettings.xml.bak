@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- Game settings -->
+<settings>
+    <game name="Overgrowth"/>
+    <renderer width="1024" height="768"/>
+    <font file="Media\Fonts\AverageSans_24.spritefont"/>
+    <!-- sprites -->
+    <sprites path="Media\Images">
+        <sprite name="background" file="background.png"/>
+        <sprite name="textwheel" file="textwheel.png"/>
+        <sprite name="PinkSquare" file="PinkSquare.png"/>
+        <sprite name="SylvaraTest" file="SylvaraTest.png"/>
+        <sprite name="healthbar" file="healthbar.png"/>
+        <sprite name="healthbarbackground" file="healthbarbackground.png"/>
+        <sprite name="LyingPinkSquare" file="LyingPinkSquare.png"/>
+        <sprite name="manabar" file="manabar.png"/>
+    </sprites>
+    <!-- sound -->
+    <sounds path="Media\Sounds">
+        <sound name="piano" file="untitled.wav" instances="8"/>
+        <sound name="oink" file="oink.wav" instances="8"/>
+        <sound name="clang" file="clang.wav" instances="8"/>
+        <sound name="grunt" file="umph.wav" instances="8"/>
+    </sounds>
+</settings>

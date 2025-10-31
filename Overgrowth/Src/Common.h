@@ -16,6 +16,8 @@ class CPlayer;
 class CUIManager;
 class IInput;
 
+#include "../GameDefines.h"
+
 /// \brief The common variables class.
 ///
 /// OCommon is a singleton class that encapsulates things that are common to
@@ -24,8 +26,8 @@ class IInput;
 /// around as parameters, which makes the code minisculely faster, and more
 /// importantly, makes the code more readable by reducing function clutter.
 
-class OCommon {
-	protected:
+class OCommon : OAssetDefines {
+protected:
     static ORenderer* m_pRenderer; ///< Pointer to renderer.
     static OObjectManager* m_pObjectManager; ///< Pointer to object manager.
     static LParticleEngine2D* m_pParticleEngine; ///< Pointer to particle engine.
@@ -40,4 +42,7 @@ class OCommon {
     static Vector2 m_vWorldSize; ///< World height and width.
     static CPlayer* m_pPlayer; ///< Pointer to player character.
     static float m_fTile;
+
+    UINT GetSpriteHandleIndex(const std::string handle);
+    UINT GetSoundHandleIndex(const std::string handle);
 }; //OCommon

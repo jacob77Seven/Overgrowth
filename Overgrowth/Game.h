@@ -23,6 +23,8 @@
 /// next animation frame. `Release()` will be called at game exit but before
 /// any destructors are run.
 
+class OAssetLoader;
+
 class CGame: 
   public LComponent, 
   public LSettings,
@@ -35,12 +37,10 @@ class CGame:
     ORenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     OObjectManager* m_pObjectManager = nullptr; ///< Pointer to renderer.
     LevelImporter* LvlImporter = nullptr;
+    OAssetLoader* m_pAssetLoader = nullptr;
     Vector2 m_vCameraPos;
     LBaseCamera* m_pCamera = nullptr;
 
-
-    void LoadImages(); ///< Load images.
-    void LoadSounds(); ///< Load sounds.
     void LoadLevels(); ///< Load levels.
     void BeginGame(); ///< Begin playing the game.
     //void CreateObjects(); ///< Create game objects.

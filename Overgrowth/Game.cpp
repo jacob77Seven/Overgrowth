@@ -8,6 +8,7 @@
 #include "Src\TestCharacter.h"
 #include "shellapi.h"
 #include "Src\Common.h"
+#include "Src\AssetLoader.h"
 
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
@@ -30,14 +31,14 @@ void CGame::Initialize(){
 
     m_pRenderer = new ORenderer(eSpriteMode::Unbatched3D);
     OCommon::m_pRenderer = m_pRenderer;
-    m_pRenderer->Initialize(30, 24); 
+    //m_pRenderer->Initialize(30, 24); 
     m_pObjectManager = new OObjectManager();
     OCommon::m_pObjectManager = m_pObjectManager;
 
     m_pUIManager = new CUIManager();
-
-    LoadImages(); //load images from xml file list
-    LoadSounds(); //load the sounds for this game
+    m_pAssetLoader = new OAssetLoader();
+    m_pAssetLoader->LoadSprites();
+    m_pAssetLoader->LoadSounds(); //load the sounds for this game
     LoadLevels();
     m_pUIManager->InitializeUI();
 
@@ -45,51 +46,6 @@ void CGame::Initialize(){
 
     BeginGame();
 } //Initialize
-
-/// Load the specific images needed for this game. This is where `eSprite`
-/// values from `GameDefines.h` get tied to the names of sprite tags in
-/// `gamesettings.xml`. Those sprite tags contain the name of the corresponding
-/// image file. If the image tag or the image file are missing, then the game
-/// should abort from deeper in the Engine code leaving you with an error
-/// message in a dialog box.
-
-void CGame::LoadImages(){  
-    m_pRenderer->BeginResourceUpload();
-
-    m_pRenderer->Load(eSprite::Background, "background"); 
-    m_pRenderer->Load(eSprite::TextWheel,  "textwheel"); 
-    m_pRenderer->Load(eSprite::Pig,  "pig"); 
-    m_pRenderer->Load(eSprite::Pink_sheet,  "pink_sheet");
-
-    m_pRenderer->Load(eSprite::RogueCharFrame, "roguecharframe");
-    m_pRenderer->Load(eSprite::WarriorCharFrame, "warriorcharframe");
-    m_pRenderer->Load(eSprite::DruidCharFrame, "druidcharframe");
-    m_pRenderer->Load(eSprite::HealthbarBackground, "healthbarbackground");
-    m_pRenderer->Load(eSprite::Healthbar, "healthbar");
-    m_pRenderer->Load(eSprite::ManabarBackground, "manabarbackground");
-    m_pRenderer->Load(eSprite::Manabar, "manabar");
-    m_pRenderer->Load(eSprite::AbilityCooldown, "abilitycooldown");
-
-    m_pRenderer->Load(eSprite::RogueAbilityOne, "rogueabilityone");
-    m_pRenderer->Load(eSprite::RogueAbilityTwo, "rogueabilitytwo");
-    m_pRenderer->Load(eSprite::RogueAbilityThree, "rogueabilitythree");
-
-    m_pRenderer->Load(eSprite::WarriorAbilityOne, "warriorabilityone");
-    m_pRenderer->Load(eSprite::WarriorAbilityTwo, "warriorabilitytwo");
-    m_pRenderer->Load(eSprite::WarriorAbilityThree, "warriorabilitythree");
-
-    m_pRenderer->Load(eSprite::DruidAbilityOne, "druidabilityone");
-    m_pRenderer->Load(eSprite::DruidAbilityTwo, "druidabilitytwo");
-    m_pRenderer->Load(eSprite::DruidAbilityThree, "druidabilitythree");
-    //m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
-
-    m_pRenderer->LoadSpriteSheet((UINT)eSprite::Pink_sheet, "pink_sheet", 8, 8, 16);
-    m_pRenderer->LoadSpriteSheet((UINT)eSprite::walkright, "walkright", 76, 98, 8);
-
-    m_pRenderer->Load(eSprite::PinkSquare, "pinksquare");
-
-    m_pRenderer->EndResourceUpload();
-} //LoadImages
 
 // Load Levels
 void CGame::LoadLevels() {
@@ -99,16 +55,6 @@ void CGame::LoadLevels() {
 
 } //LoadLevels
 
-/// Initialize the audio player and load game sounds.
-
-void CGame::LoadSounds(){
-    m_pAudio->Initialize(eSound::Size);
-    m_pAudio->Load(eSound::Grunt, "grunt");
-    m_pAudio->Load(eSound::Clang, "clang");
-    m_pAudio->Load(eSound::Oink, "oink");
-    m_pAudio->Load(eSound::Piano, "piano");
-
-} //LoadSounds
 
 /// Release all of the DirectX12 objects by deleting the renderer.
 
@@ -127,7 +73,7 @@ void CGame::BeginGame(){
     //m_pSpriteDesc = new LSpriteDesc3D((UINT)eSprite::TextWheel, m_vWinCenter);
     m_pSquareDesc = new LSpriteDesc3D();
     //m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::PinkSquare;
-    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::Pig;
+    m_pSquareDesc->m_nSpriteIndex = (UINT)eSprite::SylvaraTest;
     m_pSquareDesc->m_nCurrentFrame = 0;
     //m_pSquareDesc->m_nCurrentFrame = 1;
     m_pSquareDesc->m_vPos = Vector3(m_vWinCenter.x, m_vWinCenter.y, 0.0f);
@@ -203,16 +149,16 @@ void CGame::KeyboardHandler(){
         m_bDrawFrameRate = !m_bDrawFrameRate;
   
     if(m_pKeyboard->TriggerDown(VK_SPACE)) //play sound
-        m_pAudio->play(eSound::Clang);
+        m_pAudio->play(eSound::clang);
 
-    if(m_pKeyboard->TriggerUp(VK_SPACE)) //play sound
-        m_pAudio->play(eSound::Grunt);
+    //if(m_pKeyboard->TriggerUp(VK_SPACE)) //play sound
+    //    m_pAudio->play(eSound::grunt);
   
     if (m_pKeyboard->TriggerDown('O'))
-        m_pAudio->play(eSound::Oink);
+        m_pAudio->play(eSound::oink);
 
     if (m_pKeyboard->TriggerDown('P'))
-        m_pAudio->play(eSound::Piano);
+        m_pAudio->play(eSound::piano);
 
     if (m_pKeyboard->Down(VK_LEFT))  m_pSquareDesc->m_vPos.x -= 5.0f;
         

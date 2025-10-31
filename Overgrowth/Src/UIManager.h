@@ -39,7 +39,7 @@ private:
 
     eCharSelected charSelected = eCharSelected::Rogue;
 
-    float m_fActiveFrameHeight = m_nWinHeight * 0.15f;
+    float m_fActiveFrameHeight = m_nWinHeight * 0.125f;
     float m_fInactiveFrameHeight = m_nWinHeight * 0.1f;
     float m_fFrameOffset = m_nWinHeight * 0.01f;
 

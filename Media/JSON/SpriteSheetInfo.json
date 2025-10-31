@@ -1,0 +1,78 @@
+{
+    "SpriteSheets": [
+        {
+            "SheetHandle": "walkright",
+            "NumSprites": 8,
+            "SizeX": 76,
+            "SizeY": 98,
+            "Anims": [
+                {
+                    "Name": "EnemyWalkRight",
+                    "StartFrame": 0,
+                    "EndFrame": 7,
+                    "FPS": 8,
+                    "Events": [
+                        {
+                            "LeftStep": 2,
+                            "RightStep": 6
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "SheetHandle": "walkleft",
+            "NumSprites": 8,
+            "SizeX": 76,
+            "SizeY": 98,
+            "Anims": [
+                {
+                    "Name": "EnemyWalkLeft",
+                    "StartFrame": 0,
+                    "EndFrame": 7,
+                    "FPS": 8,
+                    "Events": [
+                        {
+                            "LeftStep": 2,
+                            "RightStep": 6
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "SheetHandle": "PinkSquare",
+            "NumSprites": 16,
+            "SizeX": 8,
+            "SizeY": 8,
+            "Anims": [
+                {
+                    "Name": "PinkSquareTestAnim",
+                    "StartFrame": 0,
+                    "EndFrame": 15,
+                    "FPS": 8,
+                    "Events": [
+                        {
+                            "A": 0
+                        }
+                    ]
+                },
+                {
+                    "Name": "ABCD",
+                    "StartFrame": 0,
+                    "EndFrame": 3,
+                    "FPS": 1,
+                    "Events": [
+                        {
+                            "D": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+
+
+
