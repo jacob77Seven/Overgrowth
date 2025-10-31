@@ -16,12 +16,11 @@
     <ClCompile Include="Src\Renderer.cpp" />
     <ClCompile Include="Src\UIManager.cpp" />
     <ClCompile Include="Src\UIWidgetAbility.cpp" />
-    <ClCompile Include="Src\UIWidgetCharFrame.cpp" />
-    <ClCompile Include="Src\UIWidgetHealthBar.cpp" />
-    <ClCompile Include="Src\UIWidgetManaBar.cpp" />
+    <ClCompile Include="Src\UIWidget.cpp" />
     <ClCompile Include="Src\UIWidgetResourceBar.cpp" />
-    <ClCompile Include="Src\Player.cpp" />
+    <ClCompile Include="Src\PlayerManager.cpp" />
     <ClCompile Include="assetDefines.cpp" />
+    <ClCompile Include="Src\AssetLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -43,12 +42,11 @@
     <ClInclude Include="Src\Renderer.h" />
     <ClInclude Include="Src\UIManager.h" />
     <ClInclude Include="Src\UIWidgetAbility.h" />
-    <ClInclude Include="Src\UIWidgetCharFrame.h" />
-    <ClInclude Include="Src\UIWidgetHealthBar.h" />
-    <ClInclude Include="Src\UIWidgetManaBar.h" />
+    <ClInclude Include="Src\UIWidget.h" />
     <ClInclude Include="Src\UIWidgetResourceBar.h" />
-    <ClInclude Include="Src\Player.h" />
+    <ClInclude Include="Src\PlayerManager.h" />
     <ClInclude Include="assetDefines.h" />
+    <ClInclude Include="Src\AssetLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Overgrowth.rc" />

@@ -10,6 +10,8 @@
 #include "Src\Common.h"
 #include "Src\AssetLoader.h"
 
+#include <math.h>
+
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
 
@@ -40,9 +42,8 @@ void CGame::Initialize(){
     m_pAssetLoader->LoadSprites();
     m_pAssetLoader->LoadSounds(); //load the sounds for this game
     LoadLevels();
-    m_pUIManager->InitializeUI();
 
-    m_pInputManager.push_back(m_pUIManager);
+    m_pUIManager->InitializeUI();
 
     BeginGame();
 } //Initialize
@@ -85,7 +86,7 @@ void CGame::BeginGame(){
 
     if ((LvlImporter == nullptr)) {
         printf("No levels loaded!\n");
-	    return;
+        return;
     }
     m_pObjectManager;
     auto character = m_pObjectManager->create<TestCharacter>(Vector3(m_vWinCenter.x - 300, m_vWinCenter.y -300, 0));
@@ -197,8 +198,8 @@ void CGame::KeyboardHandler(){
 } //KeyboardHandler
 
 void CGame::SendInput(const eInput& input) {
-	for (auto listener : m_pInputManager)
-		listener->Input(input);
+    for (auto listener : m_pInputManager)
+        listener->Input(input);
 }
 
 /// Draw the current frame rate to a hard-coded position in the window.
@@ -228,11 +229,44 @@ void CGame::RenderFrame(){
     OCommon::m_pObjectManager->draw();
 
     Vector3 pos = m_pCamera->GetPos();
-    m_pCamera->MoveTo(Vector3(m_nWinWidth / 2, m_nWinHeight / 2, m_fCameraPosZ));
 
     m_pUIManager->DrawUI();
 
-    m_pCamera->MoveTo(pos);
+    LSpriteDesc3D desc;
+    float w, h;
+    float scale = 0;
+
+    m_pRenderer->GetSize((UINT)eSprite::RogueAbilityOne, w, h);
+    scale = 1 / (h / (m_nWinHeight * 0.02f));
+    desc.m_nSpriteIndex = (UINT)eSprite::RogueAbilityOne;
+    desc.m_vPos = Vector3(pos.x, pos.y - 98.0f, pos.z + 500.0f);
+    desc.m_fXScale = scale;
+    desc.m_fYScale = scale;
+    m_pRenderer->Draw(&desc);
+
+    /*m_pRenderer->GetSize((UINT)eSprite::RogueCharFrame, h, w);
+    scale = 1 / (h / (m_nWinHeight * 0.026f));
+    desc.m_nSpriteIndex = (UINT)eSprite::RogueCharFrame;
+    desc.m_vPos = Vector3(pos.x - 186.1f, pos.y + 99.0f, pos.z + 500.0f);
+    desc.m_fXScale = scale;
+    desc.m_fYScale = scale;
+    m_pRenderer->Draw(&desc);*/
+
+    m_pRenderer->GetSize((UINT)eSprite::WarriorCharFrame, h, w);
+    scale = 1 / (h / (m_nWinHeight * 0.02f));
+    desc.m_nSpriteIndex = (UINT)eSprite::WarriorCharFrame;
+    desc.m_vPos = Vector3(pos.x - 189.0f, pos.y + 71.0f, pos.z + 500.0f);
+    desc.m_fXScale = scale;
+    desc.m_fYScale = scale;
+    m_pRenderer->Draw(&desc);
+
+    m_pRenderer->GetSize((UINT)eSprite::DruidCharFrame, h, w);
+    scale = 1 / (h / (m_nWinHeight * 0.02f));
+    desc.m_nSpriteIndex = (UINT)eSprite::DruidCharFrame;
+    desc.m_vPos = Vector3(pos.x - 189.0f, pos.y + 47.0f, pos.z + 500.0f);
+    desc.m_fXScale = scale;
+    desc.m_fYScale = scale;
+    m_pRenderer->Draw(&desc);
 
     if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 

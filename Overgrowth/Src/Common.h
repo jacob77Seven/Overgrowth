@@ -33,6 +33,7 @@ protected:
     static LParticleEngine2D* m_pParticleEngine; ///< Pointer to particle engine.
     static CTileManager* m_pTileManager; ///< Pointer to tile manager. 
 	static CUIManager* m_pUIManager;
+    static LBaseCamera* m_pCamera;
 	static std::vector<IInput*> m_pInputManager;
 
     static bool m_bDrawAABBs; ///< Draw AABB flag.

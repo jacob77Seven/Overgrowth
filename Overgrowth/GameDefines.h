@@ -42,4 +42,8 @@ enum class eInput : UINT {
 	Size
 };
 
+enum class eCharSelected : UINT {
+	Rogue, Warrior, Druid
+};
+
 #endif //__L4RC_GAME_GAMEDEFINES_H__

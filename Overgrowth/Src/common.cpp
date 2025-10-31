@@ -10,6 +10,7 @@ ORenderer* OCommon::m_pRenderer = nullptr;
 OObjectManager* OCommon::m_pObjectManager = nullptr;
 LParticleEngine2D* OCommon::m_pParticleEngine = nullptr;
 CTileManager* OCommon::m_pTileManager = nullptr;
+LBaseCamera* OCommon::m_pCamera = nullptr;
 CUIManager* OCommon::m_pUIManager = nullptr;
 std::vector<IInput*> OCommon::m_pInputManager;
 

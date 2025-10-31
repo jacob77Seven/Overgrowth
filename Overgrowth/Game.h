@@ -39,7 +39,6 @@ class CGame:
     LevelImporter* LvlImporter = nullptr;
     OAssetLoader* m_pAssetLoader = nullptr;
     Vector2 m_vCameraPos;
-    LBaseCamera* m_pCamera = nullptr;
 
     void LoadLevels(); ///< Load levels.
     void BeginGame(); ///< Begin playing the game.
