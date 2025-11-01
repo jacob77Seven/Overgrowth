@@ -9,7 +9,11 @@ class PlayerManager:
     public IInput, 
     public OCommon {
 protected:
-    float health = 100.0f;
+    float m_fMaxHealth = 100.0f;
+    float m_fHealth = 80.0f;
+
+    float m_fMaxMana = 100.0f;
+    float m_fMana = 80.0f;
     
     float m_fCharSwitchCooldown = 0.5f;
     float m_fCharSwitchTime = -1.0f;
@@ -38,7 +42,10 @@ protected:
     eCharSelected charSelected = eCharSelected::Rogue;
 
 public:
+    float GetHealth() { return m_fHealth / m_fMaxHealth; }
+    float GetMana() { return m_fMana / m_fMaxMana; }
     eCharSelected GetCharSelected() { return charSelected; }
+
     bool IsSwitchingChar();
 
     void Input(const eInput& input) override;

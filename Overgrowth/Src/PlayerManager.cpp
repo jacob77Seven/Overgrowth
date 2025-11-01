@@ -7,6 +7,8 @@ void PlayerManager::Input(const eInput& input) {
 
 	if(time - m_fCharSwitchTime > m_fCharSwitchCooldown) {
 		m_fCharSwitchTime = time;
+		m_fHealth = rand() % (int)m_fMaxHealth;
+		m_fMana = rand() % (int)m_fMaxMana;
 
 		switch (input) {
 		case eInput::KeyOne:
