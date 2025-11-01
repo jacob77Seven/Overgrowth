@@ -13,6 +13,7 @@
 #include "Src/Common.h"
 #include "Src/ObjectManager.h"
 #include "Src/UIManager.h"
+#include "Src/PlayerManager.h"
 
 /// \brief The game class.
 ///
@@ -29,7 +30,7 @@ class CGame:
   public LComponent, 
   public LSettings,
   public OCommon { 
-
+    
   private:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.

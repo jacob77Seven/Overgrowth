@@ -13,6 +13,7 @@ CTileManager* OCommon::m_pTileManager = nullptr;
 LBaseCamera* OCommon::m_pCamera = nullptr;
 CUIManager* OCommon::m_pUIManager = nullptr;
 std::vector<IInput*> OCommon::m_pInputManager;
+PlayerManager* OCommon::m_pPlayerManager = nullptr;
 
 bool OCommon::m_bDrawAABBs = false;
 bool OCommon::m_bGodMode = false;
@@ -21,7 +22,7 @@ Vector2 OCommon::m_vWorldSize = Vector2::Zero;
 CPlayer* OCommon::m_pPlayer = nullptr;
 float OCommon::m_fTile = 1000.f;
 
-float OCommon::m_fCameraPosZ = -2400.0f;
+float OCommon::m_fCameraPosZ = -1000.0f;
 
 UINT OCommon::GetSpriteHandleIndex(const std::string handle) {
     for (UINT i = 0; i < (UINT)eSprite::Size; i++) {

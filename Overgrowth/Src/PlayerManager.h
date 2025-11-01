@@ -1,10 +1,16 @@
 #pragma once
 #include "BaseCharacter.h"
+#include "InputInterface.h"
+#include "Common.h"
+#include "../GameDefines.h"
 
-class PlayerManager {
+class PlayerManager: 
+    public LComponent,
+    public IInput, 
+    public OCommon {
 protected:
-	float health = 100.0f;
-
+    float health = 100.0f;
+    
     float m_fCharSwitchCooldown = 0.5f;
     float m_fCharSwitchTime = -1.0f;
 
@@ -30,4 +36,10 @@ protected:
     float m_fDruidAbilityThreeTimePressed = -1.0f;
 
     eCharSelected charSelected = eCharSelected::Rogue;
+
+public:
+    eCharSelected GetCharSelected() { return charSelected; }
+    bool IsSwitchingChar();
+
+    void Input(const eInput& input) override;
 };

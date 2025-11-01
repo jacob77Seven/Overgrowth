@@ -15,6 +15,7 @@ class CTileManager;
 class CPlayer;
 class CUIManager;
 class IInput;
+class PlayerManager;
 
 #include "../GameDefines.h"
 
@@ -35,6 +36,7 @@ protected:
 	static CUIManager* m_pUIManager;
     static LBaseCamera* m_pCamera;
 	static std::vector<IInput*> m_pInputManager;
+    static PlayerManager* m_pPlayerManager;
 
     static bool m_bDrawAABBs; ///< Draw AABB flag.
     static bool m_bGodMode; ///< God mode flag.

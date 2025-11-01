@@ -39,11 +39,15 @@ void CGame::Initialize(){
 
     m_pUIManager = new CUIManager();
     m_pAssetLoader = new OAssetLoader();
+    m_pPlayerManager = new PlayerManager();
+
     m_pAssetLoader->LoadSprites();
     m_pAssetLoader->LoadSounds(); //load the sounds for this game
     LoadLevels();
 
     m_pUIManager->InitializeUI();
+
+    m_pInputManager.push_back(m_pPlayerManager);
 
     BeginGame();
 } //Initialize
@@ -230,7 +234,11 @@ void CGame::RenderFrame(){
 
     Vector3 pos = m_pCamera->GetPos();
 
+    m_pCamera->SetOrthographic(m_nWinWidth, m_nWinHeight, 0.1f, 1000.0f);
+    m_pCamera->MoveTo(Vector3(0.0f, 0.0f, pos.z));
     m_pUIManager->DrawUI();
+    m_pCamera->MoveTo(pos);
+    m_pCamera->SetPerspective(45.0f * XM_PI / 180.0f, m_nWinWidth / m_nWinHeight, 0.1f, 1000.0f);
 
     LSpriteDesc3D desc;
     float w, h;
@@ -252,21 +260,21 @@ void CGame::RenderFrame(){
     desc.m_fYScale = scale;
     m_pRenderer->Draw(&desc);*/
 
-    m_pRenderer->GetSize((UINT)eSprite::WarriorCharFrame, h, w);
+    /*m_pRenderer->GetSize((UINT)eSprite::WarriorCharFrame, h, w);
     scale = 1 / (h / (m_nWinHeight * 0.02f));
     desc.m_nSpriteIndex = (UINT)eSprite::WarriorCharFrame;
     desc.m_vPos = Vector3(pos.x - 189.0f, pos.y + 71.0f, pos.z + 500.0f);
     desc.m_fXScale = scale;
     desc.m_fYScale = scale;
-    m_pRenderer->Draw(&desc);
+    m_pRenderer->Draw(&desc);*/
 
-    m_pRenderer->GetSize((UINT)eSprite::DruidCharFrame, h, w);
+    /*m_pRenderer->GetSize((UINT)eSprite::DruidCharFrame, h, w);
     scale = 1 / (h / (m_nWinHeight * 0.02f));
     desc.m_nSpriteIndex = (UINT)eSprite::DruidCharFrame;
     desc.m_vPos = Vector3(pos.x - 189.0f, pos.y + 47.0f, pos.z + 500.0f);
     desc.m_fXScale = scale;
     desc.m_fYScale = scale;
-    m_pRenderer->Draw(&desc);
+    m_pRenderer->Draw(&desc);*/
 
     if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
 
@@ -298,6 +306,9 @@ void CGame::ProcessFrame(){
         //m_pSpriteDesc->m_fRoll += 0.125f*XM_2PI*t; //rotate at 1/8 RPS
         if (OCommon::m_pObjectManager)
             OCommon::m_pObjectManager->tick(t);
+
+        m_pUIManager->MoveUI(t);
         });
+
     RenderFrame(); //render a frame of animation
 } //ProcessFrame

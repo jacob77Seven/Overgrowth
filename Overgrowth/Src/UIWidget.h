@@ -6,7 +6,7 @@
 class UIWidget {
 private:
 	LSpriteDesc3D m_pSprite;
-
+	
 	float m_fSpriteSizeX = 0.0f;
 	float m_fSpriteSizeY = 0.0f;
 public:
@@ -17,8 +17,9 @@ public:
 	float m_fTargetPosY = 0.0f;
 	float m_fTargetPosZ = 0.0f;
 
-	void SetToTargets();
 	void SetTargets(float scaleX, float scaleY, Vector3 pos);
+	void SetToTargets();
+	void InterpToTargets(float t);
 
 	void SetSprite(eSprite sprite, float w, float h);
 
